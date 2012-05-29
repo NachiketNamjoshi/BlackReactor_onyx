@@ -1799,8 +1799,10 @@ out:
 		unsigned long scan;
 
 		scan = zone_nr_lru_pages(mz, lru);
-		if (sc->priority || noswap || !vmscan_swappiness(sc)) {
-			scan >>= sc->priority;
+		// SHADY
+		if (priority || noswap || !vmscan_swappiness(mz, sc)) {
+			scan >>= priority;
+			//SHADY
 			if (!scan && force_scan)
 				scan = SWAP_CLUSTER_MAX;
 			scan = div64_u64(scan * fraction[file], denominator);
