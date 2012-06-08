@@ -2990,11 +2990,16 @@ static void l2cap_ertm_retrans_timeout(struct work_struct *work)
 		return;
 
 	lock_sock(sk);
+	
+		if (type != L2CAP_CONF_RFC)
+			continue;
 
-	if (!l2cap_pi(sk)->conn) {
-		release_sock(sk);
-		return;
-	}
+		if (olen != sizeof(rfc))
+			break;
+
+		memcpy(&rfc, (void *)val, olen);
+		goto done;
+}
 
 	l2cap_ertm_tx(sk, 0, 0, L2CAP_ERTM_EVENT_RETRANS_TIMER_EXPIRES);
 	release_sock(sk);
