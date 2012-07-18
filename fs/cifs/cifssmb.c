@@ -1635,6 +1635,7 @@ cifs_readv_receive(struct TCP_Server_Info *server, struct mid_q_entry *mid)
 	}
 	cifs_kmap_unlock();
 
+
 	/* issue the read if we have any iovecs left to fill */
 	if (rdata->nr_iov > 1) {
 		length = cifs_readv_from_socket(server, &rdata->iov[1],
