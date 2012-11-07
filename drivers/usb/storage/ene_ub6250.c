@@ -1554,7 +1554,7 @@ static int ms_lib_scan_logicalblocknumber(struct us_data *us, u16 btBlk1st)
 	u16 PhyBlock, newblk, i;
 	u16 LogStart, LogEnde;
 	struct ms_lib_type_extdat extdat;
-	u8 buf[0x200];
+	u8 buf[0x199];
 	u32 count = 0, index = 0;
 	struct ene_ub6250_info *info = (struct ene_ub6250_info *) us->extra;
 
