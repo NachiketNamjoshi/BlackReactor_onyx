@@ -585,25 +585,12 @@ static int inet_diag_bc_audit(const void *bytecode, int bytecode_len)
 		case INET_DIAG_BC_D_COND:
 			if (!valid_hostcond(bc, len, &min_len))
 				return -EINVAL;
-<<<<<<< HEAD
 			break;
-=======
-			/* fall through */
-		case INET_DIAG_BC_AUTO:
->>>>>>> 08ba7ba08e8... inet_diag: validate byte code to prevent oops in inet_diag_bc_run()
 		case INET_DIAG_BC_S_GE:
 		case INET_DIAG_BC_S_LE:
 		case INET_DIAG_BC_D_GE:
 		case INET_DIAG_BC_D_LE:
-<<<<<<< HEAD
 			if (!valid_port_comparison(bc, len, &min_len))
-=======
-		case INET_DIAG_BC_JMP:
-			if (op->no < min_len || op->no > len + 4 || op->no & 3)
-				return -EINVAL;
-			if (op->no < len &&
-			    !valid_cc(bytecode, bytecode_len, len - op->no))
->>>>>>> 08ba7ba08e8... inet_diag: validate byte code to prevent oops in inet_diag_bc_run()
 				return -EINVAL;
 			break;
 		case INET_DIAG_BC_AUTO:
@@ -613,7 +600,6 @@ static int inet_diag_bc_audit(const void *bytecode, int bytecode_len)
 		default:
 			return -EINVAL;
 		}
-<<<<<<< HEAD
 
 		if (op->code != INET_DIAG_BC_NOP) {
 			if (op->no < min_len || op->no > len + 4 || op->no & 3)
@@ -622,9 +608,6 @@ static int inet_diag_bc_audit(const void *bytecode, int bytecode_len)
 			    !valid_cc(bytecode, bytecode_len, len - op->no))
 				return -EINVAL;
 		}
-
-=======
->>>>>>> 08ba7ba08e8... inet_diag: validate byte code to prevent oops in inet_diag_bc_run()
 		if (op->yes < min_len || op->yes > len + 4 || op->yes & 3)
 			return -EINVAL;
 		bc  += op->yes;
