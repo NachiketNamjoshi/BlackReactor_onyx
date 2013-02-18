@@ -1202,10 +1202,11 @@ static int console_trylock_for_printk(unsigned int cpu)
 			retval = 0;
 		}
 	}
+	
 	logbuf_cpu = UINT_MAX;
+	raw_spin_unlock(&logbuf_lock);
 	if (wake)
 		up(&console_sem);
-	raw_spin_unlock(&logbuf_lock);
 	return retval;
 }
 
