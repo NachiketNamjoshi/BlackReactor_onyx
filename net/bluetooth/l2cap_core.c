@@ -2043,6 +2043,11 @@ static void l2cap_ertm_send_rr_or_rnr(struct sock *sk, bool poll)
 
 	BT_DBG("sk %p, poll %d", sk, (int) poll);
 
+	if (conn->mtu < L2CAP_HDR_SIZE + L2CAP_CMD_HDR_SIZE)
+		return NULL;
+
+	len = L2CAP_HDR_SIZE + L2CAP_CMD_HDR_SIZE + dlen;
+	count = min_t(unsigned int, conn->mtu, len);
 	pi = l2cap_pi(sk);
 
 	memset(&control, 0, sizeof(control));
