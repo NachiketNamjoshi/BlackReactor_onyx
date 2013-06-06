@@ -2675,7 +2675,6 @@ static int dvb_dmxdev_section_event_cb(struct dmx_section_filter *filter,
 		}
 		return 0;
 	}
-
 	free = dvb_ringbuffer_free(&dmxdevfilter->buffer);
 
 	if ((DMX_OVERRUN_ERROR == dmx_data_ready->status) ||
@@ -2705,7 +2704,6 @@ static int dvb_dmxdev_section_event_cb(struct dmx_section_filter *filter,
 
 	res = dvb_dmxdev_add_event(&dmxdevfilter->events, &event);
 	DVB_RINGBUFFER_PUSH(&dmxdevfilter->buffer, dmx_data_ready->data_length);
-
 	spin_unlock(&dmxdevfilter->dev->lock);
 	wake_up_all(&dmxdevfilter->buffer.queue);
 
@@ -2837,6 +2835,7 @@ static int dvb_dmxdev_ts_event_cb(struct dmx_ts_feed *feed,
 		wake_up_all(&buffer->queue);
 		return 0;
 	}
+<<<<<<< HEAD
 
 	free = dvb_ringbuffer_free(&dmxdevfilter->buffer);
 
@@ -2924,6 +2923,13 @@ static int dvb_dmxdev_ts_event_cb(struct dmx_ts_feed *feed,
 			events->current_event_data_size = 0;
 		 }
 	}
+=======
+	ret = dvb_dmxdev_buffer_write(buffer, buffer1, buffer1_len);
+	if (ret == buffer1_len)
+		ret = dvb_dmxdev_buffer_write(buffer, buffer2, buffer2_len);
+	if (ret < 0)
+		buffer->error = ret;
+>>>>>>> 9ef2f22... media: dmxdev: remove dvb_ringbuffer_flush() on writer side
 	spin_unlock(&dmxdevfilter->dev->lock);
 	wake_up_all(&buffer->queue);
 	return 0;
