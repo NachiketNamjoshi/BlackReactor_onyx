@@ -886,7 +886,11 @@ static int create_device(struct zram *zram, int device_id)
 	ret = sysfs_create_group(&disk_to_dev(zram->disk)->kobj,
 				&zram_disk_attr_group);
 	if (ret < 0) {
+<<<<<<< HEAD
 		pr_warn("Error creating sysfs group");
+=======
+		pr_warning("Error creating sysfs group");
+>>>>>>> 11fc2ee... zram: destroy all devices on error recovery path in zram_init()
 		goto out_free_disk;
 	}
 
