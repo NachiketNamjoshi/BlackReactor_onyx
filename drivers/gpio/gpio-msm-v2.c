@@ -137,11 +137,13 @@ unsigned __msm_gpio_get_intr_status(unsigned gpio)
 
 void __msm_gpio_set_intr_status(unsigned gpio)
 {
+
 	__raw_writel(BIT(INTR_STATUS_BIT), GPIO_INTR_STATUS(gpio));
 }
 
 unsigned __msm_gpio_get_intr_config(unsigned gpio)
 {
+
 	return __raw_readl(GPIO_INTR_CFG(gpio));
 }
 
