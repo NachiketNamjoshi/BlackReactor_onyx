@@ -104,9 +104,9 @@ static void __cpuinit cpu_boost_main(struct work_struct *work)
 		return;
 	}
 
-	/* Calculate boost duration for each CPU (CPU0 gets the longest) */
+	/* Calculate boost duration for each CPU (CPU0 is boosted the longest) */
 	for (cpu = 0; cpu < num_cpus_to_boost; cpu++)
-		boost_ms[cpu] = ((CONFIG_NR_CPUS - cpu) * 600) - (num_cpus_to_boost * 350);
+		boost_ms[cpu] = 1650 - (cpu * 300) - (num_cpus_to_boost * 300);
 
 	/* Prioritize boosting of online CPUs */
 	for_each_online_cpu(cpu) {
