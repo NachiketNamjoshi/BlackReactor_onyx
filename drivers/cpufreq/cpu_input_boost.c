@@ -15,7 +15,6 @@
 
 #include <linux/cpu.h>
 #include <linux/cpufreq.h>
-#include <linux/hrtimer.h>
 #include <linux/input.h>
 #include <linux/module.h>
 #include <linux/notifier.h>
@@ -41,97 +40,49 @@ static bool freqs_available __read_mostly;
 static unsigned int boost_freq[3] __read_mostly;
 static unsigned int boost_ms[3];
 static unsigned int enabled __read_mostly;
+static unsigned int user_minfreq;
 
-static u64 last_input_time;
-#define MIN_INPUT_INTERVAL (150 * USEC_PER_MSEC)
-
-/**
- * Percentage threshold used to boost CPUs (default 30%). A higher
- * value will cause more CPUs to be boosted -- CPUs are boosted
- * when ((current_freq/max_freq) * 100) < up_threshold
- */
-static unsigned int up_threshold = 30;
-
-static void cpu_unboost(unsigned int cpu)
+static void cpu_boost(unsigned int nr_cpus)
 {
 	struct boost_policy *b;
+	unsigned int cpu;
 
-	b = &per_cpu(boost_info, cpu);
+	for_each_online_cpu(cpu) {
+		b = &per_cpu(boost_info, cpu);
+		b->boost_state = BOOST;
+		cpufreq_update_policy(cpu);
+		if (cpu == (nr_cpus - 1))
+			return;
+	}
+}
+
+static void cpu_unboost(struct boost_policy *b)
+{
 	b->boost_state = UNBOOST;
 	get_online_cpus();
-	if (cpu_online(cpu))
-		cpufreq_update_policy(cpu);
+	if (cpu_online(b->cpu))
+		cpufreq_update_policy(b->cpu);
 	put_online_cpus();
-
-	if (!cpu)
-		boost_running = false;
 }
 
 static void __cpuinit cpu_boost_main(struct work_struct *work)
 {
 	struct boost_policy *b;
-	struct cpufreq_policy *policy;
-	unsigned int cpu, num_cpus_boosted = 0, num_cpus_to_boost = 0;
+	unsigned int cpu, num_cpus_to_boost;
 
-	/* Num of CPUs to be boosted based on current freq of each online CPU */
 	get_online_cpus();
-	for_each_online_cpu(cpu) {
-		policy = cpufreq_cpu_get(cpu);
-		if (policy != NULL) {
-			if ((policy->cur * 100 / policy->max) < up_threshold)
-				num_cpus_to_boost++;
-			cpufreq_cpu_put(policy);
-			/* Only allow 2 CPUs to be staged for boosting from here */
-			if (num_cpus_to_boost == 2)
-				break;
-		}
-	}
-
-	/* Num of CPUs to be boosted based on how many of them are online */
-	switch (num_online_cpus() * 100 / CONFIG_NR_CPUS) {
-	case 25:
-		num_cpus_to_boost += 2;
-		break;
-	case 50 ... 75:
-		num_cpus_to_boost++;
-		break;
-	}
-
-	/* Nothing to boost */
-	if (!num_cpus_to_boost) {
-		put_online_cpus();
-		boost_running = false;
-		return;
-	}
+	num_cpus_to_boost = num_online_cpus() - 1;
+	if (!num_cpus_to_boost)
+		num_cpus_to_boost = 1;
 
 	/* Calculate boost duration for each CPU (CPU0 is boosted the longest) */
 	for (cpu = 0; cpu < num_cpus_to_boost; cpu++)
 		boost_ms[cpu] = 1650 - (cpu * 300) - (num_cpus_to_boost * 300);
 
-	/* Prioritize boosting of online CPUs */
-	for_each_online_cpu(cpu) {
-		b = &per_cpu(boost_info, cpu);
-		b->boost_state = BOOST;
-		cpufreq_update_policy(cpu);
-		num_cpus_boosted++;
-		if (num_cpus_boosted == num_cpus_to_boost)
-			goto finish_boost;
-	}
-
-	/* Boost offline CPUs if we still need to boost more CPUs */
-	for_each_possible_cpu(cpu) {
-		b = &per_cpu(boost_info, cpu);
-		if (b->boost_state == UNBOOST) {
-			b->boost_state = BOOST;
-			num_cpus_boosted++;
-			if (num_cpus_boosted == num_cpus_to_boost)
-				goto finish_boost;
-		}
-	}
-
-finish_boost:
+	cpu_boost(num_cpus_to_boost);
 	put_online_cpus();
-	for (cpu = 0; cpu < num_cpus_boosted; cpu++) {
+
+	for (cpu = 0; cpu < num_cpus_to_boost; cpu++) {
 		b = &per_cpu(boost_info, cpu);
 		queue_delayed_work(boost_wq, &b->restore_work,
 					msecs_to_jiffies(boost_ms[cpu]));
@@ -142,7 +93,10 @@ static void __cpuinit cpu_restore_main(struct work_struct *work)
 {
 	struct boost_policy *b = container_of(work, struct boost_policy,
 							restore_work.work);
-	cpu_unboost(b->cpu);
+	cpu_unboost(b);
+
+	if (!b->cpu)
+		boost_running = false;
 }
 
 static int cpu_do_boost(struct notifier_block *nb, unsigned long val, void *data)
@@ -159,6 +113,11 @@ static int cpu_do_boost(struct notifier_block *nb, unsigned long val, void *data
 
 	if (!freqs_available)
 		return NOTIFY_OK;
+
+	if (user_minfreq) {
+		policy->min = user_minfreq;
+		return NOTIFY_OK;
+	}
 
 	b_freq = boost_freq[policy->cpu];
 
@@ -184,18 +143,12 @@ static struct notifier_block cpu_do_boost_nb = {
 static void cpu_iboost_input_event(struct input_handle *handle, unsigned int type,
 		unsigned int code, int value)
 {
-	u64 now;
-
-	if (boost_running || !enabled || !freqs_available)
-		return;
-
-	now = ktime_to_us(ktime_get());
-	if (now - last_input_time < MIN_INPUT_INTERVAL)
+	if (boost_running || !enabled ||
+		!freqs_available || user_minfreq)
 		return;
 
 	boost_running = true;
 	queue_work(boost_wq, &boost_work);
-	last_input_time = ktime_to_us(ktime_get());
 }
 
 static int cpu_iboost_input_connect(struct input_handler *handler,
@@ -313,16 +266,23 @@ static ssize_t enabled_write(struct device *dev,
 	return size;
 }
 
-static ssize_t up_threshold_write(struct device *dev,
+static ssize_t userspace_minfreq_write(struct device *dev,
 		struct device_attribute *attr, const char *buf, size_t size)
 {
-	unsigned int data;
+	struct boost_policy *b;
+	unsigned int data, cpu;
 	int ret = sscanf(buf, "%u", &data);
 
 	if (ret != 1)
 		return -EINVAL;
 
-	up_threshold = data;
+	user_minfreq = data;
+
+	for (cpu = 0; cpu < 3; cpu++) {
+		b = &per_cpu(boost_info, cpu);
+		cancel_delayed_work_sync(&b->restore_work);
+		queue_delayed_work(boost_wq, &b->restore_work, 0);
+	}
 
 	return size;
 }
@@ -339,20 +299,23 @@ static ssize_t enabled_read(struct device *dev,
 	return sprintf(buf, "%u\n", enabled);
 }
 
-static ssize_t up_threshold_read(struct device *dev,
+static ssize_t userspace_minfreq_read(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
-	return sprintf(buf, "%u\n", up_threshold);
+	return sprintf(buf, "%u\n", user_minfreq);
 }
 
-static DEVICE_ATTR(boost_freqs, 0644, boost_freqs_read, boost_freqs_write);
-static DEVICE_ATTR(enabled, 0644, enabled_read, enabled_write);
-static DEVICE_ATTR(up_threshold, 0644, up_threshold_read, up_threshold_write);
+static DEVICE_ATTR(boost_freqs, S_IRUGO | S_IWUGO,
+			boost_freqs_read, boost_freqs_write);
+static DEVICE_ATTR(enabled, S_IRUGO | S_IWUGO,
+			enabled_read, enabled_write);
+static DEVICE_ATTR(userspace_minfreq, S_IRUGO | S_IWUGO,
+			userspace_minfreq_read, userspace_minfreq_write);
 
 static struct attribute *cpu_iboost_attr[] = {
 	&dev_attr_boost_freqs.attr,
 	&dev_attr_enabled.attr,
-	&dev_attr_up_threshold.attr,
+	&dev_attr_userspace_minfreq.attr,
 	NULL
 };
 
@@ -375,7 +338,7 @@ static int __init cpu_iboost_init(void)
 
 	cpufreq_register_notifier(&cpu_do_boost_nb, CPUFREQ_POLICY_NOTIFIER);
 
-	for (i = 0; i < min(CONFIG_NR_CPUS, 3); i++) {
+	for (i = 0; i < (CONFIG_NR_CPUS - 1); i++) {
 		b = &per_cpu(boost_info, i);
 		b->cpu = i;
 		INIT_DELAYED_WORK(&b->restore_work, cpu_restore_main);
