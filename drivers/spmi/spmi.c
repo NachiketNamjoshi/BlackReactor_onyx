@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -261,7 +261,7 @@ int spmi_add_device(struct spmi_device *spmidev)
 
 	/* Set the device name */
 	spmidev->id = id;
-	dev_set_name(dev, "%s-%d", spmidev->name, spmidev->id);
+	dev_set_name(dev, "%s-%02d", spmidev->name, spmidev->sid);
 
 	/* Device may be bound to an active driver when this returns */
 	rc = device_add(dev);
