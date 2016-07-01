@@ -149,6 +149,7 @@ static int get_task_ioprio(struct task_struct *p)
 	task_lock(p);
 	if (p->io_context)
 		ret = p->io_context->ioprio;
+	task_unlock(p);
 out:
 	return ret;
 }
