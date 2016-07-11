@@ -1,4 +1,4 @@
-/* Copyright (c) 2013-2015, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -26,41 +26,29 @@ int msm_isp_axi_create_stream(
     struct msm_vfe_axi_shared_data *axi_data,
     struct msm_vfe_axi_stream_request_cmd *stream_cfg_cmd)
 {
-    int i = stream_cfg_cmd->stream_src;
+	uint32_t i = stream_cfg_cmd->stream_src;
+	if (i >= VFE_AXI_SRC_MAX) {
+		pr_err("%s:%d invalid stream_src %d\n", __func__, __LINE__,
+			stream_cfg_cmd->stream_src);
+		return -EINVAL;
+	}
 
-    if (i >= VFE_AXI_SRC_MAX) {
-        pr_err("%s:%d invalid stream_src %d\n", __func__, __LINE__,
-               stream_cfg_cmd->stream_src);
-        return -EINVAL;
-    }
+	if ((axi_data->stream_handle_cnt << 8) == 0)
+		axi_data->stream_handle_cnt++;
 
-    if (axi_data->stream_info[i].state != AVAILABLE) {
-        pr_err("%s:%d invalid state %d expected %d for src %d\n",
-               __func__, __LINE__, axi_data->stream_info[i].state,
-               AVAILABLE, i);
-        return -EINVAL;
-    }
+	stream_cfg_cmd->axi_stream_handle =
+		(++axi_data->stream_handle_cnt) << 8 | i;
 
-    if ((axi_data->stream_handle_cnt << 8) == 0)
-        axi_data->stream_handle_cnt++;
-
-    stream_cfg_cmd->axi_stream_handle =
-        (++axi_data->stream_handle_cnt) << 8 | i;
-
-    memset(&axi_data->stream_info[i], 0,
-           sizeof(struct msm_vfe_axi_stream));
-    spin_lock_init(&axi_data->stream_info[i].lock);
-    axi_data->stream_info[i].session_id = stream_cfg_cmd->session_id;
-    axi_data->stream_info[i].stream_id = stream_cfg_cmd->stream_id;
-    axi_data->stream_info[i].buf_divert = stream_cfg_cmd->buf_divert;
-    axi_data->stream_info[i].state = INACTIVE;
-    axi_data->stream_info[i].stream_handle =
-        stream_cfg_cmd->axi_stream_handle;
-    axi_data->stream_info[i].controllable_output =
-        stream_cfg_cmd->controllable_output;
-    if (stream_cfg_cmd->controllable_output)
-        stream_cfg_cmd->frame_skip_pattern = SKIP_ALL;
-    return 0;
+	memset(&axi_data->stream_info[i], 0,
+		   sizeof(struct msm_vfe_axi_stream));
+	spin_lock_init(&axi_data->stream_info[i].lock);
+	axi_data->stream_info[i].session_id = stream_cfg_cmd->session_id;
+	axi_data->stream_info[i].stream_id = stream_cfg_cmd->stream_id;
+	axi_data->stream_info[i].buf_divert = stream_cfg_cmd->buf_divert;
+	axi_data->stream_info[i].state = INACTIVE;
+	axi_data->stream_info[i].stream_handle =
+		stream_cfg_cmd->axi_stream_handle;
+	return 0;
 }
 
 void msm_isp_axi_destroy_stream(
