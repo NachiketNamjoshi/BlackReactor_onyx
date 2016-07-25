@@ -1,0 +1,37 @@
+Signature-Version: 1.0
+Created-By: 1.0 (Android SignApk)
+SHA1-Digest-Manifest: /EXQzY61AQbMuNIyivJTVuQspiY=
+
+Name: ramdisk/arsenic-anykernel
+SHA1-Digest: PRYNGNk7jSoOuDDPiX90oPj6X88=
+
+Name: tools/unpackbootimg
+SHA1-Digest: h+GGg/7hHSvygzJma3Nn7O2nvQo=
+
+Name: META-INF/com/google/android/updater-script
+SHA1-Digest: Br6xNsbYLFIighT+FGsY/cB14YM=
+
+Name: tools/busybox
+SHA1-Digest: SkmkgmwTZGwpJgcApGDln4GwCs8=
+
+Name: zImage
+SHA1-Digest: 6lVMidmCS9uGsXUndn/dpP+qqjs=
+
+Name: anykernel.sh
+SHA1-Digest: 1a+XxqAMzHu4bPrsb/MJDIYfOKY=
+
+Name: META-INF/com/google/android/update-binary
+SHA1-Digest: YgKBGmGVz+DKrfxvCT+nRG9RR8g=
+
+Name: dtb
+SHA1-Digest: AIR+P6PWu1jNSpYYm6dw/ZfyYno=
+
+Name: modules/placeholder
+SHA1-Digest: QJOU9vnStsi7gOgb8RSyyQ7wink=
+
+Name: tools/mkbootimg
+SHA1-Digest: j2r7iEt15q9AAJzHC6Hpo80yGtE=
+
+Name: ramdisk/sbin/arsenic-post_boot.sh
+SHA1-Digest: ZYkkTZdiVIKPES2OcRH2j7AtiJE=
+
