@@ -27,6 +27,7 @@
 #include <mach/kgsl.h>
 
 #define KGSL_NAME "kgsl"
+#include <linux/kthread.h>
 
 /* The number of memstore arrays limits the number of contexts allowed.
  * If more contexts are needed, update multiple for MEMSTORE_SIZE
@@ -123,7 +124,6 @@ struct kgsl_driver {
 		atomic_t mapped_max;
 	} stats;
 	unsigned int full_cache_threshold;
-
 	struct kthread_worker worker;
 	struct task_struct *worker_thread;
 };
