@@ -19,6 +19,11 @@ export KBUILD_BUILD_USER="nachiket"
 export KBUILD_BUILD_HOST="reactor"
 
 
+# Remove Last builds
+rm -rf $OUT_DIR/BlackReactor*.zip
+rm -rf $OUT_DIR/Kernel*.zip
+rm -rf $OUT_DIR/zImage
+
 compile_kernel ()
 {
 echo -e "**********************************************************************************************"
@@ -37,15 +42,16 @@ zipping
 }
 
 zipping() {
-rm -rf $OUT_DIR/BlackReactor*.zip
-rm -rf $OUT_DIR/Kernel*.zip
+
+# make new zip
 cp $KERN_IMG $OUT_DIR/zImage
 cd $OUT_DIR
 zip -r BlackReactor-onyx-$(date +"%Y%m%d")-$(date +"%H%M%S").zip *
-OUT_PRODUCT = $OUT_DIR/BlackReactor-onyx*
+
 }
 
 compile_kernel
+OUT_PRODUCT = "$OUT_DIR/BlackReactor-onyx*"
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
 echo -e "$yellow Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
