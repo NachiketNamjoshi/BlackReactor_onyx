@@ -4,3 +4,15 @@
 *.gcno
 *.zip
 /zipping/onyx/zImage
+*.o
+*.o.cmd
+*.cmd
+*.order
+*.config
+.config
+.version
+*.d
+*.s
+arch/arm/include/generated/*
+include/config/*
+include/generated/*
