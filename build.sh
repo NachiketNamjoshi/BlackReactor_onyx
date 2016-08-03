@@ -1,27 +1,50 @@
+#!/bin/bash
+
+##################################################
+##################################################
+# 												 #
+# 	  Copyright (c) 2016, Nachiket.Namjoshi		 #
+# 			 All rights reserved.				 #
+# 												 #
+# 	BlackReactor Kernel Build Script beta - v0.1 #
+# 												 #
+##################################################
+##################################################
+
 #For Time Calculation
 BUILD_START=$(date +"%s")
 
 # Housekeeping
-KERNEL_DIR=$PWD
-KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage
-OUT_DIR=$KERNEL_DIR/zipping/onyx
-
 blue='\033[0;34m'
 cyan='\033[0;36m'
-yellow='\033[0;33m'
+green='\033[1;32m'
 red='\033[0;31m'
 nocol='\033[0m'
 
+# 
+# Configure following according to your system
+# 
 
+# Directories
+KERNEL_DIR=$PWD
+KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage
+OUT_DIR=$KERNEL_DIR/zipping/onyx
+OUT_PRODUCT = $OUT_DIR/*.zip
+REACTOR_VERSION="alpha-4"
+
+# Device Spceifics
 export ARCH=arm
 export CROSS_COMPILE="/home/nachiket/android/onyx/kernel/toolchains/Linaro/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-"
 export KBUILD_BUILD_USER="nachiket"
 export KBUILD_BUILD_HOST="reactor"
 
 
+########################
+## Start Build Script ##
+########################
+
 # Remove Last builds
-rm -rf $OUT_DIR/BlackReactor*.zip
-rm -rf $OUT_DIR/Kernel*.zip
+rm -rf $OUT_DIR/*.zip
 rm -rf $OUT_DIR/zImage
 
 compile_kernel ()
@@ -46,13 +69,14 @@ zipping() {
 # make new zip
 cp $KERN_IMG $OUT_DIR/zImage
 cd $OUT_DIR
-zip -r BlackReactor-onyx-$(date +"%Y%m%d")-$(date +"%H%M%S").zip *
+zip -r BlackReactor-onyx-$REACTOR_VERSION-$(date +"%Y%m%d")-$(date +"%H%M%S").zip *
 
 }
 
 compile_kernel
-OUT_PRODUCT = "$OUT_DIR/BlackReactor-onyx*"
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
-echo -e "$yellow Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
-echo -e "$blue OUTPUT: $OUT_PRODUCT"
+echo -e "\n$green Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
+echo "\nzImage size (bytes):"
+stat -c%s $KERN_IMG
+echo "\n$green OUTPUT: $OUT_DIR/*.zip \n$nocol"
