@@ -29,7 +29,6 @@ nocol='\033[0m'
 KERNEL_DIR=$PWD
 KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage
 OUT_DIR=$KERNEL_DIR/zipping/onyx
-OUT_PRODUCT = $OUT_DIR/*.zip
 REACTOR_VERSION="alpha-4"
 
 # Device Spceifics
@@ -49,11 +48,11 @@ rm -rf $OUT_DIR/zImage
 
 compile_kernel ()
 {
-echo -e "**********************************************************************************************"
+echo -e "$green ********************************************************************************************** $nocol"
 echo "                    "
-echo "                                    Compiling BlackReactor-Kernel                    "
+echo "                                   Compiling BlackReactor-Kernel                    "
 echo "                    "
-echo -e "**********************************************************************************************"
+echo -e "$green ********************************************************************************************** $nocol"
 make onyx_defconfig
 make -j64
 if ! [ -a $KERN_IMG ];
@@ -76,7 +75,6 @@ zip -r BlackReactor-onyx-$REACTOR_VERSION-$(date +"%Y%m%d")-$(date +"%H%M%S").zi
 compile_kernel
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
-echo -e "\n$green Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
-echo "\nzImage size (bytes):"
-stat -c%s $KERN_IMG
-echo "\n$green OUTPUT: $OUT_DIR/*.zip \n$nocol"
+echo -e "$green Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
+echo -e "$green zImage size (bytes): $(stat -c%s $KERN_IMG) $nocol"
+echo " OUTPUT: $OUT_DIR/BlackReactor-onyx*.zip "
