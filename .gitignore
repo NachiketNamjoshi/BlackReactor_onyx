@@ -16,3 +16,15 @@
 arch/arm/include/generated/*
 include/config/*
 include/generated/*
+*.a
+include/linux/version.h
+.config.old
+.tmp_System.map
+.tmp_kallsyms1.S
+.tmp_kallsyms2.S
+.tmp_vmlinux1
+.tmp_vmlinux2
+Module.symvers
+System.map
+vmlinux
+
