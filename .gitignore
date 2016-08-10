@@ -27,4 +27,5 @@ include/linux/version.h
 Module.symvers
 System.map
 vmlinux
-
+commit.log
+fsck.log
