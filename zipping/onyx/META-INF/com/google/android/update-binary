@@ -75,7 +75,7 @@ bb=/tmp/anykernel/tools/busybox;
 
 ui_print "### BlackReactor-Kernel ###";
 ui_print " ";
-ui_print "### Nachiket.Namjoshi	###";
+ui_print "### Nachiket.Namjoshi ###";
 ui_print " ";
 
 mount -o ro /system;
