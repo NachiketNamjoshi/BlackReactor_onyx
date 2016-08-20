@@ -75,6 +75,5 @@ zip -r BlackReactor-onyx-$REACTOR_VERSION-$(date +"%Y%m%d")-$(date +"%H%M%S").zi
 compile_kernel
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
-echo -e "$green Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
-echo -e "$green zImage size (bytes): $(stat -c%s $KERN_IMG) $nocol"
-echo " OUTPUT: $OUT_DIR/BlackReactor-onyx*.zip "
+echo -e "$blue Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
+echo -e "$red zImage size (bytes): $(stat -c%s $KERN_IMG) $nocol"
