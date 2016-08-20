@@ -4,7 +4,7 @@
 #
 # Original and credits: osm0sis @ xda-developers
 #
-# Modified by Nimit Mehta
+# Modified by NachiketNamjoshi
 
 OUTFD=/proc/self/fd/$2;
 ZIP="$3";
@@ -129,20 +129,23 @@ if [ $? != "0" ]; then
 	abort;
 fi;
 
-# if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.modules)" == 1 ]; then
-#	ui_print "* Copying modules...";
-#	ui_print " ";
-#
-#	mount -o remount,rw /system;
-#	mkdir -p /system/lib/modules;
-#	cp -rf /tmp/anykernel/modules/* /system/lib/modules/;
-#	set_perm_recursive 0 0 0755 0644 /system/lib/modules;
-#	mount -o remount,ro /system;
-# fi;
+if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.modules)" == 1 ]; then
+	ui_print "* Copying modules...";
+	ui_print " ";
+
+	mount -o remount,rw /system;
+	mkdir -p /system/lib/modules;
+	cp -rf /tmp/anykernel/modules/* /system/lib/modules/;
+	set_perm_recursive 0 0 0755 0644 /system/lib/modules;
+	mount -o remount,ro /system;
+fi;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
 	rm -rf /tmp/anykernel;
 fi;
+
+mount -o remount,rw /system;
+cp -R "/tmp/anykernel/system" /system
 
 umount /system;
 umount /data;

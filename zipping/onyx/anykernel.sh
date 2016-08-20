@@ -2,14 +2,14 @@
 #
 # Original and credits: osm0sis @ xda-developers
 #
-# Modified by Nimit Mehta
+# Modified by NachiketNamjoshi
 
 ############### AnyKernel setup start ############### 
 
 # EDIFY properties
 do.devicecheck=1
 do.initd=0
-do.modules=1
+do.modules=0
 do.cleanup=1
 device.name1=OnePlus
 device.name2=ONE
@@ -29,6 +29,7 @@ device.name15=
 
 # shell variables
 block=/dev/block/platform/msm_sdcc.1/by-name/boot;
+kern_dir=/BlackReactor;
 
 ############### AnyKernel setup end ############### 
 
@@ -70,7 +71,7 @@ dump_boot()
 		exit 1;
 	fi;
 
-	if [ -f $ramdisk/arsenic-anykernel ]; then
+	if [ -f $kern_dir/validity ]; then
 		   ui_print "  Installing over existing kernel...";
 		   ui_print " ";
 	fi;
@@ -305,17 +306,12 @@ dump_boot;
 
 # AnyKernel permissions
 chmod 755 $ramdisk/sbin/busybox
-chmod -R 755 $ramdisk/sbin/arsenic-post_boot.sh
+chmod -R 755 $ramdisk/sbin/reactor-post_boot.sh
 
 # ramdisk changes
-# backup_file default.prop;
-# replace_string default.prop "ro.adb.secure=0" "ro.adb.secure=1" "ro.adb.secure=0";
-# replace_string default.prop "ro.secure=0" "ro.secure=1" "ro.secure=0";
-
-# init.onyx.rc
-# backup_file init.onyx.rc;
-# append_file init.onyx.rc "arsenic-post_boot" init.onyx.patch;
-
+backup_file default.prop;
+replace_string default.prop "ro.adb.secure=0" "ro.adb.secure=1" "ro.adb.secure=0";
+replace_string default.prop "ro.secure=0" "ro.secure=1" "ro.secure=0";
 
 ############### Ramdisk customization end ###############
 
