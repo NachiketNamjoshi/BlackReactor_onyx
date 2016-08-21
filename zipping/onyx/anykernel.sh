@@ -106,7 +106,7 @@ write_boot()
 	fi;
 
 	if [ -f /tmp/anykernel/dtb.img ]; then
-		dtb="--dt /tmp/anykernel/dtb";
+		dtb="--dt /tmp/anykernel/dtb.img";
 	elif [ -f *-dtb ]; then
 		dtb=`ls *-dtb`;
 		dtb="--dt $split_img/$dtb";

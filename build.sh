@@ -68,7 +68,7 @@ zipping
 
 build_dtb() {
 	
-	./$KERNEL_DIR/tools/dtbtool -o $KERN_DTB -s 2048 -p $KERNEL_DIR/scripts/dtc/ $KERNEL_DIR/arch/arm/boot/
+	$KERNEL_DIR/tools/dtbtool -o $KERN_DTB -s 2048 -p $KERNEL_DIR/scripts/dtc/ $KERNEL_DIR/arch/arm/boot/
 }
 
 
