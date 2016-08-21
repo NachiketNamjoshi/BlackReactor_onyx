@@ -29,3 +29,4 @@ System.map
 vmlinux
 commit.log
 fsck.log
+build_test.sh
