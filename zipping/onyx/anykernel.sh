@@ -105,7 +105,7 @@ write_boot()
 		kernel=$split_img/$kernel;
 	fi;
 
-	if [ -f /tmp/anykernel/dtb ]; then
+	if [ -f /tmp/anykernel/dtb.img ]; then
 		dtb="--dt /tmp/anykernel/dtb";
 	elif [ -f *-dtb ]; then
 		dtb=`ls *-dtb`;

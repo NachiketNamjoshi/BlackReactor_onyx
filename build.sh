@@ -46,7 +46,7 @@ export KBUILD_BUILD_HOST="reactor"
 # Remove Last builds
 rm -rf $OUT_DIR/*.zip
 rm -rf $OUT_DIR/zImage
-rm -rf $OUT_DIR/dtb
+rm -rf $OUT_DIR/dtb.img
 
 compile_kernel ()
 {
@@ -67,7 +67,8 @@ zipping
 }
 
 build_dtb() {
-	$KERN_DIR/tools/dtbtool -o $KERN_DTB -s 2048 -p $KERNEL_DIR/scripts/dtc/ $KERNEL_DIR/arch/arm/boot/
+	
+	./$KERNEL_DIR/tools/dtbtool -o $KERN_DTB -s 2048 -p $KERNEL_DIR/scripts/dtc/ $KERNEL_DIR/arch/arm/boot/
 }
 
 
@@ -75,6 +76,7 @@ zipping() {
 
 # make new zip
 cp $KERN_IMG $OUT_DIR/zImage
+cp $KERN_DTB $OUT_DIR/dtb.img
 cd $OUT_DIR
 zip -r BlackReactor-onyx-$REACTOR_VERSION-$(date +"%Y%m%d")-$(date +"%H%M%S").zip *
 
