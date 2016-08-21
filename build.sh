@@ -30,6 +30,7 @@ KERNEL_DIR=$PWD
 KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage
 OUT_DIR=$KERNEL_DIR/zipping/onyx
 REACTOR_VERSION="alpha-6"
+KERN_DTB=$KERNEL_DIR/arch/arm/boot/dt.img
 
 # Device Spceifics
 export ARCH=arm
@@ -45,6 +46,7 @@ export KBUILD_BUILD_HOST="reactor"
 # Remove Last builds
 rm -rf $OUT_DIR/*.zip
 rm -rf $OUT_DIR/zImage
+rm -rf $OUT_DIR/dtb
 
 compile_kernel ()
 {
@@ -60,8 +62,14 @@ then
 echo -e "$red Kernel Compilation failed! Fix the errors! $nocol"
 exit 1
 fi
+build_dtb
 zipping
 }
+
+build_dtb() {
+	$KERN_DIR/tools/dtbtool -o $KERN_DTB -s 2048 -p $KERNEL_DIR/scripts/dtc/ $KERNEL_DIR/arch/arm/boot/
+}
+
 
 zipping() {
 
