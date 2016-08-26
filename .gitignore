@@ -11,7 +11,6 @@
 *.config
 .config
 .version
-*.d
 *.s
 arch/arm/include/generated/*
 include/config/*
@@ -31,3 +30,6 @@ commit.log
 fsck.log
 build_test.sh
 zipping/onyx/dtb
+.missing-syscalls.d
+usr/.initramfs_data.cpio.d
+
