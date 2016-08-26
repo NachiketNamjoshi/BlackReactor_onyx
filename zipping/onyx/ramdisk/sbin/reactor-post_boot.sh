@@ -63,8 +63,26 @@ cd /sys/class/misc/blackReactor_sound
 echo "\n============================================\n" >> REACTOR_LOGFILE_SOUND
 
 
+echo "\n=========================\n" >> $REACTOR_LOGFILE
+echo "$(date) Tweaking interactive cpufreq gov" >> $REACTOR_LOGFILE
+tweak_interactive
+echo "\n=========================\n" >> $REACTOR_LOGFILE
+
 
 # set busybox selinux labels
 mount -o rw,remount rootfs /
 	chcon u:object_r:toolbox_exec:s0 /sbin/busybox
 mount -o ro,remount rootfs /
+
+
+function tweak_interactive() {
+/sbin/busybox chmod 644 /sys/devices/system/cpu/cpufreq/interactive/*
+echo "20000" > /sys/devices/system/cpu/cpufreq/interactive/timer_rate
+echo "40000" > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
+echo "760000" > /sys/devices/system/cpu/cpufreq/interactive/midrange_freq
+echo "1300000" > /sys/devices/system/cpu/cpufreq/interactive/max_normal_freq
+echo "1900000" > /sys/devices/system/cpu/cpufreq/interactive/max_boost
+echo "65" > /sys/devices/system/cpu/cpufreq/interactive/midrange_go_maxspeed_load
+echo "85" > /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load
+/sbin/busybox chmod 444 /sys/devices/system/cpu/cpufreq/interactive/*
+}
