@@ -46,21 +46,21 @@ fi
 echo "=========================" >> $REACTOR_LOGFILE
 
 
-# maintain sound log file history
-	rm $REACTOR_LOGFILE_SOUND.3
-	mv $REACTOR_LOGFILE_SOUND.2 $REACTOR_LOGFILE_SOUND.3
-	mv $REACTOR_LOGFILE_SOUND.1 $REACTOR_LOGFILE_SOUND.2
-	mv $REACTOR_LOGFILE_SOUND $REACTOR_LOGFILE_SOUND.1
+# # maintain sound log file history
+# 	rm $REACTOR_LOGFILE_SOUND.3
+# 	mv $REACTOR_LOGFILE_SOUND.2 $REACTOR_LOGFILE_SOUND.3
+# 	mv $REACTOR_LOGFILE_SOUND.1 $REACTOR_LOGFILE_SOUND.2
+# 	mv $REACTOR_LOGFILE_SOUND $REACTOR_LOGFILE_SOUND.1
 
-# Initialise the sound log file (chmod to make it readable via /sdcard link)
-echo $(date) BlackReactor-Kernel initialization started > $REACTOR_LOGFILE_SOUND
-/sbin/busybox chmod 666 $REACTOR_LOGFILE_SOUND
-echo -e "\n============================================\n" >> REACTOR_LOGFILE_SOUND
-echo -e "\n**** blackReactor_sound\n" >> REACTOR_LOGFILE_SOUND
-echo "\n============================================\n" >> REACTOR_LOGFILE_SOUND
-cd /sys/class/misc/blackReactor_sound
-/sbin/busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> REACTOR_LOGFILE_SOUND
-echo "\n============================================\n" >> REACTOR_LOGFILE_SOUND
+# # Initialise the sound log file (chmod to make it readable via /sdcard link)
+# echo $(date) BlackReactor-Kernel initialization started > $REACTOR_LOGFILE_SOUND
+# /sbin/busybox chmod 666 $REACTOR_LOGFILE_SOUND
+# echo -e "\n============================================\n" >> REACTOR_LOGFILE_SOUND
+# echo -e "\n**** blackReactor_sound\n" >> REACTOR_LOGFILE_SOUND
+# echo "\n============================================\n" >> REACTOR_LOGFILE_SOUND
+# cd /sys/class/misc/blackReactor_sound
+# /sbin/busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> REACTOR_LOGFILE_SOUND
+# echo "\n============================================\n" >> REACTOR_LOGFILE_SOUND
 
 
 echo "\n=========================\n" >> $REACTOR_LOGFILE
