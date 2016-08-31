@@ -1635,6 +1635,7 @@ static int qcedev_check_cipher_params(struct qcedev_cipher_op_req *req,
 			__func__, total, req->data_len);
 		goto error;
 }
+
 	/* Verify Source Address's */
 	for (i = 0, total = 0; i < req->entries; i++) {
 		if (total < req->data_len) {
@@ -1665,7 +1666,6 @@ static int qcedev_check_cipher_params(struct qcedev_cipher_op_req *req,
 			total += req->vbuf.dst[i].len;
 		}
 	}
-
 	return 0;
 error:
 	return -EINVAL;
