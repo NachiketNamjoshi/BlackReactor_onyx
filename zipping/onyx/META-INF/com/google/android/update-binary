@@ -139,11 +139,12 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.modules)" == 1 ]; then
 	set_perm_recursive 0 0 0755 0644 /system/lib/modules;
 	mount -o remount,ro /system;
 fi;
+
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.react)" == 1]; then
 	mount -o remount,rw /system;
 	ui_print "* Copying 00BlackReactor...";
 	cp -R "/tmp/anykernel/system/00BlackReactor" /system/etc/init.d/;
-fi
+fi;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
 	rm -rf /tmp/anykernel;
