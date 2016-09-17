@@ -9,7 +9,6 @@
 # EDIFY properties
 do.devicecheck=1
 do.initd=0
-do.react=1
 do.modules=0
 do.cleanup=1
 device.name1=OnePlus
@@ -30,7 +29,7 @@ device.name15=
 
 # shell variables
 block=/dev/block/platform/msm_sdcc.1/by-name/boot;
-kern_dir=/BlackReactor;
+kern_dir=/data/BlackReactor;
 
 ############### AnyKernel setup end ############### 
 
@@ -294,6 +293,7 @@ ramdisk=/tmp/anykernel/ramdisk;
 bin=/tmp/anykernel/tools;
 split_img=/tmp/anykernel/split_img;
 patch=/tmp/anykernel/patch;
+black=/tmp/anykernel/system/00BlackReactor;
 
 chmod -R 755 $bin;
 mkdir -p $ramdisk $split_img;
@@ -304,10 +304,6 @@ OUTFD=/proc/self/fd/$1;
 dump_boot;
 
 ############### Ramdisk customization start ###############
-
-# AnyKernel permissions
-chmod 755 $ramdisk/sbin/busybox
-chmod -R 755 $ramdisk/sbin/reactor-post_boot.sh
 
 # ramdisk changes
 backup_file default.prop;
