@@ -143,6 +143,7 @@ fi;
 mount -o remount,rw /system;
 ui_print "* Copying 00BlackReactor...";
 cp -f /tmp/anykernel/system/00BlackReactor /system/etc/init.d/00BlackReactor;
+chmod 777 /system/etc/init.d/00BlackReactor;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
 	rm -rf /tmp/anykernel;
