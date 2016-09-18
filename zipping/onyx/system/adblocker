@@ -1,0 +1,65 @@
+#!/system/bin/sh
+# Copyright (C) 2016 NachiketNamjoshi
+#
+#=======================================================================#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+#=======================================================================#
+
+mount -o remount,rw / 2>/dev/null
+mount -o remount,rw / / 2>/dev/null
+mount -o remount,rw rootfs 2>/dev/null
+mount -o remount,rw /system 2>/dev/null
+mount -o remount,rw /system /system 2>/dev/null
+busybox mount -o remount,rw / 2>/dev/null
+busybox mount -o remount,rw / / 2>/dev/null
+busybox mount -o remount,rw rootfs 2>/dev/null
+busybox mount -o remount,rw /system 2>/dev/null
+busybox mount -o remount,rw /system /system 2>/dev/null
+
+	
+		mount -o remount,rw / 2>/dev/null
+		mount -o remount,rw / / 2>/dev/null
+		mount -o remount,rw rootfs 2>/dev/null
+		mount -o remount,rw /system 2>/dev/null
+		mount -o remount,rw /system /system 2>/dev/null
+		busybox mount -o remount,rw / 2>/dev/null
+		busybox mount -o remount,rw / / 2>/dev/null
+		busybox mount -o remount,rw rootfs 2>/dev/null
+		busybox mount -o remount,rw /system 2>/dev/null
+		busybox mount -o remount,rw /system /system 2>/dev/null	
+   		busybox rm -rf /system/etc/hosts
+   		busybox wget -O /system/etc/host4 "http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext"
+   		busybox wget -O /system/etc/host3 "http://adaway.org/hosts.txt"
+   		busybox cat /system/etc/host4 >> /system/etc/host3; busybox rm -rf /system/etc/host4
+   		busybox wget -O /system/etc/host2 "http://hosts-file.net/ad_servers.txt"
+   		busybox cat /system/etc/host3 >> /system/etc/host2; busybox rm -rf /system/etc/host3
+   		busybox wget -O /system/etc/host1 "http://winhelp2002.mvps.org/hosts.txt"
+   		busybox cat /system/etc/host2 >> /system/etc/host1; busybox rm -rf /system/etc/host2
+   		busybox sed '/^#/ d' /system/etc/host1 > /system/etc/host; 
+   		busybox rm -rf /system/etc/host1
+   		busybox sort /system/etc/host | busybox uniq -u > /system/etc/hosts; busybox rm -rf /system/etc/host
+   		busybox sed '/localhost/d' /system/etc/hosts > /system/etc/host; busybox rm -rf /system/etc/hosts
+   		busybox sed -i -e 's/0.0.0.0/127.0.0.1/g' /system/etc/host; busybox sed -i '1i #adblocker' /system/etc/host
+   		busybox sed -i '2i 127.0.0.1 localhost' /system/etc/host; busybox sed -i '3i ::1 localhost' /system/etc/host
+   		busybox awk '{$1=$1}1' OFS=" " /system/etc/host > /system/etc/hosts
+  		busybox sed -i -e '$a\' /system/etc/hosts
+   		busybox rm -rf /system/etc/host
+   		busybox chmod 644 /system/etc/hosts
+   		busybox chown 0:0 /system/etc/hosts  
+   		mount -o remount,ro / 2>/dev/null
+		mount -o remount,ro / / 2>/dev/null
+		mount -o remount,ro rootfs 2>/dev/null
+		mount -o remount,ro /system 2>/dev/null
+		mount -o remount,ro /system /system 2>/dev/null
+		busybox mount -o remount,ro / 2>/dev/null
+		busybox mount -o remount,ro / / 2>/dev/null
+		busybox mount -o remount,ro rootfs 2>/dev/null
+		busybox mount -o remount,ro /system 2>/dev/null
+		busybox mount -o remount,ro /system /system 2>/dev/null
