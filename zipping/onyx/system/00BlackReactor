@@ -152,5 +152,10 @@ fi
 echo "Checking Done." >> $REACTOR__S_LOGFILE
 #############
 echo "\n=========================\n" >> $REACTOR__S_LOGFILE
+echo "$(date) Running AdBlocker" >> $REACTOR__S_LOGFILE
+adblocker
+echo "\n=========================\n" >> $REACTOR__S_LOGFILE
+
+echo "\n=========================\n" >> $REACTOR__S_LOGFILE
 echo "$(date) End Log" >> $REACTOR__S_LOGFILE
 echo "\n=========================\n" >> $REACTOR__S_LOGFILE
