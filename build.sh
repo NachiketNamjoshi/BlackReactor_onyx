@@ -55,8 +55,9 @@ echo "                    "
 echo "                                   Compiling BlackReactor-Kernel                    "
 echo "                    "
 echo -e "$green ********************************************************************************************** $nocol"
+make clean && make mrproper
 make onyx_defconfig
-make -j64 V=2
+make -j32
 if ! [ -a $KERN_IMG ];
 then
 echo -e "$red Kernel Compilation failed! Fix the errors! $nocol"
