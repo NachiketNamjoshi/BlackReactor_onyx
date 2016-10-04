@@ -29,7 +29,7 @@ nocol='\033[0m'
 KERNEL_DIR=$PWD
 KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage
 OUT_DIR=$KERNEL_DIR/zipping/onyx
-REACTOR_VERSION="beta-2.1"
+REACTOR_VERSION="beta-2.5"
 KERN_DTB=$KERNEL_DIR/arch/arm/boot/dt.img
 
 # Device Spceifics
@@ -79,7 +79,6 @@ zipping() {
 cp $KERN_IMG $OUT_DIR/zImage
 cp $KERN_DTB $OUT_DIR/dtb.img
 cd $OUT_DIR
-rm -rf modules/*
 zip -r BlackReactor-onyx-$REACTOR_VERSION-$(date +"%Y%m%d")-$(date +"%H%M%S").zip *
 
 }
