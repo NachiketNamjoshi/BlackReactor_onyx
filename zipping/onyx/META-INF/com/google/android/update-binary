@@ -150,16 +150,6 @@ cp -f /tmp/anykernel/system/hosts /system/etc/hosts;
 chmod 644 /system/etc/hosts;
 chown 0:0 /system/etc/hosts;
 
-
-ui_print "* Checking for busybox existence";
-mount -o remount,rw /system;
-if [ ! -f /system/bin/busybox ]; then
-	ui_print "  [*] busybox doesnt exist. Copying...";
-	mount -o remount,rw /system;
-	cp -f $bb /system/bin/busybox;
-	chmod 777 /system/bin/busybox;
-fi;
-
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
 	rm -rf /tmp/anykernel;
 fi;
