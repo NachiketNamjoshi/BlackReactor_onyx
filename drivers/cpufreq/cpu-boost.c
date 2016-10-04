@@ -92,15 +92,14 @@ static int boost_adjust_notify(struct notifier_block *nb, unsigned long val, voi
 	struct cpu_sync *s = &per_cpu(sync_info, cpu);
 	unsigned int b_min = s->boost_min;
 	unsigned int ib_min = s->input_boost_min;
-	unsigned int min, min_freq;
+	unsigned int min;
 
 	switch (val) {
 	case CPUFREQ_ADJUST:
 		if (!b_min && !ib_min)
 			break;
-		
-		min_freq = max(b_min, ib_min);
-		min = min(min_freq, policy->max);
+
+		min = min(max(b_min, ib_min), policy->max);
 		
 		pr_debug("CPU%u policy min before boost: %u kHz\n",
 			 cpu, policy->min);
