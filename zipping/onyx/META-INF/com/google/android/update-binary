@@ -145,8 +145,11 @@ ui_print "* Copying 00BlackReactor...";
 cp -f /tmp/anykernel/system/00BlackReactor /system/etc/init.d/00BlackReactor;
 chmod 777 /system/etc/init.d/00BlackReactor;
 ui_print "* Adding Ad-blocker..."
-cp -f /tmp/anykernel/system/adblocker /system/bin/adblocker;
-chmod 777 /system/bin/adblocker;
+rm -rf /system/etc/hosts
+cp -f /tmp/anykernel/system/hosts /system/etc/hosts;
+chmod 644 /system/etc/hosts;
+chown 0:0 /system/etc/hosts;
+
 
 ui_print "* Checking for busybox existence";
 mount -o remount,rw /system;
