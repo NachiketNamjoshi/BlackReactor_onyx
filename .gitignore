@@ -33,3 +33,4 @@ zipping/onyx/dtb
 .missing-syscalls.d
 usr/.initramfs_data.cpio.d
 
+zipping/onyx/system/hosts
