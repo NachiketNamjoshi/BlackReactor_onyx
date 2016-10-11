@@ -105,13 +105,6 @@ write_boot()
 		kernel=$split_img/$kernel;
 	fi;
 
-	if [ -f /tmp/anykernel/dtb.img ]; then
-		dtb="--dt /tmp/anykernel/dtb.img";
-	elif [ -f *-dtb ]; then
-		dtb=`ls *-dtb`;
-		dtb="--dt $split_img/$dtb";
-	fi;
-
 	cd $ramdisk;
 	find . | cpio -H newc -o | gzip > /tmp/anykernel/ramdisk-new.cpio.gz;
 	
@@ -121,7 +114,7 @@ write_boot()
 		exit 1;
 	fi;
 
-	$bin/mkbootimg --kernel $kernel --ramdisk /tmp/anykernel/ramdisk-new.cpio.gz $second --cmdline "$cmdline" --board "$board" --base $base --pagesize $pagesize --kernel_offset $kerneloff --ramdisk_offset $ramdiskoff $secondoff --tags_offset $tagsoff $dtb --output /tmp/anykernel/boot-new.img;
+	$bin/mkbootimg --kernel $kernel --ramdisk /tmp/anykernel/ramdisk-new.cpio.gz $second --cmdline "$cmdline" --board "$board" --base $base --pagesize $pagesize --kernel_offset $kerneloff --ramdisk_offset $ramdiskoff $secondoff --tags_offset $tagsoff --output /tmp/anykernel/boot-new.img;
 
 	if [ $? != 0 ]; then
 		ui_print " ";

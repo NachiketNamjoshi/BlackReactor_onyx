@@ -27,10 +27,9 @@ nocol='\033[0m'
 
 # Directories
 KERNEL_DIR=$PWD
-KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage
+KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage-dtb
 OUT_DIR=$KERNEL_DIR/zipping/onyx
-REACTOR_VERSION="stable-0.2"
-KERN_DTB=$KERNEL_DIR/arch/arm/boot/dt.img
+REACTOR_VERSION="betaa-3.8.1"
 
 # Device Spceifics
 export ARCH=arm
@@ -63,22 +62,14 @@ then
 echo -e "$red Kernel Compilation failed! Fix the errors! $nocol"
 exit 1
 fi
-build_dtb
 block_ads
 zipping
 }
-
-build_dtb() {
-	
-	$KERNEL_DIR/tools/dtbtool -o $KERN_DTB -s 2048 -p $KERNEL_DIR/scripts/dtc/ $KERNEL_DIR/arch/arm/boot/
-}
-
 
 zipping() {
 
 # make new zip
 cp $KERN_IMG $OUT_DIR/zImage
-cp $KERN_DTB $OUT_DIR/dtb.img
 cd $OUT_DIR
 zip -r BlackReactor-onyx-$REACTOR_VERSION-$(date +"%Y%m%d")-$(date +"%H%M%S").zip *
 
