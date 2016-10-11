@@ -21,6 +21,7 @@
 	qcom,board-id = <8 0>;
 	qcom,product-name = "15055";
 	qcom,hw-ver = <11>;
+	qcom,board-id = <8 0 15055 11>;
 };
 
 &sdhc_1 {
