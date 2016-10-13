@@ -705,9 +705,11 @@ static int psmouse_extensions(struct psmouse *psmouse,
 {
 	bool synaptics_hardware = false;
 
+#ifdef CONFIG_MOUSE_PS2_LIFEBOOK
 /*
  * We always check for lifebook because it does not disturb mouse
  * (it only checks DMI information).
+ *
  */
 	if (psmouse_do_detect(lifebook_detect, psmouse, set_properties) == 0) {
 		if (max_proto > PSMOUSE_IMEX) {
@@ -715,7 +717,7 @@ static int psmouse_extensions(struct psmouse *psmouse,
 				return PSMOUSE_LIFEBOOK;
 		}
 	}
-
+#endif
 /*
  * Try Kensington ThinkingMouse (we try first, because synaptics probe
  * upsets the thinkingmouse).
@@ -818,6 +820,7 @@ static int psmouse_extensions(struct psmouse *psmouse,
 			return PSMOUSE_TOUCHKIT_PS2;
 	}
 
+#ifdef CONFIG_MOUSE_PS2_SENTELIC
 /*
  * Try Finger Sensing Pad. We do it here because its probe upsets
  * Trackpoint devices (causing TP_READ_ID command to time out).
@@ -833,7 +836,7 @@ static int psmouse_extensions(struct psmouse *psmouse,
 			max_proto = PSMOUSE_IMEX;
 		}
 	}
-
+#endif
 /*
  * Reset to defaults in case the device got confused by extended
  * protocol probes. Note that we follow up with full reset because

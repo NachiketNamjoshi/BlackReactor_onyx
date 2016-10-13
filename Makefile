@@ -245,8 +245,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = gcc
 HOSTCXX      = g++
-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -fomit-frame-pointer
-HOSTCXXFLAGS = -Ofast
+HOSTCFLAGS = -Wall -Wmissing-prototypes -Wstrict-prototypes -O3 -fomit-frame-pointer -floop-flatten -floop-parallelize-all $(GRAPHITE)
+HOSTCXXFLAGS = -O3 -floop-flatten -floop-parallelize-all $(GRAPHITE)
 
 # Decide whether to build built-in, modular, or both.
 # Normally, just do built-in.
@@ -351,14 +351,15 @@ CC		= $(srctree)/scripts/gcc-wrapper.py $(REAL_CC)
 
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
-CFLAGS_MODULE   =
-AFLAGS_MODULE   =
-LDFLAGS_MODULE  =
-CFLAGS_KERNEL	=
-AFLAGS_KERNEL	=
-CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
-GRAPHITE_FLAGS  = -fgraphite -floop-parallelize-all -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -floop-flatten
 
+KERNELFLAGS	= -DNDEBUG -mtune=cortex-a15 -mcpu=cortex-a15 -marm -mfpu=neon-vfpv4 -floop-parallelize-all -floop-flatten $(GRAPHITE)
+MODFLAGS	= -DMODULE $(KERNELFLAGS)
+CFLAGS_MODULE	= $(MODFLAGS)
+AFLAGS_MODULE	= $(MODFLAGS)
+LDFLAGS_MODULE	= -T $(srctree)/scripts/module-common.lds
+CFLAGS_KERNEL	= $(KERNELFLAGS)
+AFLAGS_KERNEL	= $(KERNELFLAGS)
+CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
 # Use LINUXINCLUDE when you must reference the include/ directory.
 # Needed to be compatible with the O= option
@@ -369,11 +370,17 @@ LINUXINCLUDE    := -I$(srctree)/arch/$(hdr-arch)/include \
 
 KBUILD_CPPFLAGS := -D__KERNEL__
 
-KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
+KBUILD_CFLAGS   := -Wall -DNDEBUG -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
-		   -fno-delete-null-pointer-checks
+		   -Wno-array-bounds \
+		   -fno-delete-null-pointer-checks \
+		   -mcpu=cortex-a15 -mtune=cortex-a15 -mfpu=neon-vfpv4 \
+		   -fgraphite -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -floop-flatten \
+		   -ffast-math -fsingle-precision-constant \
+		   -fgcse-lm -fgcse-sm -fsched-spec-load -fforce-addr -funsafe-math-optimizations \
+		   -fno-diagnostics-show-caret
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
@@ -570,13 +577,19 @@ endif # $(dot-config)
 # Defaults to vmlinux, but the arch makefile usually adds further targets
 all: vmlinux
 
+include $(srctree)/arch/$(SRCARCH)/Makefile
+
+KBUILD_CFLAGS += $(call cc-option,-fno-delete-null-pointer-checks,)
+
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
 else
-KBUILD_CFLAGS	+= -Ofast
+
+KBUILD_CFLAGS	+= -O3 -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-tree-vectorize
 endif
 
-include $(srctree)/arch/$(SRCARCH)/Makefile
+# Tell gcc to never replace conditional load with a non-conditional one
+KBUILD_CFLAGS += $(call cc-option,--param=allow-store-data-races=0)
 
 ifneq ($(CONFIG_FRAME_WARN),0)
 KBUILD_CFLAGS += $(call cc-option,-Wframe-larger-than=${CONFIG_FRAME_WARN})
@@ -603,6 +616,8 @@ ifndef CONFIG_FUNCTION_TRACER
 KBUILD_CFLAGS	+= -fomit-frame-pointer
 endif
 endif
+
+KBUILD_CFLAGS += $(call cc-option, -fno-var-tracking-assignments)
 
 ifdef CONFIG_DEBUG_INFO
 KBUILD_CFLAGS	+= -g

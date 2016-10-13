@@ -4619,7 +4619,7 @@ static int fb_notifier_callback(struct notifier_block *p,
  * and creates a work queue for detection of other expansion Function
  * modules.
  */
-static int __devinit synaptics_rmi4_probe(struct i2c_client *client,
+static int synaptics_rmi4_probe(struct i2c_client *client,
 		const struct i2c_device_id *dev_id)
 {
 	int retval;
@@ -4908,7 +4908,7 @@ static void synaptics_oneplus_func(struct work_struct *work)
 }
 
 
-static int __devinit synaptics_rmi4_probe_oneplus(struct i2c_client *client,
+static int synaptics_rmi4_probe_oneplus(struct i2c_client *client,
 		const struct i2c_device_id *dev_id)
 {
 	optimize_data.workqueue = create_workqueue("optimize_workqueue");

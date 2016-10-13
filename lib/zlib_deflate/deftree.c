@@ -961,7 +961,6 @@ ulg zlib_tr_flush_block(
 
     return s->compressed_len >> 3;
 }
-
 /* ===========================================================================
  * Save the match info and tally the frequency counts. Return true if
  * the current block must be flushed.

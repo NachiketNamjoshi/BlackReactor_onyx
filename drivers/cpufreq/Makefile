@@ -1,3 +1,4 @@
+EXTRA_CFLAGS += -Wno-sequence-point
 # CPUfreq core
 obj-$(CONFIG_CPU_FREQ)			+= cpufreq.o cpu-boost.o
 # CPUfreq stats

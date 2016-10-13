@@ -1,3 +1,5 @@
+CFLAGS_KERNEL	:= -fno-unsafe-math-optimizations
+
 obj-$(CONFIG_F2FS_FS) += f2fs.o
 
 f2fs-y		:= dir.o file.o inode.o namei.o hash.o super.o inline.o

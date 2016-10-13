@@ -5,7 +5,7 @@
 # This is the compression code, see zlib_inflate for the
 # decompression code.
 #
-
+CFLAGS_KERNEL	:= -fno-unsafe-math-optimizations
 obj-$(CONFIG_ZLIB_DEFLATE) += zlib_deflate.o
 
 zlib_deflate-objs := deflate.o deftree.o deflate_syms.o
