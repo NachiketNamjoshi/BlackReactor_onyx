@@ -1508,7 +1508,7 @@ static int synaptics_rmi4_proc_write( struct file *filp, const char __user *buff
 	if(len > 2)
 		return 0 ;
 
-		if( copy_from_user(buf, buff, len) ){
+	if( copy_from_user(buf, buff, len) ){
 		printk(KERN_INFO "%s: read proc input error.\n", __func__);
 		return len;
 	}

@@ -3852,9 +3852,9 @@ bool freeze_workqueues_busy(void)
 		
 		    struct cpu_workqueue_struct *cwq;
 		    if (cpu < CONFIG_NR_CPUS)
-			cwq = get_cwq(cpu, wq);
+				cwq = get_cwq(cpu, wq);
 		    else
-			continue;
+				continue;
 
 			if (!cwq || !(wq->flags & WQ_FREEZABLE))
 				continue;

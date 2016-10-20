@@ -70,7 +70,10 @@ dump_pmc_state( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3
 {
     char *ptr = p;
 
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
 
     p += log_sprintf( pMac,p, "********  PMC State & Configuration ******** \n");
     p += log_sprintf( pMac,p, " PMC: IMPS Enabled? %d\n", pMac->pmc.impsEnabled);
@@ -94,7 +97,10 @@ dump_pmc_state( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3
 static char *
 dump_pmc_enable_imps( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     (void)pmcEnablePowerSave(pMac, ePMC_IDLE_MODE_POWER_SAVE);
     return p;
 }
@@ -102,7 +108,10 @@ dump_pmc_enable_imps( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U3
 static char *
 dump_pmc_disable_imps( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     (void)pmcDisablePowerSave(pMac, ePMC_IDLE_MODE_POWER_SAVE);
     return p;
 }
@@ -110,7 +119,9 @@ dump_pmc_disable_imps( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U
 static char *
 dump_pmc_request_imps( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg2; (void) arg3; (void) arg4;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     pMac->pmc.impsEnabled = TRUE;
     (void)pmcRequestImps(pMac, arg1, dump_pmc_callbackRoutine, pMac);
     return p;
@@ -119,7 +130,10 @@ dump_pmc_request_imps( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U
 static char *
 dump_pmc_start_auto_bmps_timer( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     pMac->pmc.bmpsEnabled = TRUE;
     (void)pmcStartAutoBmpsTimer(pMac);
     return p;
@@ -128,7 +142,10 @@ dump_pmc_start_auto_bmps_timer( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg
 static char *
 dump_pmc_stop_auto_bmps_timer( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     (void)pmcStopAutoBmpsTimer(pMac);
     return p;
 }
@@ -136,7 +153,10 @@ dump_pmc_stop_auto_bmps_timer( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2
 static char *
 dump_pmc_enable_bmps( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     (void)pmcEnablePowerSave(pMac, ePMC_BEACON_MODE_POWER_SAVE);
     return p;
 }
@@ -144,7 +164,10 @@ dump_pmc_enable_bmps( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U3
 static char *
 dump_pmc_disable_bmps( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     (void)pmcDisablePowerSave(pMac, ePMC_BEACON_MODE_POWER_SAVE);
     return p;
 }
@@ -152,7 +175,10 @@ dump_pmc_disable_bmps( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U
 static char *
 dump_pmc_request_bmps( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     pMac->pmc.bmpsEnabled = TRUE;
     (void)sme_RequestBmps(pMac, dump_pmc_callbackRoutine, pMac);
     return p;
@@ -161,7 +187,10 @@ dump_pmc_request_bmps( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U
 static char *
 dump_pmc_enable_uapsd( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     (void)pmcEnablePowerSave(pMac, ePMC_UAPSD_MODE_POWER_SAVE);
     return p;
 }
@@ -169,7 +198,10 @@ dump_pmc_enable_uapsd( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U
 static char *
 dump_pmc_disable_uapsd( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     (void)pmcDisablePowerSave(pMac, ePMC_UAPSD_MODE_POWER_SAVE);
     return p;
 }
@@ -177,7 +209,10 @@ dump_pmc_disable_uapsd( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_
 static char *
 dump_pmc_start_uapsd( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     pMac->pmc.bmpsEnabled = TRUE;
     pMac->pmc.uapsdEnabled = TRUE;
     (void)pmcStartUapsd(pMac, dump_pmc_callbackRoutine, pMac);
@@ -187,7 +222,10 @@ dump_pmc_start_uapsd( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U3
 static char *
 dump_pmc_stop_uapsd( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     (void)pmcStopUapsd(pMac);
     return p;
 }
@@ -195,7 +233,10 @@ dump_pmc_stop_uapsd( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32
 static char *
 dump_pmc_request_standby( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     pMac->pmc.standbyEnabled = TRUE;
     (void)pmcRequestStandby(pMac, dump_pmc_callbackRoutine, pMac);
     return p;
@@ -204,7 +245,10 @@ dump_pmc_request_standby( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tAN
 static char *
 dump_pmc_request_full_power( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     (void)sme_RequestFullPower(pMac, dump_pmc_callbackRoutine, pMac, eSME_FULL_PWR_NEEDED_BY_HDD);
     return p;
 }
@@ -232,7 +276,7 @@ dump_pmc_enter_wowl( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32
         wowlEnterParams.ucMagicPktEnable = 1;
         /* magic packet */
         length = SIR_MAC_ADDR_LENGTH;
-        status = wlan_cfgGetStr(pMac, WNI_CFG_STA_ID, (tANI_U8 *)wowlEnterParams.magicPtrn, &length); 
+        status = wlan_cfgGetStr(pMac, WNI_CFG_STA_ID, (tANI_U8 *)wowlEnterParams.magicPtrn, &length);
         if (eSIR_SUCCESS != status)
         {
             pmcLog(pMac, LOGE,
@@ -247,7 +291,7 @@ dump_pmc_enter_wowl( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32
     }
     if(arg2 == 1)
     {
-      wowlEnterParams.ucPatternFilteringEnable = 1;
+        wowlEnterParams.ucPatternFilteringEnable = 1;
     }
 
     if(arg3 == CSR_ROAM_SESSION_MAX )
@@ -260,7 +304,7 @@ dump_pmc_enter_wowl( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32
 
     sessionId = (tANI_U8 ) arg3;
 #ifdef WLAN_WAKEUP_EVENTS
-    (void)sme_EnterWowl(pMac, dump_pmc_callbackRoutine, pMac, dump_pmc_callbackRoutine2, pMac, 
+    (void)sme_EnterWowl(pMac, dump_pmc_callbackRoutine, pMac, dump_pmc_callbackRoutine2, pMac,
                         &wowlEnterParams, sessionId);
 #else // WLAN_WAKEUP_EVENTS
     (void)sme_EnterWowl(pMac, dump_pmc_callbackRoutine, pMac, &wowlEnterParams, sessionId);
@@ -271,7 +315,10 @@ dump_pmc_enter_wowl( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32
 static char *
 dump_pmc_exit_wowl( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p)
 {
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
     (void)sme_ExitWowl(pMac, eWOWL_EXIT_USER);
     return p;
 }
@@ -281,8 +328,9 @@ dump_pmc_remove_ptrn( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U3
 {
     tSirWowlDelBcastPtrn delPattern;
     tANI_U8  sessionId = 0;
-    (void) arg3; (void) arg4;
- 
+    (void) arg3;
+    (void) arg4;
+
     vos_mem_set(&delPattern, sizeof(tSirWowlDelBcastPtrn), 0);
 
     if((arg1 <= 7) || (arg2 == CSR_ROAM_SESSION_MAX))
@@ -306,7 +354,10 @@ dump_pmc_test_uapsd( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32
     tSirSmeRsp smeRsp;
     smeRsp.statusCode = eSIR_SME_SUCCESS;
 
-    (void) arg1; (void) arg2; (void) arg3; (void) arg4;
+    (void) arg1;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
 
     pMac->pmc.uapsdEnabled = TRUE;
     pMac->pmc.pmcState = BMPS;
@@ -337,7 +388,9 @@ dump_pmc_test_Wowl( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 
     vos_mem_set(&delPattern, sizeof(tSirWowlDelBcastPtrn), 0);
     vos_mem_set(&wowlEnterParams, sizeof(tSirSmeWowlEnterParams), 0);
 
-    (void) arg2; (void) arg3; (void) arg4;
+    (void) arg2;
+    (void) arg3;
+    (void) arg4;
 
     if(arg1 == CSR_ROAM_SESSION_MAX)
     {
@@ -357,8 +410,8 @@ dump_pmc_test_Wowl( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 
 
     //Enter Wowl
 #ifdef WLAN_WAKEUP_EVENTS
-    sme_EnterWowl(pMac, dump_pmc_callbackRoutine, pMac, dump_pmc_callbackRoutine2, pMac, 
-                   &wowlEnterParams, sessionId);
+    sme_EnterWowl(pMac, dump_pmc_callbackRoutine, pMac, dump_pmc_callbackRoutine2, pMac,
+                  &wowlEnterParams, sessionId);
 #else // WLAN_WAKEUP_EVENTS
     sme_EnterWowl(pMac, dump_pmc_callbackRoutine, pMac, &wowlEnterParams, sessionId);
 #endif // WLAN_WAKEUP_EVENTS
