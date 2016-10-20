@@ -7570,9 +7570,10 @@ tANI_U8 limUnmapChannel(tANI_U8 mapChannel)
         if (IS_ROAM_SCAN_OFFLOAD_FEATURE_ENABLE)
             return aUnsortedChannelList[mapChannel -1];
         else
-#else if( mapChannel > 0 && mapChannel <= abChannelSize )
+#else 
+            if( mapChannel > 0 && mapChannel <= abChannelSize )
 #endif
-            return abChannel[mapChannel -1];
+                return abChannel[mapChannel -1];
     else
         return 0;
 }

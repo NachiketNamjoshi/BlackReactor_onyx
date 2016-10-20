@@ -380,7 +380,8 @@ KBUILD_CFLAGS   := -Wall -DNDEBUG -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fgraphite -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -floop-flatten \
 		   -ffast-math -fsingle-precision-constant \
 		   -fgcse-lm -fgcse-sm -fsched-spec-load -fforce-addr -funsafe-math-optimizations \
-		   -fno-diagnostics-show-caret -Wno-bool-compare -Wno-misleading-indentation
+		   -fno-diagnostics-show-caret -Wno-bool-compare -Wno-misleading-indentation \
+		   -Wno-shift-overflow
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
