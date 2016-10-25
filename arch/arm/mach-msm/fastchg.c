@@ -121,7 +121,7 @@ int force_fast_charge_init(void)
 			return -ENOMEM;
 	}
 
-	force_fast_charge_current_kobj = kobject_create_and_add("fast_charge_current", kernel_kobj);
+	force_fast_charge_current_kobj = kobject_create_and_add("fast_charge", kernel_kobj);
 	if(!force_fast_charge_current_kobj) {
 		return -ENOMEM;
 	}
