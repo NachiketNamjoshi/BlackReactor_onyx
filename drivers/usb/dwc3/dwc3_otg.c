@@ -579,7 +579,10 @@ static int dwc3_otg_set_power(struct usb_phy *phy, unsigned mA)
 		return 0;
  #ifdef CONFIG_FORCE_FAST_CHARGE
  	if (force_fast_charge > 0 && mA > 0) {
- 		mA = FAST_CHG_MAX;
+ 		if(force_fast_charge_current <= FAST_CHG_MAX)
+ 			mA = force_fast_charge_current;
+ 		else
+ 			mA = FAST_CHG_DEFAULT;
  		pr_info("USB fast charging is ON\n");
  	} else {
  		pr_info("USB fast charging is OFF\n");

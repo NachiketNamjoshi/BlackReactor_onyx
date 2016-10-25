@@ -18,5 +18,7 @@
 #define _LINUX_FASTCHG_H
 
 extern int force_fast_charge;
-#define FAST_CHG_MAX 1600;
+extern unsigned int force_fast_charge_current;
+#define FAST_CHG_MAX 2200
+#define FAST_CHG_DEFAULT 1600
 #endif
