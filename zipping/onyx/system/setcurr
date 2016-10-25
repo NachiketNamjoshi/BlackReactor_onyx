@@ -1,4 +1,10 @@
 #!/system/bin/sh
-echo 'Setting fast charge current to: '$1
-echo  $1 > /sys/kernel/fast_charge/force_fast_charge_current
-echo 'Done'
+CURR=$1
+if [ $CURR -lt 2200 ]; then
+	echo 'Setting fast charge current to: '$1
+	echo  $1 > /sys/kernel/fast_charge/force_fast_charge_current
+	echo 'Done'
+	exit 0
+fi
+echo 'Entered Current: '$CURR' is greater than max allowed current'
+exit 1
