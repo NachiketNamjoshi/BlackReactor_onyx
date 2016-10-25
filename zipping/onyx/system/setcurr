@@ -1,0 +1,4 @@
+#!/system/bin/sh
+echo 'Setting fast charge current to: '$1
+echo  $1 > /sys/kernel/fast_charge/force_fast_charge_current
+echo 'Done'
