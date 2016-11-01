@@ -5,7 +5,9 @@ if [ $CURR -lt 2200 ]; then
 	echo  $CURR > /sys/kernel/fast_charge_current/force_fast_charge_current
 	echo 'Done'
 	mount -o remount,rw /system
-	mkdir /system/su.d
+	if [ ! -d /system/su.d ]; then
+		mkdir /system/su.d
+	fi
 	echo "#!/system/bin/sh" > /system/su.d/fast_charge_current.sh
 	echo "echo $CURR > /sys/kernel/fast_charge_current/force_fast_charge_current" > /system/su.d/fast_charge_current.sh
 	chmod 755 /system/su.d/fast_charge_current.sh 
