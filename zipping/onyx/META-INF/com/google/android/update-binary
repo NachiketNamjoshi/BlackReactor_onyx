@@ -149,6 +149,7 @@ rm -rf /system/etc/hosts
 cp -f /tmp/anykernel/system/hosts /system/etc/hosts;
 chmod 644 /system/etc/hosts;
 chown 0:0 /system/etc/hosts;
+ui_print "* Adding setcurr utility..."
 cp -f /tmp/anykernel/system/setcurr /system/bin/setcurr;
 chmod 777 /system/bin/setcurr;
 
