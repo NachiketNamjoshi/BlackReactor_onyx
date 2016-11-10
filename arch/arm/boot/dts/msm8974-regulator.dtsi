@@ -131,7 +131,7 @@
 	rpm-regulator-smpb4 {
 		status = "okay";
 		pm8841_s4: regulator-s4 {
-			regulator-min-microvolt = <675000>;
+			regulator-min-microvolt = <750000>;
 			regulator-max-microvolt = <815000>;
 			status = "okay";
 		};
