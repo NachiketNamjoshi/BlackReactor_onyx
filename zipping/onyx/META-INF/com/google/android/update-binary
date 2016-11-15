@@ -72,12 +72,31 @@ fi;
 
 chmod -R 755 /tmp/anykernel/tools /tmp/anykernel/bin;
 bb=/tmp/anykernel/tools/busybox;
-
-ui_print "### BlackReactor-Kernel ###";
+ui_print "*************************************************";
 ui_print " ";
-ui_print "### Nachiket.Namjoshi ###";
+ui_print "BBBBBBBBBBBBBBBBB        RRRRRRRRRRRRRRRRR   ";
+ui_print "B::::::::::::::::B       R::::::::::::::::R  ";
+ui_print "B::::::BBBBBB:::::B      R::::::RRRRRR:::::R ";
+ui_print "BB:::::B     B:::::B     RR:::::R     R:::::R";
+ui_print "  B::::B     B:::::B       R::::R     R:::::R";
+ui_print "  B::::B     B:::::B       R::::R     R:::::R";
+ui_print "  B::::BBBBBB:::::B        R::::RRRRRR:::::R ";
+ui_print "  B:::::::::::::BB         R:::::::::::::RR  ";
+ui_print "  B::::BBBBBB:::::B        R::::RRRRRR:::::R ";
+ui_print "  B::::B     B:::::B       R::::R     R:::::R";
+ui_print "  B::::B     B:::::B       R::::R     R:::::R";
+ui_print "  B::::B     B:::::B       R::::R     R:::::R";
+ui_print "BB:::::BBBBBB::::::B     RR:::::R     R:::::R";
+ui_print "B:::::::::::::::::B      R::::::R     R:::::R";
+ui_print "B::::::::::::::::B       R::::::R     R:::::R";
+ui_print "BBBBBBBBBBBBBBBBB        RRRRRRRR     RRRRRRR";
 ui_print " ";
-
+ui_print "*************************************************";
+ui_print "               BLACK REACTOR KERNEL ";
+ui_print "*************************************************";
+ui_print "            BY NachiketNamjoshi @ XDA";
+ui_print "*************************************************";
+ui_print " ";
 mount -o ro /system;
 mount /data;
 
