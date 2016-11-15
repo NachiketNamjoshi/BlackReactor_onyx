@@ -1,4 +1,9 @@
 #!/system/bin/sh
+if [ $# -eq 0 ]; then
+	echo "Enter a current value"
+	exit 1
+fi
+
 CURR=$1
 if [ $CURR -lt 2200 ]; then
 	echo 'Setting fast charge current to: '$CURR
