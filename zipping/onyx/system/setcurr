@@ -4,10 +4,6 @@ if [ $CURR -lt 2200 ]; then
 	echo 'Setting fast charge current to: '$CURR
 	echo  $CURR > /sys/kernel/fast_charge_current/force_fast_charge_current
 	echo 'Done'
-	mount -o remount,rw /system
-	if [ ! -d /system/su.d ]; then
-		mkdir /system/su.d
-	fi
 	echo $CURR > /data/BlackReactor/fastchg_current
 	exit 0
 fi
