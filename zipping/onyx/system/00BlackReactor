@@ -38,17 +38,6 @@ fi
 	 grep ro.build.version /system/build.prop >> $REACTOR__S_LOGFILE
 echo "=========================" >> $REACTOR__S_LOGFILE
 
-echo "$(date) Tweaking interactive cpufreq gov" >> $REACTOR__S_LOGFILE
-#############
-echo "20000" > /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-echo "40000" > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-echo "760000" > /sys/devices/system/cpu/cpufreq/interactive/midrange_freq
-echo "1300000" > /sys/devices/system/cpu/cpufreq/interactive/max_normal_freq
-echo "1900000" > /sys/devices/system/cpu/cpufreq/interactive/max_boost
-echo "65" > /sys/devices/system/cpu/cpufreq/interactive/midrange_go_maxspeed_load
-echo "85" > /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load
-#############
-echo "\n=========================\n" >> $REACTOR__S_LOGFILE
 if [ ! $FST_CHG_VALUE -eq 0 ]; then
 	echo 1 > /sys/kernel/fast_charge/force_fast_charge
 fi
