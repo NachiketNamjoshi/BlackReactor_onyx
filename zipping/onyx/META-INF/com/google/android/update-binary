@@ -101,9 +101,9 @@ mount -o ro /system;
 mount /data;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.devicecheck)" == 1 ]; then
-	ui_print "* Checking device compatibility...";
-	ui_print "  - Detected product.device: $(getprop ro.product.device)";
-	ui_print "  - Detected build.product : $(getprop ro.build.product)";
+	ui_print "[-] Checking device compatibility...";
+	ui_print " |- Detected product.device: $(getprop ro.product.device)";
+	ui_print " |- Detected build.product : $(getprop ro.build.product)";
 
 	for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15; do
 		testname="$(file_getprop /tmp/anykernel/anykernel.sh device.name$i)";
@@ -122,7 +122,7 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.devicecheck)" == 1 ]; then
 fi;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.initd)" == 1 ]; then
-	ui_print "* Creating init.d...";
+	ui_print "[*] Creating init.d...";
 	ui_print " ";
 
 	mount -o remount,rw /system;
@@ -131,15 +131,14 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.initd)" == 1 ]; then
 	mount -o remount,ro /system;
 fi;
 
-ui_print "* Installing kernel...";
-ui_print " ";
+ui_print "[-] Installing kernel...";
 
 for i in $($bb --list); do
 	$bb ln -s $bb /tmp/anykernel/bin/$i;
 done;
 
 if [ $? != 0 -o -z "$(ls /tmp/anykernel/bin)" ]; then
-	abort "Recovery busybox setup failed. Aborting.";
+	abort "[*] Recovery busybox setup failed. Aborting.";
 fi;
 
 PATH="/tmp/anykernel/bin:$PATH" $bb ash /tmp/anykernel/anykernel.sh $2;
@@ -149,9 +148,7 @@ if [ $? != "0" ]; then
 fi;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.modules)" == 1 ]; then
-	ui_print "* Copying modules...";
-	ui_print " ";
-
+	ui_print " |- Copying modules...";
 	mount -o remount,rw /system;
 	mkdir -p /system/lib/modules;
 	cp -rf /tmp/anykernel/modules/* /system/lib/modules/;
@@ -160,19 +157,20 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.modules)" == 1 ]; then
 fi;
 
 mount -o remount,rw /system;
-ui_print "* Copying 00BlackReactor...";
+ui_print " |- Copying 00BlackReactor...";
 cp -f /tmp/anykernel/system/00BlackReactor /system/etc/init.d/00BlackReactor;
 chmod 777 /system/etc/init.d/00BlackReactor;
-ui_print "* Adding Ad-blocker..."
+ui_print " |- Adding Ad-blocker..."
 rm -rf /system/etc/hosts
 cp -f /tmp/anykernel/system/hosts /system/etc/hosts;
 chmod 644 /system/etc/hosts;
 chown 0:0 /system/etc/hosts;
-ui_print "* Adding setcurr utility..."
+ui_print " |- Adding setcurr utility...";
 cp -f /tmp/anykernel/system/setcurr /system/bin/setcurr;
 chmod 777 /system/bin/setcurr;
 if [ ! -d /data/BlackReactor ]; then
-	ui_print "*** Creating Directories...";
+	ui_print "!! BlackReactor Directory not Found !!";
+	ui_print " [*] Creating Directories...";
 	mkdir -p /data/BlackReactor;
 fi
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
