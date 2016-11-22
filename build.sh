@@ -33,7 +33,7 @@ REACTOR_VERSION="stable-0.4"
 
 # Device Spceifics
 export ARCH=arm
-export CROSS_COMPILE="/home/nachiket/Android/onyx/kernel/toolchains/Linaro/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-"
+export CROSS_COMPILE="/home/nachiket/Android/android-ndk-r13/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-"
 export KBUILD_BUILD_USER="nachiket"
 export KBUILD_BUILD_HOST="reactor"
 
