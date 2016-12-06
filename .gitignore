@@ -34,3 +34,5 @@ zipping/onyx/dtb
 usr/.initramfs_data.cpio.d
 shit
 .tmp_versions/
+compile.log
+product_info
