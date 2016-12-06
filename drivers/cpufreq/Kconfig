@@ -116,6 +116,10 @@ config CPU_FREQ_DEFAULT_GOV_INTERACTIVE
 	  loading your cpufreq low-level hardware driver, using the
 	  'interactive' governor for latency-sensitive workloads.
 
+config CPU_FREQ_DEFAULT_GOV_REACTIVE
+	bool "reactive"
+select CPU_FREQ_GOV_REACTIVE
+
 config CPU_FREQ_DEFAULT_GOV_YANKACTIVE
   	   bool "yankactive"
    	   select CPU_FREQ_GOV_YANKACTIVE
@@ -207,6 +211,19 @@ config CPU_FREQ_GOV_USERSPACE
 	  For details, take a look at <file:Documentation/cpu-freq/>.
 
 	  If in doubt, say Y.
+
+config CPU_FREQ_GOV_REACTIVE
+	tristate "reactive' cpufreq policy governor"
+	select CPU_FREQ_TABLE
+	help
+	  'reactive' - This driver adds a dynamic cpufreq policy governor.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called cpufreq_reactive.
+
+	  For details, take a look at linux/Documentation/cpu-freq.
+
+	  If in doubt, say N.
 
 config CPU_FREQ_GOV_ONDEMAND
 	tristate "'ondemand' cpufreq policy governor"
