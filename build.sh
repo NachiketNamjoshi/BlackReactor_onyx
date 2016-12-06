@@ -1,15 +1,14 @@
 #!/bin/bash
 
-##################################################
-##################################################
-# 												 #
-# 	  Copyright (c) 2016, Nachiket.Namjoshi		 #
-# 			 All rights reserved.				 #
-# 												 #
-# 	BlackReactor Kernel Build Script beta - v0.1 #
-# 												 #
-##################################################
-##################################################
+###################################################
+###################################################
+##    Copyright (c) 2016, Nachiket.Namjoshi      ##
+##             All rights reserved.              ##
+##                                               ##
+##  BlackReactor Kernel Build Script beta - v0.2 ##
+##                                               ##
+###################################################
+###################################################
 
 #For Time Calculation
 BUILD_START=$(date +"%s")
@@ -30,7 +29,11 @@ KERNEL_DIR=$PWD
 KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage-dtb
 OUT_DIR=$KERNEL_DIR/zipping/onyx
 REACTOR_VERSION="stable-0.4"
-
+PRODUCT_INFO=$KERNEL_DIR/product_info
+COMPILE_LOG=$KERNEL_DIR/compile.log
+SIGNAPK=$KERNEL_DIR/zipping/common/sign/signapk.jar
+CERT=$KERNEL_DIR/zipping/common/sign/certificate.pem
+KEY=$KERNEL_DIR/zipping/common/sign/key.pk8
 # Device Spceifics
 export ARCH=arm
 export CROSS_COMPILE="/home/nachiket/Android/android-ndk-r13/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-"
@@ -64,6 +67,7 @@ exit 1
 fi
 block_ads
 zipping
+get_md5
 }
 
 zipping() {
@@ -71,8 +75,9 @@ zipping() {
 # make new zip
 cp $KERN_IMG $OUT_DIR/zImage
 cd $OUT_DIR
-zip -r BlackReactor-onyx-$REACTOR_VERSION-$(date +"%Y%m%d")-$(date +"%H%M%S").zip *
-
+zip -r -9 BR_UNSIGNED.zip *
+java -jar $SIGNAPK $CERT $KEY BR_UNSIGNED.zip BlackReactor-onyx-$REACTOR_VERSION-$(date +"%Y%m%d")-$(date +"%H%M%S").zip
+rm -f BR_UNSIGNED.zip
 }
 
 block_ads() {
@@ -96,8 +101,20 @@ awk '{$1=$1}1' OFS=" " $HOST_FILE > $HOSTS_FILE
 sed -i -e '$a\' $HOSTS_FILE
 rm -rf $HOST_FILE
 }
-compile_kernel
+
+get_md5() {
+TARGET_ZIP_NAME=$(ls $OUT_DIR | grep -i "black")
+TARGET_ZIP="$OUT_DIR/$TARGET_ZIP_NAME"
+echo -e " OUT: $(md5sum $TARGET_ZIP | awk '{print $1}') $(basename $TARGET_ZIP)" > $PRODUCT_INFO
+
+HOSTS_FILE="$OUT_DIR/system/hosts"
+echo -e " HOSTS: $(md5sum $HOSTS_FILE | awk '{print $1}') $(basename $HOSTS_FILE)" >> $PRODUCT_INFO
+}
+
+compile_kernel | tee $COMPILE_LOG
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
 echo -e "$blue Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
+cat $PRODUCT_INFO
 echo -e "$red zImage size (bytes): $(stat -c%s $KERN_IMG) $nocol"
+
