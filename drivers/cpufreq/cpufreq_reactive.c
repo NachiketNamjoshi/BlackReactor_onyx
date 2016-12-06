@@ -87,14 +87,14 @@ static struct reactive_tuners {
 	atomic_t freq_step_dec;
 	atomic_t freq_step_dec_at_max_freq;
 } reactive_tuners_ins = {
-	.sampling_rate = ATOMIC_INIT(40000),
+	.sampling_rate = ATOMIC_INIT(30000),
 	.inc_cpu_load_at_min_freq = ATOMIC_INIT(40),
-	.inc_cpu_load = ATOMIC_INIT(70),
-	.dec_cpu_load = ATOMIC_INIT(50),
-	.freq_for_responsiveness = ATOMIC_INIT(1958400),
-	.freq_for_responsiveness_max = ATOMIC_INIT(2534400),
-	.freq_step_at_min_freq = ATOMIC_INIT(40),
-	.freq_step = ATOMIC_INIT(40),
+	.inc_cpu_load = ATOMIC_INIT(75),
+	.dec_cpu_load = ATOMIC_INIT(65),
+	.freq_for_responsiveness = ATOMIC_INIT(883200),
+	.freq_for_responsiveness_max = ATOMIC_INIT(1267200),
+	.freq_step_at_min_freq = ATOMIC_INIT(30),
+	.freq_step = ATOMIC_INIT(30),
 	.freq_up_brake_at_min_freq = ATOMIC_INIT(30),
 	.freq_up_brake = ATOMIC_INIT(30),
 	.freq_step_dec = ATOMIC_INIT(10),

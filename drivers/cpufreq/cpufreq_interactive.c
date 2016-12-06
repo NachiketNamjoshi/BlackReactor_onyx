@@ -69,7 +69,7 @@ static struct mutex gov_lock;
 static unsigned int hispeed_freq;
 
 /* Go to hi speed when CPU load at or above this value. */
-#define DEFAULT_GO_HISPEED_LOAD 99
+#define DEFAULT_GO_HISPEED_LOAD 95
 static unsigned long go_hispeed_load = DEFAULT_GO_HISPEED_LOAD;
 
 /* Sampling down factor to be applied to min_sample_time at max freq */
@@ -85,17 +85,17 @@ static int ntarget_loads = ARRAY_SIZE(default_target_loads);
 /*
  * The minimum amount of time to spend at a frequency before we can ramp down.
  */
-#define DEFAULT_MIN_SAMPLE_TIME (80 * USEC_PER_MSEC)
+#define DEFAULT_MIN_SAMPLE_TIME (60 * USEC_PER_MSEC)
 static unsigned long min_sample_time = DEFAULT_MIN_SAMPLE_TIME;
 
 /*
  * The sample rate of the timer used to increase frequency
  */
-#define DEFAULT_TIMER_RATE (20 * USEC_PER_MSEC)
+#define DEFAULT_TIMER_RATE (10 * USEC_PER_MSEC)
 static unsigned long timer_rate = DEFAULT_TIMER_RATE;
 
 /* Busy SDF parameters*/
-#define MIN_BUSY_TIME (100 * USEC_PER_MSEC)
+#define MIN_BUSY_TIME (500 * USEC_PER_MSEC)
 
 /*
  * Wait this long before raising speed above hispeed, by default a single
