@@ -36,6 +36,11 @@
 #define DEF_PA 0xff
 #define PCC_ADJ 0x80
 
+#define RED 0xF5
+#define GREEN 0xF5
+#define BLUE 0x100
+
+
 struct kcal_lut_data {
 #if defined(CONFIG_MMI_PANEL_NOTIFICATIONS) && defined(CONFIG_FB)
 	struct mmi_notifier panel_nb;
@@ -577,9 +582,9 @@ static int kcal_ctrl_probe(struct platform_device *pdev)
 	platform_set_drvdata(pdev, lut_data);
 
 	lut_data->enable = 0x1;
-	lut_data->red = DEF_PCC;
-	lut_data->green = DEF_PCC;
-	lut_data->blue = DEF_PCC;
+	lut_data->red = RED;
+	lut_data->green = GREEN;
+	lut_data->blue = BLUE;
 	lut_data->minimum = 0x23;
 	lut_data->invert = 0x0;
 	lut_data->hue = 0x0;
