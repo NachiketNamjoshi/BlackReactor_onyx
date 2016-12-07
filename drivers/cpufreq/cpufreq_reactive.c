@@ -87,7 +87,7 @@ static struct reactive_tuners {
 	atomic_t freq_step_dec;
 	atomic_t freq_step_dec_at_max_freq;
 } reactive_tuners_ins = {
-	.sampling_rate = ATOMIC_INIT(30000),
+	.sampling_rate = ATOMIC_INIT(15000),
 	.inc_cpu_load_at_min_freq = ATOMIC_INIT(40),
 	.inc_cpu_load = ATOMIC_INIT(75),
 	.dec_cpu_load = ATOMIC_INIT(65),
@@ -501,9 +501,6 @@ static void reactive_check_cpu(struct cpufreq_reactive_cpuinfo *this_reactive_cp
 			(cur_idle_time - this_reactive_cpuinfo->prev_cpu_idle);
 	this_reactive_cpuinfo->prev_cpu_idle = cur_idle_time;
 
-	/*min_freq = atomic_read(&min_freq_limit[cpu]);
-	max_freq = atomic_read(&max_freq_limit[cpu]);*/
-
 	freq_for_responsiveness = atomic_read(&reactive_tuners_ins.freq_for_responsiveness);
 	freq_for_responsiveness_max = atomic_read(&reactive_tuners_ins.freq_for_responsiveness_max);
 	dec_cpu_load = atomic_read(&reactive_tuners_ins.dec_cpu_load);
@@ -515,9 +512,9 @@ static void reactive_check_cpu(struct cpufreq_reactive_cpuinfo *this_reactive_cp
 	if (!cpu_policy || cpu_policy == NULL)
 		return;
 
-	/*printk(KERN_ERR "TIMER CPU[%u], wall[%u], idle[%u]\n",cpu, wall_time, idle_time);*/
+
 	if (wall_time >= idle_time) { /*if wall_time < idle_time, evaluate cpu load next time*/
-		cur_load = wall_time > idle_time ? (100 * (wall_time - idle_time)) / wall_time : 1;/*if wall_time is equal to idle_time cpu_load is equal to 1*/
+		cur_load = wall_time > idle_time ? (100 * (wall_time - idle_time)) / wall_time : 1; /*if wall_time is equal to idle_time cpu_load is equal to 1*/
 		min_freq = cpu_policy->min;
 		max_freq = cpu_policy->max;		
 		/* CPUs Online Scale Frequency*/
@@ -528,7 +525,7 @@ static void reactive_check_cpu(struct cpufreq_reactive_cpuinfo *this_reactive_cp
 		} else if (cpu_policy->cur > freq_for_responsiveness_max) {
 			freq_step_dec = atomic_read(&reactive_tuners_ins.freq_step_dec_at_max_freq);
 		}		
-		/* Check for frequency increase or for frequency decrease */
+		/* Check for frequency increase or decrease */
 		if (cur_load >= inc_cpu_load && cpu_policy->cur < max_freq) {
 			tmp_freq = max(min((cpu_policy->cur + ((cur_load + freq_step - freq_up_brake == 0 ? 1 : cur_load + freq_step - freq_up_brake) * 3780)), max_freq), min_freq);
 		} else if (cur_load < dec_cpu_load && cpu_policy->cur > min_freq) {
