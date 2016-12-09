@@ -25,7 +25,7 @@
 			qcom,max-current = <12>;
 			qcom,default-state = "off";
 			qcom,id = <3>;
-			qcom,duty-pcts = [00 0B 16 21 2C 37 42 4D 58 64];
+			qcom,duty-pcts = [FF 00 00 FF 00 00 FF 00 00 FF];
 			qcom,lut-flags = <31>; /* loop, ramp up, reverse, pause hi, pause lo */
 			qcom,pause-hi = <0>;
 			qcom,pause-lo = <0>;
@@ -44,7 +44,7 @@
 			qcom,max-current = <12>;
 			qcom,default-state = "off";
 			qcom,id = <4>;
-			qcom,duty-pcts = [00 0B 16 21 2C 37 42 4D 58 64];
+			qcom,duty-pcts = [00 FF 00 00 FF 00 00 FF 00 00];
 			qcom,lut-flags = <31>; /* loop, ramp up, reverse, pause hi, pause lo */
 			qcom,pause-hi = <0>;
 			qcom,pause-lo = <0>;
@@ -62,7 +62,7 @@
 			qcom,pwm-us = <1000>;
 			qcom,max-current = <12>;
 			qcom,id = <5>;
-			qcom,duty-pcts = [00 0B 16 21 2C 37 42 4D 58 64];
+			qcom,duty-pcts = [00 00 FF 00 00 FF 00 00 FF 00];
 			qcom,lut-flags = <31>; /* loop, ramp up, reverse, pause hi, pause lo */
 			qcom,pause-hi = <0>;
 			qcom,pause-lo = <0>;
