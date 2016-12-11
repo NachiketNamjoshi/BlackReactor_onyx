@@ -470,22 +470,13 @@ static struct attribute_group reactive_attr_group = {
 static void reactive_check_cpu(struct cpufreq_reactive_cpuinfo *this_reactive_cpuinfo)
 {
 	struct cpufreq_policy *cpu_policy;
-	unsigned int min_freq;
-	unsigned int max_freq;
-	unsigned int freq_for_responsiveness;
-	unsigned int freq_for_responsiveness_max;
-	int dec_cpu_load;
-	int inc_cpu_load;
-	int freq_step;
-	int freq_up_brake;
-	int freq_step_dec;
-	cputime64_t cur_wall_time, cur_idle_time;
-	unsigned int wall_time, idle_time;
+	unsigned int min_freq, max_freq, freq_for_responsiveness, freq_for_responsiveness_max, wall_time, idle_time, cpu;
 	unsigned int index = 0;
 	unsigned int tmp_freq = 0;
 	unsigned int next_freq = 0;
+	int dec_cpu_load, inc_cpu_load, freq_step, freq_up_brake, freq_step_dec;
+	cputime64_t cur_wall_time, cur_idle_time; 
 	int cur_load = -1;
-	unsigned int cpu;
 
 	cpu = this_reactive_cpuinfo->cpu;
 	cpu_policy = this_reactive_cpuinfo->cur_policy;
@@ -514,7 +505,7 @@ static void reactive_check_cpu(struct cpufreq_reactive_cpuinfo *this_reactive_cp
 
 
 	if (wall_time >= idle_time) { /*if wall_time < idle_time, evaluate cpu load next time*/
-		cur_load = wall_time > idle_time ? (100 * (wall_time - idle_time)) / wall_time : 1; /*if wall_time is equal to idle_time cpu_load is equal to 1*/
+		cur_load = wall_time > idle_time ? ((100 * (wall_time - idle_time)) / wall_time) : 1; /*if wall_time == idle_time, cpu_load = 1*/
 		min_freq = cpu_policy->min;
 		max_freq = cpu_policy->max;		
 		/* CPUs Online Scale Frequency*/
@@ -527,9 +518,9 @@ static void reactive_check_cpu(struct cpufreq_reactive_cpuinfo *this_reactive_cp
 		}		
 		/* Check for frequency increase or decrease */
 		if (cur_load >= inc_cpu_load && cpu_policy->cur < max_freq) {
-			tmp_freq = max(min((cpu_policy->cur + ((cur_load + freq_step - freq_up_brake == 0 ? 1 : cur_load + freq_step - freq_up_brake) * 3780)), max_freq), min_freq);
+			tmp_freq = max(min((cpu_policy->cur + ((cur_load + freq_step - freq_up_brake == 0 ? 1 : cur_load + freq_step - freq_up_brake) * 3825)), max_freq), min_freq);
 		} else if (cur_load < dec_cpu_load && cpu_policy->cur > min_freq) {
-			tmp_freq = max(min((cpu_policy->cur - ((100 - cur_load + freq_step_dec == 0 ? 1 : 100 - cur_load + freq_step_dec) * 3780)), max_freq), min_freq);
+			tmp_freq = max(min((cpu_policy->cur - ((100 - cur_load + freq_step_dec == 0 ? 1 : 100 - cur_load + freq_step_dec) * 3825)), max_freq), min_freq);
 		} else {
 			/* if cpu frequency is already at maximum or minimum or cur_load is between inc_cpu_load and dec_cpu_load var, we don't need to set frequency!
 			return; */
