@@ -28,7 +28,7 @@ nocol='\033[0m'
 KERNEL_DIR=$PWD
 KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage-dtb
 OUT_DIR=$KERNEL_DIR/zipping/onyx
-REACTOR_VERSION="beta-15"
+REACTOR_VERSION="beta-15.8"
 PRODUCT_INFO=$KERNEL_DIR/product_info
 COMPILE_LOG=$KERNEL_DIR/compile.log
 SIGNAPK=$KERNEL_DIR/zipping/common/sign/signapk.jar
@@ -36,7 +36,7 @@ CERT=$KERNEL_DIR/zipping/common/sign/certificate.pem
 KEY=$KERNEL_DIR/zipping/common/sign/key.pk8
 # Device Spceifics
 export ARCH=arm
-export CROSS_COMPILE="/home/nachiket/Android/onyx/kernel/toolchains/Linaro/arm-linux-androideabi-4.8/bin/arm-linux-androideabi-"
+export CROSS_COMPILE="/home/nachiket/Android/onyx/kernel/toolchains/google/arm-linux-androideabi-4.8/bin/arm-linux-androideabi-"
 export KBUILD_BUILD_USER="nachiket"
 export KBUILD_BUILD_HOST="reactor"
 
