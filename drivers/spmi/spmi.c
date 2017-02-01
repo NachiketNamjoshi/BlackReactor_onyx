@@ -261,7 +261,7 @@ int spmi_add_device(struct spmi_device *spmidev)
 
 	/* Set the device name */
 	spmidev->id = id;
-	dev_set_name(dev, "%s-%02d", spmidev->name, spmidev->sid);
+	dev_set_name(dev, "%s-%p", spmidev->name, spmidev);
 
 	/* Device may be bound to an active driver when this returns */
 	rc = device_add(dev);
