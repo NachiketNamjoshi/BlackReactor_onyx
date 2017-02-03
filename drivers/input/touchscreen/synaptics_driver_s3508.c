@@ -125,8 +125,8 @@ struct test_header {
 #define Right2LeftSwip      9   // <--
 #define Up2DownSwip         10  // |v
 #define Down2UpSwip         11  // |^
-#define Mgestrue            12  // M
-#define Wgestrue            13  // W
+#define Mgesture            12  // M
+#define Wgesture            13  // W
 
 // carlo@oneplus.net 2015-05-25, begin.
 #ifdef VENDOR_EDIT
@@ -137,6 +137,8 @@ struct test_header {
 #define KEY_GESTURE_DOWN_ARROW  253 // draw down arrow
 #define KEY_GESTURE_LEFT_ARROW  254 // draw left arrow
 #define KEY_GESTURE_RIGHT_ARROW 255 // draw right arrow
+#define KEY_GESTURE_LETTER_W    256 // draw letter "W"
+#define KEY_GESTURE_LETTER_M    257 // draw letter "M"
 #endif
 // carlo@oneplus.net 2015-05-25, end.
 
@@ -162,8 +164,8 @@ int Right2LeftSwip_gesture=0;//"(<--)"
 int Up2DownSwip_gesture =0;//"up to down |"
 int Down2UpSwip_gesture =0;//"down to up |"
 
-int Wgestrue_gesture =0;//"(W)"
-int Mgestrue_gesture =0;//"(M)"
+int Wgesture_gesture =0;//"(W)"
+int Mgesture_gesture =0;//"(M)"
 #endif
 
 /*********************for Debug LOG switch*******************/
@@ -493,35 +495,37 @@ struct synaptics_ts_data {
 #if defined(CONFIG_FB)
     struct notifier_block fb_notif;
 #endif
-    /******power*******/
-    struct regulator *vdd_2v8;
-    struct regulator *vdd_3v0;
-    struct regulator *vcc_i2c_1v8;
+	/******power*******/
+	struct regulator *vdd_2v8;
+	struct regulator *vdd_3v0;
+	struct regulator *vcc_i2c_1v8;
 
-    /*pinctrl******/
-    struct device                       *dev;
-    struct pinctrl                      *pinctrl;
-    struct pinctrl_state                *id_pullup;
-    struct pinctrl_state                *id_pulldown;
+	/*pinctrl******/
+	struct device						*dev;
+	struct pinctrl 						*pinctrl;
+	struct pinctrl_state 				*id_pullup;
+	struct pinctrl_state 				*id_pulldown;
 
-    /*******for FW update*******/
-    bool suspended;
-    bool loading_fw;
-    char fw_name[TP_FW_NAME_MAX_LEN];
-    char test_limit_name[TP_FW_NAME_MAX_LEN];
-    char fw_id[12];
-    struct mutex mutex;
+	/*******for FW update*******/
+	bool suspended;
+	bool loading_fw;
+	char fw_name[TP_FW_NAME_MAX_LEN];
+	char test_limit_name[TP_FW_NAME_MAX_LEN];
+	char fw_id[12];
+	struct mutex mutex;
 
-    /******gesture*******/
-    int double_tap_enable;
-    int double_swipe_enable;
-    int up_arrow_enable;
-    int down_arrow_enable;
-    int left_arrow_enable;
-    int right_arrow_enable;
-    int letter_o_enable;
-    int gesture_enable;
-    int is_suspended;
+	/******gesture*******/
+	int double_tap_enable;
+	int double_swipe_enable;
+	int up_arrow_enable;
+	int down_arrow_enable;
+	int left_arrow_enable;
+	int right_arrow_enable;
+	int letter_o_enable;
+	int letter_w_enable;
+	int letter_m_enable;
+	int gesture_enable;
+	int is_suspended;
     atomic_t is_stop;
     spinlock_t lock;
 
@@ -1495,8 +1499,8 @@ static void gesture_judge(struct synaptics_ts_data *ts)
 
             break;
         case UNICODE_DETECT:
-            gesture =   (gesture_buffer[2] == 0x77 && gesture_buffer[3] == 0x00) ? Wgestrue :
-                        (gesture_buffer[2] == 0x6d && gesture_buffer[3] == 0x00) ? Mgestrue :
+			gesture =   (gesture_buffer[2] == 0x77 && gesture_buffer[3] == 0x00) ? Wgesture :
+					    (gesture_buffer[2] == 0x6d && gesture_buffer[3] == 0x00) ? Mgesture :
                         UnkownGesture;
             break;
         case 0:
@@ -1506,41 +1510,49 @@ static void gesture_judge(struct synaptics_ts_data *ts)
 
 // carlo@oneplus.net 2015-05-25, begin.
 #ifdef VENDOR_EDIT
-    keyCode = UnkownGesture;
-    // Get key code based on registered gesture.
-    switch (gesture) {
-        case DouTap:
-            if(ts->double_tap_enable)
-            keyCode = KEY_DOUBLE_TAP;
-            break;
-        case UpVee:
-            if(ts->down_arrow_enable)
-            keyCode = KEY_GESTURE_DOWN_ARROW;
-            break;
-        case DownVee:
-            if(ts->up_arrow_enable)
-            keyCode = KEY_GESTURE_UP_ARROW;
-            break;
-        case LeftVee:
-            if(ts->right_arrow_enable)
-            keyCode = KEY_GESTURE_RIGHT_ARROW;
-            break;
-        case RightVee:
-            if(ts->left_arrow_enable)
-            keyCode = KEY_GESTURE_LEFT_ARROW;
-            break;
-        case Circle:
-            if(ts->letter_o_enable)
-            keyCode = KEY_GESTURE_CIRCLE;
-            break;
-        case DouSwip:
-            if(ts->double_swipe_enable)
-            keyCode = KEY_GESTURE_TWO_SWIPE;
-            break;
-        default:
-            keyCode = 0;
-            break;
-    }
+	keyCode = UnkownGesture;
+	// Get key code based on registered gesture.
+	switch (gesture) {
+		case DouTap:
+			if(ts->double_tap_enable)
+			keyCode = KEY_DOUBLE_TAP;
+			break;
+		case UpVee:
+			if(ts->down_arrow_enable)
+			keyCode = KEY_GESTURE_DOWN_ARROW;
+			break;
+		case DownVee:
+			if(ts->up_arrow_enable)
+			keyCode = KEY_GESTURE_UP_ARROW;
+			break;
+		case LeftVee:
+			if(ts->right_arrow_enable)
+			keyCode = KEY_GESTURE_RIGHT_ARROW;
+			break;
+		case RightVee:
+			if(ts->left_arrow_enable)
+			keyCode = KEY_GESTURE_LEFT_ARROW;
+			break;
+		case Circle:
+			if(ts->letter_o_enable)
+			keyCode = KEY_GESTURE_CIRCLE;
+			break;
+		case DouSwip:
+			if(ts->double_swipe_enable)
+			keyCode = KEY_GESTURE_TWO_SWIPE;
+			break;
+		case Wgesture:
+			if(ts->letter_w_enable)
+			keyCode = KEY_GESTURE_LETTER_W;
+			break;
+		case Mgesture:
+			if(ts->letter_m_enable)
+			keyCode = KEY_GESTURE_LETTER_M;
+			break;
+		default:
+			keyCode = 0;
+			break;
+	}
 #endif
 // carlo@oneplus.net 2015-05-25, end.
     printk("detect %s gesture\n", gesture == DouTap ? "double tap" :
@@ -1554,8 +1566,8 @@ static void gesture_judge(struct synaptics_ts_data *ts)
                                                         gesture == Right2LeftSwip ? "(<--)" :
                                                         gesture == Up2DownSwip ? "up to down |" :
                                                         gesture == Down2UpSwip ? "down to up |" :
-                                                        gesture == Mgestrue ? "(M)" :
-                                                        gesture == Wgestrue ? "(W)" : "unknown");
+                                                        gesture == Mgesture ? "(M)" :
+                                                        gesture == Wgesture ? "(W)" : "unknown");
 
 
     synaptics_get_coordinate_point(ts);
@@ -3508,17 +3520,19 @@ static int  synaptics_input_init(struct synaptics_ts_data *ts)
     set_bit(INPUT_PROP_DIRECT, ts->input_dev->propbit);
 
 #ifdef SUPPORT_GESTURE
-    set_bit(KEY_F4 , ts->input_dev->keybit);//doulbe-tap resume
-    set_bit(KEY_DOUBLE_TAP, ts->input_dev->keybit);
-    set_bit(KEY_GESTURE_CIRCLE, ts->input_dev->keybit);
-    set_bit(KEY_GESTURE_UP_ARROW, ts->input_dev->keybit);
-    set_bit(KEY_GESTURE_DOWN_ARROW, ts->input_dev->keybit);
-    set_bit(KEY_GESTURE_RIGHT_ARROW, ts->input_dev->keybit);
-    set_bit(KEY_GESTURE_LEFT_ARROW, ts->input_dev->keybit);
-    set_bit(KEY_GESTURE_TWO_SWIPE, ts->input_dev->keybit);
-        set_bit(KEY_MENU , ts->input_dev->keybit);
-        set_bit(KEY_HOMEPAGE , ts->input_dev->keybit);
-        set_bit(KEY_BACK , ts->input_dev->keybit);
+	set_bit(KEY_F4 , ts->input_dev->keybit);//doulbe-tap resume
+	set_bit(KEY_DOUBLE_TAP, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_CIRCLE, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_UP_ARROW, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_DOWN_ARROW, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_RIGHT_ARROW, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_LEFT_ARROW, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_TWO_SWIPE, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_LETTER_W, ts->input_dev->keybit);
+	set_bit(KEY_GESTURE_LETTER_M, ts->input_dev->keybit);
+		set_bit(KEY_MENU , ts->input_dev->keybit);
+		set_bit(KEY_HOMEPAGE , ts->input_dev->keybit);
+		set_bit(KEY_BACK , ts->input_dev->keybit);
 #endif
 
     /* For multi touch */
@@ -3876,6 +3890,8 @@ TS_ENABLE_FOPS(down_arrow);
 TS_ENABLE_FOPS(left_arrow);
 TS_ENABLE_FOPS(right_arrow);
 TS_ENABLE_FOPS(letter_o);
+TS_ENABLE_FOPS(letter_w);
+TS_ENABLE_FOPS(letter_m);
 
 // chenggang.li@BSP.TP modified for oppo 2014-08-08 create node
 /******************************start****************************/
@@ -3978,65 +3994,77 @@ static int init_synaptics_proc(void)
 
 
 #ifdef SUPPORT_GESTURE
-    prEntry_double_tap = proc_create( "gesture_enable", 0666, prEntry_tp, &tp_double_proc_fops);
-    if(prEntry_double_tap == NULL){
-        ret = -ENOMEM;
-        printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
-    }
-    prEntry_coodinate = proc_create("coordinate", 0444, prEntry_tp, &coordinate_proc_fops);
-    if(prEntry_coodinate == NULL){
-        ret = -ENOMEM;
-        printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
-    }
+	prEntry_double_tap = proc_create( "gesture_enable", 0666, prEntry_tp, &tp_double_proc_fops);
+	if(prEntry_double_tap == NULL){
+		ret = -ENOMEM;
+		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+	}
+	prEntry_coodinate = proc_create("coordinate", 0444, prEntry_tp, &coordinate_proc_fops);
+	if(prEntry_coodinate == NULL){
+		ret = -ENOMEM;
+		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+	}
 
-    prEntry_tmp = proc_create("double_tap_enable", 0666, prEntry_tp, &tp_double_tap_proc_fops);
-    if(prEntry_tmp == NULL){
-        ret = -ENOMEM;
-        printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
-    }
+	prEntry_tmp = proc_create("double_tap_enable", 0666, prEntry_tp, &tp_double_tap_proc_fops);
+	if(prEntry_tmp == NULL){
+		ret = -ENOMEM;
+		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+	}
 
-    prEntry_tmp = proc_create("double_swipe_enable", 0666, prEntry_tp, &tp_double_swipe_proc_fops);
-    if(prEntry_tmp == NULL){
-        ret = -ENOMEM;
-        printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
-    }
+	prEntry_tmp = proc_create("double_swipe_enable", 0666, prEntry_tp, &tp_double_swipe_proc_fops);
+	if(prEntry_tmp == NULL){
+		ret = -ENOMEM;
+		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+	}
 
-    prEntry_tmp = proc_create("up_arrow_enable", 0666, prEntry_tp, &tp_up_arrow_proc_fops);
-    if(prEntry_tmp == NULL){
-        ret = -ENOMEM;
-        printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
-    }
+	prEntry_tmp = proc_create("up_arrow_enable", 0666, prEntry_tp, &tp_up_arrow_proc_fops);
+	if(prEntry_tmp == NULL){
+		ret = -ENOMEM;
+		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+	}
 
-    prEntry_tmp = proc_create("down_arrow_enable", 0666, prEntry_tp, &tp_down_arrow_proc_fops);
-    if(prEntry_tmp == NULL){
-        ret = -ENOMEM;
-        printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
-    }
+	prEntry_tmp = proc_create("down_arrow_enable", 0666, prEntry_tp, &tp_down_arrow_proc_fops);
+	if(prEntry_tmp == NULL){
+		ret = -ENOMEM;
+		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+	}
 
-    prEntry_tmp = proc_create("left_arrow_enable", 0666, prEntry_tp, &tp_left_arrow_proc_fops);
-    if(prEntry_tmp == NULL){
-        ret = -ENOMEM;
-        printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
-    }
+	prEntry_tmp = proc_create("left_arrow_enable", 0666, prEntry_tp, &tp_left_arrow_proc_fops);
+	if(prEntry_tmp == NULL){
+		ret = -ENOMEM;
+		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+	}
 
-    prEntry_tmp = proc_create("right_arrow_enable", 0666, prEntry_tp, &tp_right_arrow_proc_fops);
-    if(prEntry_tmp == NULL){
-        ret = -ENOMEM;
-        printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
-    }
+	prEntry_tmp = proc_create("right_arrow_enable", 0666, prEntry_tp, &tp_right_arrow_proc_fops);
+	if(prEntry_tmp == NULL){
+		ret = -ENOMEM;
+		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+	}
 
-    prEntry_tmp = proc_create("letter_o_enable", 0666, prEntry_tp, &tp_letter_o_proc_fops);
-    if(prEntry_tmp == NULL){
-        ret = -ENOMEM;
-        printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
-    }
+	prEntry_tmp = proc_create("letter_o_enable", 0666, prEntry_tp, &tp_letter_o_proc_fops);
+	if(prEntry_tmp == NULL){
+		ret = -ENOMEM;
+		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+	}
 
-    prEntry_tmp = proc_create("keypad_enable", 0666, prEntry_tp, &keypad_enable_proc_fops);
-    if(prEntry_tmp == NULL)
-    {
-        ret = -ENOMEM;
-        printk(KERN_ERR"init_synaptic_proc: Couldn't create keypad_enable proc entry\n");
-    }
+	prEntry_tmp = proc_create("letter_w_enable", 0666, prEntry_tp, &tp_letter_w_proc_fops);
+	if(prEntry_tmp == NULL){
+		ret = -ENOMEM;
+		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+	}
+
+	prEntry_tmp = proc_create("letter_m_enable", 0666, prEntry_tp, &tp_letter_m_proc_fops);
+	if(prEntry_tmp == NULL){
+		ret = -ENOMEM;
+		printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+	}
+
+	prEntry_tmp = proc_create("keypad_enable", 0666, prEntry_tp, &keypad_enable_proc_fops);
+	if(prEntry_tmp == NULL)
+	{
+		ret = -ENOMEM;
+		printk(KERN_ERR"init_synaptic_proc: Couldn't create keypad_enable proc entry\n");
+	}
 
 #endif
 
