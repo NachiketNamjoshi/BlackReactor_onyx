@@ -514,8 +514,8 @@ EXPORT_SYMBOL(kgsl_cffdump_waitirq);
 static int subbuf_start_handler(struct rchan_buf *buf,
 	void *subbuf, void *prev_subbuf, uint prev_padding)
 {
-	pr_debug("kgsl: cffdump: subbuf_start_handler(subbuf=%p, prev_subbuf"
-		"=%p, prev_padding=%08x)\n", subbuf, prev_subbuf, prev_padding);
+	pr_debug("kgsl: cffdump: subbuf_start_handler(subbuf=%pK, prev_subbuf"
+		"=%pK, prev_padding=%08x)\n", subbuf, prev_subbuf, prev_padding);
 
 	if (relay_buf_full(buf)) {
 		if (!suspended) {
