@@ -67,14 +67,14 @@
 	rpm-regulator-smpb1 {
 		status = "okay";
 		pm8841_s1: regulator-s1 {
-			regulator-min-microvolt = <675000>;
+			regulator-min-microvolt = <700000>;
 			regulator-max-microvolt = <1050000>;
 			status = "okay";
 		};
 		pm8841_s1_ao: regulator-s1-ao {
 			regulator-name = "8841_s1_ao";
 			qcom,set = <1>;
-			regulator-min-microvolt = <675000>;
+			regulator-min-microvolt = <700000>;
 			regulator-max-microvolt = <1050000>;
 			status = "okay";
 			compatible = "qcom,rpm-regulator-smd";
@@ -82,7 +82,7 @@
 		pm8841_s1_so: regulator-s1-so {
 			regulator-name = "8841_s1_so";
 			qcom,set = <2>;
-			regulator-min-microvolt = <675000>;
+			regulator-min-microvolt = <700000>;
 			regulator-max-microvolt = <1050000>;
 			qcom,init-voltage = <675000>;
 			status = "okay";
