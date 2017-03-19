@@ -491,7 +491,7 @@
 			regulator-min-microvolt = <500000>;
 			regulator-max-microvolt = <1300000>;/*(sjc1113 up to 1.3V) qcom patch, CASE ID: 01694672, Zhilong.Zhang@OnlineRd.Driver, 2014/09/19, Modify for solve the problem of Kernel NULL pointer */
 			qcom,headroom-voltage = <150000>;
-			qcom,retention-voltage = <675000>;
+			qcom,retention-voltage = <600000>;
 			qcom,ldo-default-voltage = <750000>;
 			qcom,ldo-threshold-voltage = <850000>;
 			qcom,ldo-delta-voltage = <50000>;
@@ -507,7 +507,7 @@
 			regulator-min-microvolt = <500000>;
 			regulator-max-microvolt = <1300000>;/*(sjc1113 up to 1.3V) qcom patch, CASE ID: 01694672, Zhilong.Zhang@OnlineRd.Driver, 2014/09/19, Modify for solve the problem of Kernel NULL pointer */
 			qcom,headroom-voltage = <150000>;
-			qcom,retention-voltage = <675000>;
+			qcom,retention-voltage = <600000>;
 			qcom,ldo-default-voltage = <750000>;
 			qcom,ldo-threshold-voltage = <850000>;
 			qcom,ldo-delta-voltage = <50000>;
@@ -523,7 +523,7 @@
 			regulator-min-microvolt = <500000>;
 			regulator-max-microvolt = <1300000>;/*(sjc1113 up to 1.3V) qcom patch, CASE ID: 01694672, Zhilong.Zhang@OnlineRd.Driver, 2014/09/19, Modify for solve the problem of Kernel NULL pointer */
 			qcom,headroom-voltage = <150000>;
-			qcom,retention-voltage = <675000>;
+			qcom,retention-voltage = <600000>;
 			qcom,ldo-default-voltage = <750000>;
 			qcom,ldo-threshold-voltage = <850000>;
 			qcom,ldo-delta-voltage = <50000>;
@@ -539,7 +539,7 @@
 			regulator-min-microvolt = <500000>;
 			regulator-max-microvolt = <1300000>;/*(sjc1113 up to 1.3V) qcom patch, CASE ID: 01694672, Zhilong.Zhang@OnlineRd.Driver, 2014/09/19, Modify for solve the problem of Kernel NULL pointer */
 			qcom,headroom-voltage = <150000>;
-			qcom,retention-voltage = <675000>;
+			qcom,retention-voltage = <600000>;
 			qcom,ldo-default-voltage = <750000>;
 			qcom,ldo-threshold-voltage = <850000>;
 			qcom,ldo-delta-voltage = <50000>;
