@@ -332,7 +332,6 @@ static long voice_svc_ioctl(struct file *file, unsigned int cmd,
 	struct apr_response_list *resp;
 	void __user *arg = (void __user *)u_arg;
 	uint32_t user_payload_size = 0;
-	uint32_t payload_size;
 	unsigned long spin_flags;
 	uint32_t payload_size = 0;
 
