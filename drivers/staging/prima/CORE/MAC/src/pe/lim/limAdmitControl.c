@@ -120,17 +120,17 @@ limCalculateSvcInt(
     if ((pTspec->minSvcInterval != 0) || (pTspec->maxSvcInterval != 0))
     {
         *pSvcInt = (pTspec->maxSvcInterval != 0)
-                   ? pTspec->maxSvcInterval : pTspec->minSvcInterval;
+                    ? pTspec->maxSvcInterval : pTspec->minSvcInterval;
         return eSIR_SUCCESS;
     }
-
+    
     /* Masking off the fixed bits according to definition of MSDU size
      * in IEEE 802.11-2007 spec (section 7.3.2.30). Nominal MSDU size
      * is defined as:  Bit[0:14]=Size, Bit[15]=Fixed
      */
-    if (pTspec->nomMsduSz != 0)
+    if (pTspec->nomMsduSz != 0) 
         msduSz = (pTspec->nomMsduSz & 0x7fff);
-    else if (pTspec->maxMsduSz != 0)
+    else if (pTspec->maxMsduSz != 0) 
         msduSz = pTspec->maxMsduSz;
     else
     {
@@ -186,7 +186,7 @@ limValidateTspecHcca(
      * correspond to the userPrio
      */
     if (pTspec->tsinfo.traffic.userPrio !=
-            (pTspec->tsinfo.traffic.tsid - SIR_MAC_HCCA_TSID_MIN))
+        (pTspec->tsinfo.traffic.tsid - SIR_MAC_HCCA_TSID_MIN))
     {
         limLog(pMac, LOGE, FL("TSid=0x%x, userPrio=%d: is not allowed"),
                pTspec->tsinfo.traffic.tsid, pTspec->tsinfo.traffic.userPrio);
@@ -212,8 +212,8 @@ limValidateTspecHcca(
     limGetAvailableBw(pMac, &maxPhyRate, &minPhyRate, phyMode,
                       1 /* bandwidth mult factor */);
     if ((pTspec->minPhyRate == 0)
-            || (pTspec->minPhyRate > maxPhyRate)
-            || (pTspec->minPhyRate < minPhyRate))
+        || (pTspec->minPhyRate > maxPhyRate)
+        || (pTspec->minPhyRate < minPhyRate))
     {
         limLog(pMac, LOGW, FL("minPhyRate (%d) invalid"),
                pTspec->minPhyRate);
@@ -223,8 +223,8 @@ limValidateTspecHcca(
      * also the min and peak data rates)
      */
     if ((pTspec->minDataRate  == 0) ||
-            (pTspec->meanDataRate == 0) ||
-            (pTspec->peakDataRate == 0))
+        (pTspec->meanDataRate == 0) ||
+        (pTspec->peakDataRate == 0))
     {
         limLog(pMac, LOGW, FL("DataRate must be specified (min %d, mean %d, peak %d)"),
                pTspec->minDataRate, pTspec->meanDataRate, pTspec->peakDataRate);
@@ -267,11 +267,11 @@ limValidateTspecHcca(
          * minPhyRate, meanDataRate and nomMsduSz are needed, only nomMsduSz
          * must be checked here since the other two are already validated
          */
-        if (pTspec->nomMsduSz == 0)
-        {
-            PELOGW(limLog(pMac, LOGW, FL("No svcInt and no MsduSize specified"));)
-            retval = eSIR_FAILURE;
-        }
+         if (pTspec->nomMsduSz == 0)
+         {
+             PELOGW(limLog(pMac, LOGW, FL("No svcInt and no MsduSize specified"));)
+             retval = eSIR_FAILURE;
+         }
     }
 
     limLog(pMac, ADMIT_CONTROL_LOGLEVEL, FL("return status %d"), retval);
@@ -306,10 +306,10 @@ limValidateTspecEdca(
                       1 /* bandwidth mult factor */);
     // mandatory fields are derived from 11e Annex I (Table I.1)
     if ((pTspec->nomMsduSz    == 0) ||
-            (pTspec->meanDataRate == 0) ||
-            (pTspec->surplusBw    == 0) ||
-            (pTspec->minPhyRate   == 0) ||
-            (pTspec->minPhyRate   > maxPhyRate))
+        (pTspec->meanDataRate == 0) ||
+        (pTspec->surplusBw    == 0) ||
+        (pTspec->minPhyRate   == 0) ||
+        (pTspec->minPhyRate   > maxPhyRate))
     {
         limLog(pMac, LOGW, FL("Invalid EDCA Tspec: NomMsdu %d, meanDataRate %d, surplusBw %d, minPhyRate %d"),
                pTspec->nomMsduSz, pTspec->meanDataRate, pTspec->surplusBw, pTspec->minPhyRate);
@@ -332,29 +332,29 @@ static tSirRetStatus
 limValidateTspec(
     tpAniSirGlobal  pMac,
     tSirMacTspecIE *pTspec,
-    tpPESession psessionEntry)
+     tpPESession psessionEntry)
 {
     tSirRetStatus retval = eSIR_SUCCESS;
     switch (pTspec->tsinfo.traffic.accessPolicy)
     {
-    case SIR_MAC_ACCESSPOLICY_EDCA:
-        if ((retval = limValidateTspecEdca(pMac, pTspec, psessionEntry)) != eSIR_SUCCESS)
-            PELOGW(limLog(pMac, LOGW, FL("EDCA tspec invalid"));)
+        case SIR_MAC_ACCESSPOLICY_EDCA:
+            if ((retval = limValidateTspecEdca(pMac, pTspec, psessionEntry)) != eSIR_SUCCESS)
+                PELOGW(limLog(pMac, LOGW, FL("EDCA tspec invalid"));)
             break;
 
-    case SIR_MAC_ACCESSPOLICY_HCCA:
+        case SIR_MAC_ACCESSPOLICY_HCCA:
 #if 0 //Not supported right now.    
-        if ((retval = limValidateTspecHcca(pMac, pTspec)) != eSIR_SUCCESS)
-            PELOGW(limLog(pMac, LOGW, FL("HCCA tspec invalid"));)
+            if ((retval = limValidateTspecHcca(pMac, pTspec)) != eSIR_SUCCESS)
+                PELOGW(limLog(pMac, LOGW, FL("HCCA tspec invalid"));)
             break;
 #endif
-    case SIR_MAC_ACCESSPOLICY_BOTH:
-    // TBD: should we support hybrid tspec as well?? for now, just fall through
-    default:
-        limLog(pMac, LOGW, FL("AccessType %d not supported"),
-               pTspec->tsinfo.traffic.accessPolicy);
-        retval = eSIR_FAILURE;
-        break;
+       case SIR_MAC_ACCESSPOLICY_BOTH:
+         // TBD: should we support hybrid tspec as well?? for now, just fall through
+        default:
+            limLog(pMac, LOGW, FL("AccessType %d not supported"),
+                   pTspec->tsinfo.traffic.accessPolicy);
+            retval = eSIR_FAILURE;
+            break;
     }
     return retval;
 }
@@ -423,22 +423,22 @@ limGetAvailableBw(
 {
     switch (phyMode)
     {
-    case WNI_CFG_PHY_MODE_11B:
-        *pMaxBw = LIM_TOTAL_BW_11B;
-        *pMinBw = LIM_MIN_BW_11B;
-        break;
+        case WNI_CFG_PHY_MODE_11B:
+            *pMaxBw = LIM_TOTAL_BW_11B;
+            *pMinBw = LIM_MIN_BW_11B;
+            break;
 
-    case WNI_CFG_PHY_MODE_11A:
-        *pMaxBw = LIM_TOTAL_BW_11A;
-        *pMinBw = LIM_MIN_BW_11A;
-        break;
+        case WNI_CFG_PHY_MODE_11A:
+            *pMaxBw = LIM_TOTAL_BW_11A;
+            *pMinBw = LIM_MIN_BW_11A;
+            break;
 
-    case WNI_CFG_PHY_MODE_11G:
-    case WNI_CFG_PHY_MODE_NONE:
-    default:
-        *pMaxBw = LIM_TOTAL_BW_11G;
-        *pMinBw = LIM_MIN_BW_11G;
-        break;
+        case WNI_CFG_PHY_MODE_11G:
+        case WNI_CFG_PHY_MODE_NONE:
+        default:
+            *pMaxBw = LIM_TOTAL_BW_11G;
+            *pMinBw = LIM_MIN_BW_11G;
+            break;
     }
     *pMaxBw *= bw_factor;
 }
@@ -514,26 +514,26 @@ tSirRetStatus limAdmitPolicy(
 
     switch (pAdmitPolicy->type)
     {
-    case WNI_CFG_ADMIT_POLICY_ADMIT_ALL:
-        retval = eSIR_SUCCESS;
-        break;
-
-    case WNI_CFG_ADMIT_POLICY_BW_FACTOR:
-        retval = limAdmitPolicyOversubscription(pMac, pTspec,
-                                                &pMac->lim.admitPolicyInfo, &pMac->lim.tspecInfo[0], psessionEntry);
-        if (retval != eSIR_SUCCESS)
-            PELOGE(limLog(pMac, LOGE, FL("rejected by BWFactor policy"));)
+        case WNI_CFG_ADMIT_POLICY_ADMIT_ALL:
+            retval = eSIR_SUCCESS;
             break;
 
-    case WNI_CFG_ADMIT_POLICY_REJECT_ALL:
-        retval = eSIR_FAILURE;
-        break;
+        case WNI_CFG_ADMIT_POLICY_BW_FACTOR:
+            retval = limAdmitPolicyOversubscription(pMac, pTspec,
+                        &pMac->lim.admitPolicyInfo, &pMac->lim.tspecInfo[0], psessionEntry);
+            if (retval != eSIR_SUCCESS)
+                PELOGE(limLog(pMac, LOGE, FL("rejected by BWFactor policy"));)
+            break;
 
-    default:
-        retval = eSIR_SUCCESS;
-        limLog(pMac, LOGE, FL("Admit Policy %d unknown, admitting all traffic"),
-               pAdmitPolicy->type);
-        break;
+        case WNI_CFG_ADMIT_POLICY_REJECT_ALL:
+            retval = eSIR_FAILURE;
+            break;
+
+        default:
+            retval = eSIR_SUCCESS;
+            limLog(pMac, LOGE, FL("Admit Policy %d unknown, admitting all traffic"),
+                   pAdmitPolicy->type);
+            break;
     }
     return retval;
 }
@@ -552,7 +552,7 @@ void limTspecDelete(tpAniSirGlobal pMac, tpLimTspecInfo pInfo)
 {
     if (pInfo == NULL)
         return;
-    //pierre
+        //pierre
     limLog(pMac, ADMIT_CONTROL_LOGLEVEL, FL("tspec entry = %d"), pInfo->idx);
     limLog(pMac, ADMIT_CONTROL_LOGLEVEL, FL("delete tspec %p"), pInfo);
     pInfo->inuse = 0;
@@ -560,7 +560,7 @@ void limTspecDelete(tpAniSirGlobal pMac, tpLimTspecInfo pInfo)
     // clear the hcca/parameterized queue indicator
 #if 0
     if ((pInfo->tspec.tsinfo.traffic.direction == SIR_MAC_DIRECTION_UPLINK) ||
-            (pInfo->tspec.tsinfo.traffic.direction == SIR_MAC_DIRECTION_BIDIR))
+        (pInfo->tspec.tsinfo.traffic.direction == SIR_MAC_DIRECTION_BIDIR))
         queue[pInfo->staid][pInfo->tspec.tsinfo.traffic.userPrio][SCH_UL_QUEUE].ts = 0;
 #endif
 
@@ -594,9 +594,9 @@ limTspecFindByStaAddr(
     for (ctspec = 0; ctspec < LIM_NUM_TSPEC_MAX; ctspec++, pTspecList++)
     {
         if ((pTspecList->inuse)
-                && (vos_mem_compare(pAddr, pTspecList->staAddr, sizeof(pTspecList->staAddr)))
-                && (vos_mem_compare((tANI_U8 *) pTspecIE, (tANI_U8 *) &pTspecList->tspec,
-                                    sizeof(tSirMacTspecIE))))
+            && (vos_mem_compare(pAddr, pTspecList->staAddr, sizeof(pTspecList->staAddr)))
+            && (vos_mem_compare((tANI_U8 *) pTspecIE, (tANI_U8 *) &pTspecList->tspec,
+                                            sizeof(tSirMacTspecIE))))
         {
             *ppInfo = pTspecList;
             return eSIR_SUCCESS;
@@ -607,7 +607,7 @@ limTspecFindByStaAddr(
 
 /** -------------------------------------------------------------
 \fn limTspecFindByAssocId
-\brief find tspec with matchin staid and Tspec
+\brief find tspec with matchin staid and Tspec 
 \param   tpAniSirGlobal pMac
 \param       tANI_U32               staid
 \param       tSirMacTspecIE    *pTspecIE
@@ -630,14 +630,14 @@ limTspecFindByAssocId(
 
     limLog(pMac, ADMIT_CONTROL_LOGLEVEL, FL("Trying to find tspec entry for assocId = %d"), assocId);
     limLog(pMac, ADMIT_CONTROL_LOGLEVEL, FL("pTsInfo->traffic.direction = %d, pTsInfo->traffic.tsid = %d"),
-           pTspecIE->tsinfo.traffic.direction, pTspecIE->tsinfo.traffic.tsid);
+                pTspecIE->tsinfo.traffic.direction, pTspecIE->tsinfo.traffic.tsid);
 
     for (ctspec = 0; ctspec < LIM_NUM_TSPEC_MAX; ctspec++, pTspecList++)
     {
         if ((pTspecList->inuse)
-                && (assocId == pTspecList->assocId)
-                && (vos_mem_compare((tANI_U8 *)pTspecIE, (tANI_U8 *)&pTspecList->tspec,
-                                    sizeof(tSirMacTspecIE))))
+            && (assocId == pTspecList->assocId)
+            && (vos_mem_compare((tANI_U8 *)pTspecIE, (tANI_U8 *)&pTspecList->tspec,
+                sizeof(tSirMacTspecIE))))
         {
             *ppInfo = pTspecList;
             return eSIR_SUCCESS;
@@ -660,7 +660,7 @@ limTspecFindByAssocId(
 tSirRetStatus
 limFindTspec(
     tpAniSirGlobal    pMac,
-    tANI_U16               assocId,
+    tANI_U16               assocId,    
     tSirMacTSInfo   *pTsInfo,
     tpLimTspecInfo    pTspecList,
     tpLimTspecInfo   *ppInfo)
@@ -671,14 +671,14 @@ limFindTspec(
 
     limLog(pMac, ADMIT_CONTROL_LOGLEVEL, FL("Trying to find tspec entry for assocId = %d"), assocId);
     limLog(pMac, ADMIT_CONTROL_LOGLEVEL, FL("pTsInfo->traffic.direction = %d, pTsInfo->traffic.tsid = %d"),
-           pTsInfo->traffic.direction, pTsInfo->traffic.tsid);
+                pTsInfo->traffic.direction, pTsInfo->traffic.tsid);
 
     for (ctspec = 0; ctspec < LIM_NUM_TSPEC_MAX; ctspec++, pTspecList++)
     {
         if ((pTspecList->inuse)
-                && (assocId == pTspecList->assocId)
-                && (pTsInfo->traffic.direction == pTspecList->tspec.tsinfo.traffic.direction)
-                && (pTsInfo->traffic.tsid == pTspecList->tspec.tsinfo.traffic.tsid))
+            && (assocId == pTspecList->assocId)
+            && (pTsInfo->traffic.direction == pTspecList->tspec.tsinfo.traffic.direction)
+            && (pTsInfo->traffic.tsid == pTspecList->tspec.tsinfo.traffic.tsid))
         {
             *ppInfo = pTspecList;
             return eSIR_SUCCESS;
@@ -709,7 +709,7 @@ tSirRetStatus limTspecAdd(
     tpLimTspecInfo    *ppInfo)
 {
     tpLimTspecInfo pTspecList = &pMac->lim.tspecInfo[0];
-    *ppInfo = NULL;
+    *ppInfo = NULL;    
 
     // validate the assocId
     if (assocId >= pMac->lim.maxStation)
@@ -720,35 +720,35 @@ tSirRetStatus limTspecAdd(
 
     //decide whether to add/update
     {
-        *ppInfo = NULL;
+      *ppInfo = NULL;
 
-        if(eSIR_SUCCESS == limFindTspec(pMac, assocId, &pTspec->tsinfo, pTspecList, ppInfo))
-        {
+      if(eSIR_SUCCESS == limFindTspec(pMac, assocId, &pTspec->tsinfo, pTspecList, ppInfo))
+      {
             //update this entry.
             limLog(pMac, ADMIT_CONTROL_LOGLEVEL, FL("updating TSPEC table entry = %d"),
-                   (*ppInfo)->idx);
-        }
-        else
-        {
-            /* We didn't find one to update. So find a free slot in the
-             * LIM TSPEC list and add this new entry
-             */
-            tANI_U8 ctspec = 0;
-            for (ctspec = 0 , pTspecList = &pMac->lim.tspecInfo[0]; ctspec < LIM_NUM_TSPEC_MAX; ctspec++, pTspecList++)
-            {
-                if (! pTspecList->inuse)
-                {
-                    limLog(pMac, LOG1, FL("Found free slot in TSPEC list. Add to TSPEC table entry %d"), ctspec);
-                    break;
-                }
-            }
+                        (*ppInfo)->idx);
+      }
+      else
+      {
+          /* We didn't find one to update. So find a free slot in the 
+           * LIM TSPEC list and add this new entry
+           */ 
+          tANI_U8 ctspec = 0;
+          for (ctspec = 0 , pTspecList = &pMac->lim.tspecInfo[0]; ctspec < LIM_NUM_TSPEC_MAX; ctspec++, pTspecList++)
+          {
+              if (! pTspecList->inuse)
+              {
+                  limLog(pMac, LOG1, FL("Found free slot in TSPEC list. Add to TSPEC table entry %d"), ctspec);
+                  break;
+              }
+          }
 
-            if (ctspec >= LIM_NUM_TSPEC_MAX)
-                return eSIR_FAILURE;
+          if (ctspec >= LIM_NUM_TSPEC_MAX)
+              return eSIR_FAILURE;
 
-            //Record the new index entry
-            pTspecList->idx = ctspec;
-        }
+          //Record the new index entry 
+          pTspecList->idx = ctspec;
+      }
     }
 
     // update the tspec info
@@ -776,7 +776,7 @@ tSirRetStatus limTspecAdd(
      */
 #if 0
     if ((pTspec->tsinfo.traffic.direction == SIR_MAC_DIRECTION_UPLINK) ||
-            (pTspec->tsinfo.traffic.direction == SIR_MAC_DIRECTION_BIDIR))
+        (pTspec->tsinfo.traffic.direction == SIR_MAC_DIRECTION_BIDIR))
         queue[staid][pTspec->tsinfo.traffic.userPrio][SCH_UL_QUEUE].ts = 1;
 #endif
     pTspecList->inuse = 1;
@@ -812,22 +812,22 @@ limValidateAccessPolicy(
 
     switch (accessPolicy)
     {
-    case SIR_MAC_ACCESSPOLICY_EDCA:
-        if (pSta->wmeEnabled || pSta->lleEnabled)
-            retval = eSIR_SUCCESS;
-        break;
+        case SIR_MAC_ACCESSPOLICY_EDCA:
+            if (pSta->wmeEnabled || pSta->lleEnabled)
+                retval = eSIR_SUCCESS;
+            break;
 
-    case SIR_MAC_ACCESSPOLICY_HCCA:
-    case SIR_MAC_ACCESSPOLICY_BOTH:
+        case SIR_MAC_ACCESSPOLICY_HCCA:
+        case SIR_MAC_ACCESSPOLICY_BOTH:
 #if 0 //only EDCA supported for now.          
-        // TBD: check wsm doesn't support the hybrid access policy
-        if (pSta->wsmEnabled || pSta->lleEnabled)
-            retval = eSIR_SUCCESS;
-        break;
+            // TBD: check wsm doesn't support the hybrid access policy
+            if (pSta->wsmEnabled || pSta->lleEnabled)
+                retval = eSIR_SUCCESS;
+            break;
 #endif  //only EDCA supported for now.
-    default:
-        PELOGE(limLog(pMac, LOGE, FL("Invalid accessPolicy %d"), accessPolicy);)
-        break;
+        default:
+            PELOGE(limLog(pMac, LOGE, FL("Invalid accessPolicy %d"), accessPolicy);)
+            break;
     }
 
     if (retval != eSIR_SUCCESS)
@@ -860,11 +860,11 @@ tSirRetStatus limAdmitControlAddTS(
     tSirMacQosCapabilityStaIE *pQos,
     tANI_U16                     assocId, // assocId, valid only if alloc==true
     tANI_U8                    alloc, // true=>allocate bw for this tspec,
-    // else determine only if space is available
+                                   // else determine only if space is available
     tSirMacScheduleIE      *pSch,
     tANI_U8                   *pTspecIdx, //index to the lim tspec table.
     tpPESession psessionEntry
-)
+    )
 {
     tpLimTspecInfo pTspecInfo;
     tSirRetStatus  retval;
@@ -882,8 +882,8 @@ tSirRetStatus limAdmitControlAddTS(
 
     // check for duplicate tspec
     retval = (alloc)
-             ? limTspecFindByAssocId(pMac, assocId, &pAddts->tspec, &pMac->lim.tspecInfo[0], &pTspecInfo)
-             : limTspecFindByStaAddr(pMac, pAddr, &pAddts->tspec, &pMac->lim.tspecInfo[0], &pTspecInfo);
+              ? limTspecFindByAssocId(pMac, assocId, &pAddts->tspec, &pMac->lim.tspecInfo[0], &pTspecInfo)
+              : limTspecFindByStaAddr(pMac, pAddr, &pAddts->tspec, &pMac->lim.tspecInfo[0], &pTspecInfo);
 
     if (retval == eSIR_SUCCESS)
     {
@@ -940,7 +940,7 @@ tSirRetStatus limAdmitControlAddTS(
 
     // add tspec to list
     if (limTspecAdd(pMac, pAddr, assocId, &pAddts->tspec, svcInterval, &pTspecInfo)
-            != eSIR_SUCCESS)
+        != eSIR_SUCCESS)
     {
         PELOGE(limLog(pMac, LOGE, FL("no space in tspec list"));)
         return eSIR_FAILURE;
@@ -978,13 +978,13 @@ limAdmitControlDeleteTS(
 
     if (limFindTspec(pMac, assocId, pTsInfo, &pMac->lim.tspecInfo[0], &pTspecInfo) == eSIR_SUCCESS)
     {
-        if(pTspecInfo != NULL)
+        if(pTspecInfo != NULL)    
         {
-            limLog(pMac, ADMIT_CONTROL_LOGLEVEL, FL("Tspec entry %d found"), pTspecInfo->idx);
-
-            *ptspecIdx = pTspecInfo->idx;
-            limTspecDelete(pMac, pTspecInfo);
-            return eSIR_SUCCESS;
+          limLog(pMac, ADMIT_CONTROL_LOGLEVEL, FL("Tspec entry %d found"), pTspecInfo->idx);
+        
+          *ptspecIdx = pTspecInfo->idx;
+          limTspecDelete(pMac, pTspecInfo);
+          return eSIR_SUCCESS;
         }
     }
     return eSIR_FAILURE;
@@ -1056,7 +1056,7 @@ tSirRetStatus limUpdateAdmitPolicy(tpAniSirGlobal    pMac)
     pMac->lim.admitPolicyInfo.bw_factor = (tANI_U8) val;
 
     PELOG1(limLog(pMac, LOG1, FL("LIM: AdmitPolicy %d, bw_factor %d"),
-                  pMac->lim.admitPolicyInfo.type, pMac->lim.admitPolicyInfo.bw_factor);)
+          pMac->lim.admitPolicyInfo.type, pMac->lim.admitPolicyInfo.bw_factor);)
 
     return eSIR_SUCCESS;
 }
@@ -1076,11 +1076,11 @@ tSirRetStatus limUpdateAdmitPolicy(tpAniSirGlobal    pMac)
 
 tSirRetStatus
 limSendHalMsgAddTs(
-    tpAniSirGlobal pMac,
-    tANI_U16       staIdx,
-    tANI_U8         tspecIdx,
-    tSirMacTspecIE tspecIE,
-    tANI_U8        sessionId)
+  tpAniSirGlobal pMac,
+  tANI_U16       staIdx,
+  tANI_U8         tspecIdx,
+  tSirMacTspecIE tspecIE,
+  tANI_U8        sessionId)
 {
     tSirMsgQ msg;
     tpAddTsParams pAddTsParam;
@@ -1088,8 +1088,8 @@ limSendHalMsgAddTs(
     pAddTsParam = vos_mem_malloc(sizeof(tAddTsParams));
     if (NULL == pAddTsParam)
     {
-        PELOGW(limLog(pMac, LOGW, FL("AllocateMemory() failed"));)
-        return eSIR_MEM_ALLOC_FAILED;
+       PELOGW(limLog(pMac, LOGW, FL("AllocateMemory() failed"));)
+       return eSIR_MEM_ALLOC_FAILED;          
     }
 
     vos_mem_set((tANI_U8 *)pAddTsParam, sizeof(tAddTsParams), 0);
@@ -1097,7 +1097,7 @@ limSendHalMsgAddTs(
     pAddTsParam->tspecIdx = tspecIdx;
     vos_mem_copy(&pAddTsParam->tspec, &tspecIE, sizeof(tSirMacTspecIE));
     pAddTsParam->sessionId = sessionId;
-
+ 
     msg.type = WDA_ADD_TS_REQ;
     msg.bodyptr = pAddTsParam;
     msg.bodyval = 0;
@@ -1110,12 +1110,12 @@ limSendHalMsgAddTs(
 
     if(eSIR_SUCCESS != wdaPostCtrlMsg(pMac, &msg))
     {
-        PELOGW(limLog(pMac, LOGW, FL("wdaPostCtrlMsg() failed"));)
-        SET_LIM_PROCESS_DEFD_MESGS(pMac, true);
-        vos_mem_free(pAddTsParam);
-        return eSIR_FAILURE;
+       PELOGW(limLog(pMac, LOGW, FL("wdaPostCtrlMsg() failed"));)
+       SET_LIM_PROCESS_DEFD_MESGS(pMac, true);
+       vos_mem_free(pAddTsParam);
+       return eSIR_FAILURE;
     }
-    return eSIR_SUCCESS;
+  return eSIR_SUCCESS;
 }
 
 /** -------------------------------------------------------------
@@ -1130,51 +1130,51 @@ limSendHalMsgAddTs(
 
 tSirRetStatus
 limSendHalMsgDelTs(
-    tpAniSirGlobal pMac,
-    tANI_U16       staIdx,
-    tANI_U8         tspecIdx,
-    tSirDeltsReqInfo delts,
-    tANI_U8        sessionId,
-    tANI_U8        *bssId)
+  tpAniSirGlobal pMac,
+  tANI_U16       staIdx,
+  tANI_U8         tspecIdx,
+  tSirDeltsReqInfo delts,
+  tANI_U8        sessionId,
+  tANI_U8        *bssId)
 {
-    tSirMsgQ msg;
-    tpDelTsParams pDelTsParam;
+  tSirMsgQ msg;
+  tpDelTsParams pDelTsParam;
 
-    pDelTsParam = vos_mem_malloc(sizeof(tDelTsParams));
-    if (NULL == pDelTsParam)
-    {
-        limLog(pMac, LOGP, FL("AllocateMemory() failed"));
-        return eSIR_MEM_ALLOC_FAILED;
-    }
+  pDelTsParam = vos_mem_malloc(sizeof(tDelTsParams));
+  if (NULL == pDelTsParam)
+  {
+     limLog(pMac, LOGP, FL("AllocateMemory() failed"));
+     return eSIR_MEM_ALLOC_FAILED;
+  }
 
-    msg.type = WDA_DEL_TS_REQ;
-    msg.bodyptr = pDelTsParam;
-    msg.bodyval = 0;
-    vos_mem_set((tANI_U8 *)pDelTsParam, sizeof(tDelTsParams), 0);
+  msg.type = WDA_DEL_TS_REQ;
+  msg.bodyptr = pDelTsParam;
+  msg.bodyval = 0;
+  vos_mem_set((tANI_U8 *)pDelTsParam, sizeof(tDelTsParams), 0);
 
-    //filling message parameters.
-    pDelTsParam->staIdx = staIdx;
-    pDelTsParam->tspecIdx = tspecIdx;
-    vos_mem_copy(&pDelTsParam->bssId, bssId, sizeof(tSirMacAddr));
+  //filling message parameters.
+  pDelTsParam->staIdx = staIdx;
+  pDelTsParam->tspecIdx = tspecIdx;
+  vos_mem_copy(&pDelTsParam->bssId, bssId, sizeof(tSirMacAddr));
 
-    PELOGW(limLog(pMac, LOGW, FL("calling wdaPostCtrlMsg()"));)
-    MTRACE(macTraceMsgTx(pMac, sessionId, msg.type));
+  PELOGW(limLog(pMac, LOGW, FL("calling wdaPostCtrlMsg()"));)
+  MTRACE(macTraceMsgTx(pMac, sessionId, msg.type));
 
-    if(eSIR_SUCCESS != wdaPostCtrlMsg(pMac, &msg))
-    {
-        PELOGW(limLog(pMac, LOGW, FL("wdaPostCtrlMsg() failed"));)
-        vos_mem_free(pDelTsParam);
-        return eSIR_FAILURE;
-    }
-    return eSIR_SUCCESS;
+  if(eSIR_SUCCESS != wdaPostCtrlMsg(pMac, &msg))
+  {
+     PELOGW(limLog(pMac, LOGW, FL("wdaPostCtrlMsg() failed"));)
+     vos_mem_free(pDelTsParam);
+     return eSIR_FAILURE;
+  }
+  return eSIR_SUCCESS;  
 }
 
 /** -------------------------------------------------------------
 \fn     limProcessHalAddTsRsp
-\brief  This function process the WDA_ADD_TS_RSP from HAL.
+\brief  This function process the WDA_ADD_TS_RSP from HAL. 
 \       If response is successful, then send back SME_ADDTS_RSP.
-\       Otherwise, send DELTS action frame to peer and then
-\       then send back SME_ADDTS_RSP.
+\       Otherwise, send DELTS action frame to peer and then 
+\       then send back SME_ADDTS_RSP. 
 \
 \param  tpAniSirGlobal  pMac
 \param  tpSirMsgQ   limMsg
@@ -1189,7 +1189,7 @@ void limProcessHalAddTsRsp(tpAniSirGlobal pMac, tpSirMsgQ limMsg)
     tpPESession  psessionEntry = NULL;
 
 
-    /* Need to process all the deferred messages enqueued
+    /* Need to process all the deferred messages enqueued 
      * since sending the WDA_ADD_TS_REQ.
      */
     SET_LIM_PROCESS_DEFD_MESGS(pMac, true);
@@ -1202,15 +1202,15 @@ void limProcessHalAddTsRsp(tpAniSirGlobal pMac, tpSirMsgQ limMsg)
 
     pAddTsRspMsg = (tpAddTsParams) (limMsg->bodyptr);
 
-    // 090803: Use peFindSessionBySessionId() to obtain the PE session context
+    // 090803: Use peFindSessionBySessionId() to obtain the PE session context       
     // from the sessionId in the Rsp Msg from HAL
     psessionEntry = peFindSessionBySessionId(pMac, pAddTsRspMsg->sessionId);
 
     if(psessionEntry == NULL)
     {
         PELOGE(limLog(pMac, LOGE,FL("Session does Not exist with given sessionId :%d "), pAddTsRspMsg->sessionId);)
-        limSendSmeAddtsRsp(pMac, rspReqd, eSIR_SME_ADDTS_RSP_FAILED, psessionEntry, pAddTsRspMsg->tspec,
-                           pMac->lim.gLimAddtsReq.sessionId, pMac->lim.gLimAddtsReq.transactionId);
+        limSendSmeAddtsRsp(pMac, rspReqd, eSIR_SME_ADDTS_RSP_FAILED, psessionEntry, pAddTsRspMsg->tspec, 
+              pMac->lim.gLimAddtsReq.sessionId, pMac->lim.gLimAddtsReq.transactionId);
         goto end;
     }
 
@@ -1219,16 +1219,16 @@ void limProcessHalAddTsRsp(tpAniSirGlobal pMac, tpSirMsgQ limMsg)
         limLog(pMac, LOG1, FL("Received successful ADDTS response from HAL "));
         // Use the smesessionId and smetransactionId from the PE session context
         limSendSmeAddtsRsp(pMac, rspReqd, eSIR_SME_SUCCESS, psessionEntry, pAddTsRspMsg->tspec,
-                           psessionEntry->smeSessionId, psessionEntry->transactionId);
+                psessionEntry->smeSessionId, psessionEntry->transactionId);
         goto end;
     }
     else
     {
         limLog(pMac, LOG1, FL("Received failure ADDTS response from HAL "));
 
-        // Send DELTS action frame to AP
-        // 090803: Get peer MAC addr from session
-#if 0
+        // Send DELTS action frame to AP        
+        // 090803: Get peer MAC addr from session        
+#if 0  
         cfgLen = sizeof(tSirMacAddr);
         if (wlan_cfgGetStr(pMac, WNI_CFG_BSSID, peerMacAddr, &cfgLen) != eSIR_SUCCESS)
         {
@@ -1238,24 +1238,24 @@ void limProcessHalAddTsRsp(tpAniSirGlobal pMac, tpSirMsgQ limMsg)
 #endif //TO SUPPORT BT-AMP
         sirCopyMacAddr(peerMacAddr,psessionEntry->bssId);
 
-        // 090803: Add the SME Session ID
+        // 090803: Add the SME Session ID        
         limSendDeltsReqActionFrame(pMac, peerMacAddr, rspReqd, &pAddTsRspMsg->tspec.tsinfo, &pAddTsRspMsg->tspec,
-                                   //psessionEntry->smeSessionId);
-                                   psessionEntry);
+                //psessionEntry->smeSessionId);
+                psessionEntry);
 
         // Delete TSPEC
-        // 090803: Pull the hash table from the session
-        pSta = dphLookupAssocId(pMac, pAddTsRspMsg->staIdx, &assocId,
-                                &psessionEntry->dph.dphHashTable);
+        // 090803: Pull the hash table from the session        
+        pSta = dphLookupAssocId(pMac, pAddTsRspMsg->staIdx, &assocId, 
+                &psessionEntry->dph.dphHashTable);    
         if (pSta != NULL)
             limAdmitControlDeleteTS(pMac, assocId, &pAddTsRspMsg->tspec.tsinfo, NULL, (tANI_U8 *)&pAddTsRspMsg->tspecIdx);
 
         // Send SME_ADDTS_RSP
         // 090803: Use the smesessionId and smetransactionId from the PE session context
         limSendSmeAddtsRsp(pMac, rspReqd, eSIR_SME_ADDTS_RSP_FAILED, psessionEntry, pAddTsRspMsg->tspec,
-                           psessionEntry->smeSessionId, psessionEntry->transactionId);
+                psessionEntry->smeSessionId, psessionEntry->transactionId);
         goto end;
-    }
+   }
 
 end:
     if( pAddTsRspMsg != NULL )

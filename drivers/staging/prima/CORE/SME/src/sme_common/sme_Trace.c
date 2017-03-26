@@ -155,9 +155,9 @@ static tANI_U8* smeTraceGetRxMsgString( tANI_U32 code )
         CASE_RETURN_STRING(TRACE_CODE_SME_RX_HDD_EXTSCAN_SET_SIGNF_CHANGE);
         CASE_RETURN_STRING(TRACE_CODE_SME_RX_HDD_EXTSCAN_RESET_SIGNF_CHANGE);
         CASE_RETURN_STRING(TRACE_CODE_SME_RX_HDD_EXTSCAN_GET_CACHED_RESULTS);
-    default:
-        return( "UNKNOWN" );
-        break;
+        default:
+            return( "UNKNOWN" );
+            break;
     }
 }
 static tANI_U8* smeTraceGetCommandString( tANI_U32 command )
@@ -203,36 +203,36 @@ static tANI_U8* smeTraceGetCommandString( tANI_U32 command )
 #endif
         CASE_RETURN_STRING(eSmeCommandRemainOnChannel);
         CASE_RETURN_STRING(eSmeCommandNoAUpdate);
-    default:
-        return( "UNKNOWN" );
-        break;
+        default:
+            return( "UNKNOWN" );
+            break;
     }
 }
 static void smeTraceDump(tpAniSirGlobal pMac, tpvosTraceRecord pRecord,
-                         tANI_U16 recIndex)
+                                                            tANI_U16 recIndex)
 {
     switch (pRecord->code) {
-    case TRACE_CODE_SME_COMMAND:
-        smsLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session, "SME COMMAND:",
-               smeTraceGetCommandString(pRecord->data), pRecord->data);
-        break;
-    case TRACE_CODE_SME_TX_WDA_MSG:
-        smsLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session, "TX WDA Msg:",
-               macTraceGetWdaMsgString((tANI_U16)pRecord->data),
-               pRecord->data);
-        break;
-    case TRACE_CODE_SME_RX_WDA_MSG:
-        smsLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session, "RX WDA Msg:",
-               macTraceGetSmeMsgString((tANI_U16)pRecord->data),
-               pRecord->data);
-        break;
-    default:
-        smsLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session, "RX HDD MSG:",
-               smeTraceGetRxMsgString(pRecord->code), pRecord->data);
+        case TRACE_CODE_SME_COMMAND:
+            smsLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                recIndex, pRecord->time, pRecord->session, "SME COMMAND:",
+                 smeTraceGetCommandString(pRecord->data), pRecord->data);
+            break;
+        case TRACE_CODE_SME_TX_WDA_MSG:
+           smsLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                recIndex, pRecord->time, pRecord->session, "TX WDA Msg:",
+                macTraceGetWdaMsgString((tANI_U16)pRecord->data),
+                                              pRecord->data);
+            break;
+        case TRACE_CODE_SME_RX_WDA_MSG:
+            smsLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                recIndex, pRecord->time, pRecord->session, "RX WDA Msg:",
+                macTraceGetSmeMsgString((tANI_U16)pRecord->data),
+                                              pRecord->data);
+            break;
+        default:
+            smsLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                recIndex, pRecord->time, pRecord->session, "RX HDD MSG:",
+                smeTraceGetRxMsgString(pRecord->code), pRecord->data);
         break;
     }
 }

@@ -90,7 +90,7 @@ limProcessDisassocFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession
         // Received Disassoc frame from a BC/MC address
         // Log error and ignore it
         PELOGE(limLog(pMac, LOG1,
-                      FL("received Disassoc frame from a BC/MC address"));)
+               FL("received Disassoc frame from a BC/MC address"));)
 
         return;
     }
@@ -100,7 +100,7 @@ limProcessDisassocFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession
         // Received Disassoc frame for a MC address
         // Log error and ignore it
         PELOGE(limLog(pMac, LOG1,
-                      FL("received Disassoc frame for a MC address"));)
+               FL("received Disassoc frame for a MC address"));)
 
         return;
     }
@@ -125,17 +125,17 @@ limProcessDisassocFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession
     reasonCode = sirReadU16(pBody);
 
     limLog(pMac, LOGE,
-           FL("Received Disassoc frame for Addr: "MAC_ADDRESS_STR
-              "(mlm state=%s, sme state=%d),"
-              "with reason code %d from "MAC_ADDRESS_STR), MAC_ADDR_ARRAY(pHdr->da),
-           limMlmStateStr(psessionEntry->limMlmState), psessionEntry->limSmeState,
-           reasonCode, MAC_ADDR_ARRAY(pHdr->sa));
+        FL("Received Disassoc frame for Addr: "MAC_ADDRESS_STR
+        "(mlm state=%s, sme state=%d),"
+        "with reason code %d from "MAC_ADDRESS_STR), MAC_ADDR_ARRAY(pHdr->da),
+        limMlmStateStr(psessionEntry->limMlmState), psessionEntry->limSmeState,
+        reasonCode, MAC_ADDR_ARRAY(pHdr->sa));
 
     /**
-    * Extract 'associated' context for STA, if any.
-    * This is maintained by DPH and created by LIM.
-    */
-    pStaDs = dphLookupHashEntry(pMac, pHdr->sa, &aid, &psessionEntry->dph.dphHashTable);
+   * Extract 'associated' context for STA, if any.
+   * This is maintained by DPH and created by LIM.
+   */
+     pStaDs = dphLookupHashEntry(pMac, pHdr->sa, &aid, &psessionEntry->dph.dphHashTable);
 
     if (pStaDs == NULL)
     {
@@ -144,9 +144,9 @@ limProcessDisassocFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession
          * Log error.
          */
         PELOGE(limLog(pMac, LOG1,
-                      FL("received Disassoc frame from STA that does not have context "
-                         "reasonCode=%d, addr "MAC_ADDRESS_STR),
-                      reasonCode,MAC_ADDR_ARRAY(pHdr->sa));)
+           FL("received Disassoc frame from STA that does not have context "
+           "reasonCode=%d, addr "MAC_ADDRESS_STR),
+            reasonCode,MAC_ADDR_ARRAY(pHdr->sa));)
 
         return;
     }
@@ -154,8 +154,8 @@ limProcessDisassocFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession
     if (limCheckDisassocDeauthAckPending(pMac, (tANI_U8*)pHdr->sa))
     {
         PELOGE(limLog(pMac, LOG1,
-                      FL("Ignore the DisAssoc received, while waiting "
-                         "for ack of disassoc/deauth"));)
+                    FL("Ignore the DisAssoc received, while waiting "
+                    "for ack of disassoc/deauth"));)
         limCleanUpDisassocDeauthReq(pMac,(tANI_U8*)pHdr->sa, 1);
         return;
     }
@@ -169,7 +169,7 @@ limProcessDisassocFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession
         */
         if (!IS_REASSOC_BSSID(pMac,pHdr->sa,psessionEntry)) {
             PELOGE(limLog(pMac, LOGE, FL("Ignore the DisAssoc received, while "
-                                         "Processing ReAssoc with different/unknown AP"));)
+                     "Processing ReAssoc with different/unknown AP"));)
             return;
         }
         /** If the Disassoc is received from the new AP to which we tried to ReAssociate
@@ -177,82 +177,82 @@ limProcessDisassocFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession
          */
         if (!IS_CURRENT_BSSID(pMac, pHdr->sa,psessionEntry)) {
             PELOGE(limLog(pMac, LOGE, FL("received Disassoc from the New AP to "
-                                         "which ReAssoc is sent "));)
+                                      "which ReAssoc is sent "));)
             limRestorePreReassocState(pMac,
-                                      eSIR_SME_REASSOC_REFUSED, reasonCode,psessionEntry);
+                                  eSIR_SME_REASSOC_REFUSED, reasonCode,psessionEntry);
             return;
         }
     }
 
     if ( (psessionEntry->limSystemRole == eLIM_AP_ROLE) ||
-            (psessionEntry->limSystemRole == eLIM_BT_AMP_AP_ROLE) )
+         (psessionEntry->limSystemRole == eLIM_BT_AMP_AP_ROLE) )
     {
         switch (reasonCode)
         {
-        case eSIR_MAC_UNSPEC_FAILURE_REASON:
-        case eSIR_MAC_DISASSOC_DUE_TO_INACTIVITY_REASON:
-        case eSIR_MAC_DISASSOC_LEAVING_BSS_REASON:
-        case eSIR_MAC_MIC_FAILURE_REASON:
-        case eSIR_MAC_4WAY_HANDSHAKE_TIMEOUT_REASON:
-        case eSIR_MAC_GR_KEY_UPDATE_TIMEOUT_REASON:
-        case eSIR_MAC_RSN_IE_MISMATCH_REASON:
-        case eSIR_MAC_1X_AUTH_FAILURE_REASON:
-            // Valid reasonCode in received Disassociation frame
-            break;
+            case eSIR_MAC_UNSPEC_FAILURE_REASON:
+            case eSIR_MAC_DISASSOC_DUE_TO_INACTIVITY_REASON:
+            case eSIR_MAC_DISASSOC_LEAVING_BSS_REASON:
+            case eSIR_MAC_MIC_FAILURE_REASON:
+            case eSIR_MAC_4WAY_HANDSHAKE_TIMEOUT_REASON:
+            case eSIR_MAC_GR_KEY_UPDATE_TIMEOUT_REASON:
+            case eSIR_MAC_RSN_IE_MISMATCH_REASON:
+            case eSIR_MAC_1X_AUTH_FAILURE_REASON:
+                // Valid reasonCode in received Disassociation frame
+                break;
 
-        default:
-            // Invalid reasonCode in received Disassociation frame
-            PELOGE(limLog(pMac, LOGE,
-                          FL("received Disassoc frame with invalid reasonCode "
-                             "%d from "MAC_ADDRESS_STR),
-                          reasonCode, MAC_ADDR_ARRAY(pHdr->sa));)
-            break;
+            default:
+                // Invalid reasonCode in received Disassociation frame
+                PELOGE(limLog(pMac, LOGE,
+                       FL("received Disassoc frame with invalid reasonCode "
+                       "%d from "MAC_ADDRESS_STR),
+                       reasonCode, MAC_ADDR_ARRAY(pHdr->sa));)
+                break;
         }
     }
     else if (  ((psessionEntry->limSystemRole == eLIM_STA_ROLE) ||
-                (psessionEntry->limSystemRole == eLIM_BT_AMP_STA_ROLE)) &&
-               ((psessionEntry->limSmeState != eLIM_SME_WT_JOIN_STATE) &&
+                (psessionEntry->limSystemRole == eLIM_BT_AMP_STA_ROLE)) &&  
+               ((psessionEntry->limSmeState != eLIM_SME_WT_JOIN_STATE) && 
                 (psessionEntry->limSmeState != eLIM_SME_WT_AUTH_STATE)  &&
                 (psessionEntry->limSmeState != eLIM_SME_WT_ASSOC_STATE)  &&
                 (psessionEntry->limSmeState != eLIM_SME_WT_REASSOC_STATE) ))
     {
         switch (reasonCode)
         {
-        case eSIR_MAC_UNSPEC_FAILURE_REASON:
-        case eSIR_MAC_DISASSOC_DUE_TO_INACTIVITY_REASON:
-        case eSIR_MAC_DISASSOC_DUE_TO_DISABILITY_REASON:
-        case eSIR_MAC_CLASS2_FRAME_FROM_NON_AUTH_STA_REASON:
-        case eSIR_MAC_CLASS3_FRAME_FROM_NON_ASSOC_STA_REASON:
-        case eSIR_MAC_MIC_FAILURE_REASON:
-        case eSIR_MAC_4WAY_HANDSHAKE_TIMEOUT_REASON:
-        case eSIR_MAC_GR_KEY_UPDATE_TIMEOUT_REASON:
-        case eSIR_MAC_RSN_IE_MISMATCH_REASON:
-        case eSIR_MAC_1X_AUTH_FAILURE_REASON:
-        case eSIR_MAC_PREV_AUTH_NOT_VALID_REASON:
-            // Valid reasonCode in received Disassociation frame
-            break;
+            case eSIR_MAC_UNSPEC_FAILURE_REASON:
+            case eSIR_MAC_DISASSOC_DUE_TO_INACTIVITY_REASON:
+            case eSIR_MAC_DISASSOC_DUE_TO_DISABILITY_REASON:
+            case eSIR_MAC_CLASS2_FRAME_FROM_NON_AUTH_STA_REASON:
+            case eSIR_MAC_CLASS3_FRAME_FROM_NON_ASSOC_STA_REASON:
+            case eSIR_MAC_MIC_FAILURE_REASON:
+            case eSIR_MAC_4WAY_HANDSHAKE_TIMEOUT_REASON:
+            case eSIR_MAC_GR_KEY_UPDATE_TIMEOUT_REASON:
+            case eSIR_MAC_RSN_IE_MISMATCH_REASON:
+            case eSIR_MAC_1X_AUTH_FAILURE_REASON:
+            case eSIR_MAC_PREV_AUTH_NOT_VALID_REASON:
+                // Valid reasonCode in received Disassociation frame
+                break;
 
-        case eSIR_MAC_DEAUTH_LEAVING_BSS_REASON:
-        case eSIR_MAC_DISASSOC_LEAVING_BSS_REASON:
-            // Valid reasonCode in received Disassociation frame
-            // as long as we're not about to channel switch
-            if(psessionEntry->gLimChannelSwitch.state != eLIM_CHANNEL_SWITCH_IDLE)
-            {
-                limLog(pMac, LOGE,
-                       FL("Ignoring disassoc frame due to upcoming "
-                          "channel switch, from "MAC_ADDRESS_STR),MAC_ADDR_ARRAY(pHdr->sa));
+            case eSIR_MAC_DEAUTH_LEAVING_BSS_REASON:
+            case eSIR_MAC_DISASSOC_LEAVING_BSS_REASON:
+                // Valid reasonCode in received Disassociation frame
+                // as long as we're not about to channel switch
+                if(psessionEntry->gLimChannelSwitch.state != eLIM_CHANNEL_SWITCH_IDLE)
+                {
+                    limLog(pMac, LOGE,
+                        FL("Ignoring disassoc frame due to upcoming "
+                           "channel switch, from "MAC_ADDRESS_STR),MAC_ADDR_ARRAY(pHdr->sa));
+                    return;
+                }
+                break;
+
+            default:
+                // Invalid reasonCode in received Disassociation frame
+                // Log error and ignore the frame
+                PELOGE(limLog(pMac, LOGE,
+                       FL("received Disassoc frame with invalid reasonCode "
+                       "%d from "MAC_ADDRESS_STR), reasonCode,
+                       MAC_ADDR_ARRAY(pHdr->sa));)
                 return;
-            }
-            break;
-
-        default:
-            // Invalid reasonCode in received Disassociation frame
-            // Log error and ignore the frame
-            PELOGE(limLog(pMac, LOGE,
-                          FL("received Disassoc frame with invalid reasonCode "
-                             "%d from "MAC_ADDRESS_STR), reasonCode,
-                          MAC_ADDR_ARRAY(pHdr->sa));)
-            return;
         }
     }
     else
@@ -261,7 +261,7 @@ limProcessDisassocFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession
         // or un-known role. Log and ignore it
         limLog(pMac, LOG1,
                FL("received Disassoc frame with invalid reasonCode %d in role "
-                  "%d in sme state %d from "MAC_ADDRESS_STR), reasonCode,
+               "%d in sme state %d from "MAC_ADDRESS_STR), reasonCode,
                psessionEntry->limSystemRole, psessionEntry->limSmeState,
                MAC_ADDR_ARRAY(pHdr->sa));
 
@@ -269,20 +269,20 @@ limProcessDisassocFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession
     }
 
     if ((pStaDs->mlmStaContext.mlmState == eLIM_MLM_WT_DEL_STA_RSP_STATE) ||
-            (pStaDs->mlmStaContext.mlmState == eLIM_MLM_WT_DEL_BSS_RSP_STATE))
+        (pStaDs->mlmStaContext.mlmState == eLIM_MLM_WT_DEL_BSS_RSP_STATE))
     {
         /**
          * Already in the process of deleting context for the peer
          * and received Disassociation frame. Log and Ignore.
          */
         PELOGE(limLog(pMac, LOGE,
-                      FL("received Disassoc frame in state %d from "MAC_ADDRESS_STR
-                         ",isDisassocDeauthInProgress : %d\n"),
-                      pStaDs->mlmStaContext.mlmState, MAC_ADDR_ARRAY(pHdr->sa),
-                      pStaDs->isDisassocDeauthInProgress);)
+               FL("received Disassoc frame in state %d from "MAC_ADDRESS_STR
+               ",isDisassocDeauthInProgress : %d\n"),
+               pStaDs->mlmStaContext.mlmState, MAC_ADDR_ARRAY(pHdr->sa),
+               pStaDs->isDisassocDeauthInProgress);)
 
         return;
-    }
+    } 
 
     if (pStaDs->mlmStaContext.mlmState != eLIM_MLM_LINK_ESTABLISHED_STATE)
     {
@@ -294,9 +294,9 @@ limProcessDisassocFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession
             pStaDs->mlmStaContext.updateContext = 1;
 
         PELOGE(limLog(pMac, LOGE,
-                      FL("received Disassoc frame from peer that is in state %d, addr "
-                         MAC_ADDRESS_STR),
-                      pStaDs->mlmStaContext.mlmState, MAC_ADDR_ARRAY(pHdr->sa));)
+               FL("received Disassoc frame from peer that is in state %d, addr "
+               MAC_ADDRESS_STR),
+               pStaDs->mlmStaContext.mlmState, MAC_ADDR_ARRAY(pHdr->sa));)
 
     } // if (pStaDs->mlmStaContext.mlmState != eLIM_MLM_LINK_ESTABLISHED_STATE)
 
@@ -316,17 +316,17 @@ limProcessDisassocFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession
 
     if (limIsReassocInProgress(pMac,psessionEntry)) {
 
-        /* If we're in the middle of ReAssoc and received disassoc from
-         * the ReAssoc AP, then notify SME by sending REASSOC_RSP with
-         * failure result code. By design, SME will then issue "Disassoc"
-         * and cleanup will happen at that time.
-         */
+    /* If we're in the middle of ReAssoc and received disassoc from 
+     * the ReAssoc AP, then notify SME by sending REASSOC_RSP with 
+     * failure result code. By design, SME will then issue "Disassoc"  
+     * and cleanup will happen at that time. 
+     */
         PELOGE(limLog(pMac, LOGE, FL("received Disassoc from AP while waiting "
-                                     "for Reassoc Rsp"));)
-
+                                  "for Reassoc Rsp"));)
+     
         if (psessionEntry->limAssocResponseData) {
             vos_mem_free(psessionEntry->limAssocResponseData);
-            psessionEntry->limAssocResponseData = NULL;
+            psessionEntry->limAssocResponseData = NULL;                            
         }
 
         limRestorePreReassocState(pMac,eSIR_SME_REASSOC_REFUSED, reasonCode,psessionEntry);
@@ -337,7 +337,7 @@ limProcessDisassocFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession
                       (tANI_U32 *) &mlmDisassocInd);
 
 
-    // send eWNI_SME_DISASSOC_IND to SME
+    // send eWNI_SME_DISASSOC_IND to SME  
     limSendSmeDisassocInd(pMac, pStaDs,psessionEntry);
 
     return;

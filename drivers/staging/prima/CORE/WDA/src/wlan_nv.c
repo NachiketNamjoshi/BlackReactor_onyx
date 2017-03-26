@@ -97,7 +97,7 @@ const sHalNv nvDefaults =
                 {1550},    // HAL_PHY_RATE_11A_DUP_36_MBPS,
                 {1550},    // HAL_PHY_RATE_11A_DUP_48_MBPS,
                 {1500},    // HAL_PHY_RATE_11A_DUP_54_MBPS,
-
+                
                 //MCS Index #0-7(20/40MHz)
                 {1700},    // HAL_PHY_RATE_MCS_1NSS_6_5_MBPS,
                 {1700},    // HAL_PHY_RATE_MCS_1NSS_13_MBPS,
@@ -136,7 +136,7 @@ const sHalNv nvDefaults =
 
 #ifdef WLAN_FEATURE_11AC
                 //11AC rates
-                //11A duplicate 80MHz Rates
+               //11A duplicate 80MHz Rates
                 {1700},    // HAL_PHY_RATE_11AC_DUP_6_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_9_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_12_MBPS,
@@ -146,7 +146,7 @@ const sHalNv nvDefaults =
                 {1550},    // HAL_PHY_RATE_11AC_DUP_48_MBPS,
                 {1500},    // HAL_PHY_RATE_11AC_DUP_54_MBPS,
 
-                //11ac 20MHZ NG, SG
+               //11ac 20MHZ NG, SG
                 {0000},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_6_5_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_13_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_19_5_MBPS,
@@ -172,7 +172,7 @@ const sHalNv nvDefaults =
                 {0000},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_SGI_96_1_MBPS,
 #endif
 
-                //11ac 40MHZ NG, SG
+               //11ac 40MHZ NG, SG
                 {0000},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_13_5_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_27_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_40_5_MBPS,
@@ -194,7 +194,7 @@ const sHalNv nvDefaults =
                 {0000},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_SGI_180_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_SGI_200_MBPS,
 
-                //11ac 80MHZ NG, SG
+               //11ac 80MHZ NG, SG
                 {0000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_29_3_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_58_5_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_87_8_MBPS,
@@ -286,7 +286,7 @@ const sHalNv nvDefaults =
 
 #ifdef WLAN_FEATUURE_11AC
                 ///11AC rates
-                ///11A duplicate 80MHz Rates
+               ///11A duplicate 80MHz Rates
                 {1700},    // HAL_PHY_RATE_11AC_DUP_6_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_9_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_12_MBPS,
@@ -296,7 +296,7 @@ const sHalNv nvDefaults =
                 {1550},    // HAL_PHY_RATE_11AC_DUP_48_MBPS,
                 {1500},    // HAL_PHY_RATE_11AC_DUP_54_MBPS,
 
-                ///11ac 20MHZ NG, SG
+               ///11ac 20MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_6_5_MBPS,
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_13_MBPS,
                 {1350},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_19_5_MBPS,
@@ -321,7 +321,7 @@ const sHalNv nvDefaults =
 #ifdef WCN_PRONTO
                 { 800},     // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_SGI_96_1_MBPS,
 #endif
-                //11ac 40MHZ NG, SG
+               //11ac 40MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_13_5_MBPS,
                 {1300},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_27_MBPS,
                 {1250},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_40_5_MBPS,
@@ -344,7 +344,7 @@ const sHalNv nvDefaults =
                 { 800},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_SGI_200_MBPS,
 
 
-                //11ac 80MHZ NG, SG
+               //11ac 80MHZ NG, SG
                 {1300},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_29_3_MBPS,
                 {1100},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_58_5_MBPS,
                 {1000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_87_8_MBPS,
@@ -436,7 +436,7 @@ const sHalNv nvDefaults =
 
 #ifdef WLAN_FEATUURE_111AC
                 ///11CAC rates
-                ///11Ad duplicate 80MHz Rates
+               ///11Ad duplicate 80MHz Rates
                 {1700},    // HAL_PHY_RATE_11AC_DUP_6_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_9_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_12_MBPS,
@@ -446,7 +446,7 @@ const sHalNv nvDefaults =
                 {1550},    // HAL_PHY_RATE_11AC_DUP_48_MBPS,
                 {1500},    // HAL_PHY_RATE_11AC_DUP_54_MBPS,
 
-                ///11a c 20MHZ NG, SG
+               ///11a c 20MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_6_5_MBPS,
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_13_MBPS,
                 {1350},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_19_5_MBPS,
@@ -471,7 +471,7 @@ const sHalNv nvDefaults =
 #ifdef WCN_PRONTO
                 { 800},     // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_SGI_96_1_MBPS,
 #endif
-                //11ac 40MHZ NG, SG
+               //11ac 40MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_13_5_MBPS,
                 {1300},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_27_MBPS,
                 {1250},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_40_5_MBPS,
@@ -494,7 +494,7 @@ const sHalNv nvDefaults =
                 { 800},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_SGI_200_MBPS,
 
 
-                ///11a c 80MHZ NG, SG
+               ///11a c 80MHZ NG, SG
                 {1300},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_29_3_MBPS,
                 {1100},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_58_5_MBPS,
                 {1000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_87_8_MBPS,
@@ -586,7 +586,7 @@ const sHalNv nvDefaults =
 
 #ifdef WLAN_FEATUURE_11AC
                 ///11CAC rates
-                ///11Ad duplicate 80MHz Rates
+               ///11Ad duplicate 80MHz Rates
                 {1700},    // HAL_PHY_RATE_11AC_DUP_6_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_9_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_12_MBPS,
@@ -596,7 +596,7 @@ const sHalNv nvDefaults =
                 {1550},    // HAL_PHY_RATE_11AC_DUP_48_MBPS,
                 {1500},    // HAL_PHY_RATE_11AC_DUP_54_MBPS,
 
-                ///11a c 20MHZ NG, SG
+               ///11a c 20MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_6_5_MBPS,
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_13_MBPS,
                 {1350},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_19_5_MBPS,
@@ -621,7 +621,7 @@ const sHalNv nvDefaults =
 #ifdef WCN_PRONTO
                 { 800},     // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_SGI_96_1_MBPS,
 #endif
-                //11ac 40MHZ NG, SG
+               //11ac 40MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_13_5_MBPS,
                 {1300},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_27_MBPS,
                 {1250},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_40_5_MBPS,
@@ -644,7 +644,7 @@ const sHalNv nvDefaults =
                 { 800},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_SGI_200_MBPS,
 
 
-                ///11a c 80MHZ NG, SG
+               ///11a c 80MHZ NG, SG
                 {1300},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_29_3_MBPS,
                 {1100},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_58_5_MBPS,
                 {1000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_87_8_MBPS,
@@ -737,7 +737,7 @@ const sHalNv nvDefaults =
 
 #ifdef WLAN_FEATUURE_11AC
                 ///11CAC rates
-                ///11Ad duplicate 80MHz Rates
+               ///11Ad duplicate 80MHz Rates
                 {1700},    // HAL_PHY_RATE_11AC_DUP_6_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_9_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_12_MBPS,
@@ -747,7 +747,7 @@ const sHalNv nvDefaults =
                 {1550},    // HAL_PHY_RATE_11AC_DUP_48_MBPS,
                 {1500},    // HAL_PHY_RATE_11AC_DUP_54_MBPS,
 
-                ///11a c 20MHZ NG, SG
+               ///11a c 20MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_6_5_MBPS,
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_13_MBPS,
                 {1350},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_19_5_MBPS,
@@ -772,7 +772,7 @@ const sHalNv nvDefaults =
 #ifdef WCN_PRONTO
                 { 800},     // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_SGI_96_1_MBPS,
 #endif
-                //11ac 40MHZ NG, SG
+               //11ac 40MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_13_5_MBPS,
                 {1300},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_27_MBPS,
                 {1250},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_40_5_MBPS,
@@ -795,7 +795,7 @@ const sHalNv nvDefaults =
                 { 800},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_SGI_200_MBPS,
 
 
-                ///11a c 80MHZ NG, SG
+               ///11a c 80MHZ NG, SG
                 {1300},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_29_3_MBPS,
                 {1100},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_58_5_MBPS,
                 {1000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_87_8_MBPS,
@@ -839,7 +839,7 @@ const sHalNv nvDefaults =
 
 
             {   // REG_DOMAIN_FCC start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 23},           //RF_CHAN_1,
@@ -955,7 +955,7 @@ const sHalNv nvDefaults =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -973,7 +973,7 @@ const sHalNv nvDefaults =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -993,7 +993,7 @@ const sHalNv nvDefaults =
             }, // REG_DOMAIN_FCC end
 
             {   // REG_DOMAIN_ETSI start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 20},           //RF_CHAN_1,
@@ -1110,7 +1110,7 @@ const sHalNv nvDefaults =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -1128,7 +1128,7 @@ const sHalNv nvDefaults =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -1148,7 +1148,7 @@ const sHalNv nvDefaults =
             }, // REG_DOMAIN_ETSI end
 
             {   // REG_DOMAIN_JAPAN start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 20},           //RF_CHAN_1,
@@ -1265,7 +1265,7 @@ const sHalNv nvDefaults =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -1283,7 +1283,7 @@ const sHalNv nvDefaults =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -1303,9 +1303,9 @@ const sHalNv nvDefaults =
             }, // REG_DOMAIN_JAPAN end
 
             {   // REG_DOMAIN_WORLD start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
-                    //2.4GHz Band
+                                       //2.4GHz Band
                     {NV_CHANNEL_ENABLE, 16},           //RF_CHAN_1,
                     {NV_CHANNEL_ENABLE, 16},           //RF_CHAN_2,
                     {NV_CHANNEL_ENABLE, 16},           //RF_CHAN_3,
@@ -1416,7 +1416,7 @@ const sHalNv nvDefaults =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -1434,7 +1434,7 @@ const sHalNv nvDefaults =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -1454,7 +1454,7 @@ const sHalNv nvDefaults =
             }, // REG_DOMAIN_WORLD end
 
             {   // REG_DOMAIN_N_AMER_EXC_FCC start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 16},           //RF_CHAN_1,
@@ -1571,7 +1571,7 @@ const sHalNv nvDefaults =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -1589,7 +1589,7 @@ const sHalNv nvDefaults =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -1609,7 +1609,7 @@ const sHalNv nvDefaults =
             },   // REG_DOMAIN_N_AMER_EXC_FCC end
 
             {   // REG_DOMAIN_APAC start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 26},           //RF_CHAN_1,
@@ -1726,7 +1726,7 @@ const sHalNv nvDefaults =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -1744,7 +1744,7 @@ const sHalNv nvDefaults =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -1764,7 +1764,7 @@ const sHalNv nvDefaults =
             }, // REG_DOMAIN_APAC end
 
             {   // REG_DOMAIN_KOREA start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 15},           //RF_CHAN_1,
@@ -1881,7 +1881,7 @@ const sHalNv nvDefaults =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -1899,7 +1899,7 @@ const sHalNv nvDefaults =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -1919,7 +1919,7 @@ const sHalNv nvDefaults =
             }, // REG_DOMAIN_KOREA end
 
             {   // REG_DOMAIN_HI_5GHZ start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 14},           //RF_CHAN_1,
@@ -2036,7 +2036,7 @@ const sHalNv nvDefaults =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -2054,7 +2054,7 @@ const sHalNv nvDefaults =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -2074,9 +2074,9 @@ const sHalNv nvDefaults =
             }, // REG_DOMAIN_HI_5GHZ end
 
             {   // REG_DOMAIN_NO_5GHZ start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
-                    //2.4GHz Band
+                                       //2.4GHz Band
                     {NV_CHANNEL_ENABLE, 12},           //RF_CHAN_1,
                     {NV_CHANNEL_ENABLE, 12},           //RF_CHAN_2,
                     {NV_CHANNEL_ENABLE, 12},           //RF_CHAN_3,
@@ -2101,7 +2101,7 @@ const sHalNv nvDefaults =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -2119,7 +2119,7 @@ const sHalNv nvDefaults =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -2255,8 +2255,8 @@ const sHalNv nvDefaults =
                     103 , 103 , 104 , 104 , 104 , 104 , 104 , 105 , 105 , 105 , 105 , 105 , 106 , 106 , 106 , 106 , 106 , 106 , 107 ,
                     107 , 107 , 107 , 107 , 107 , 107 , 108 , 108 , 108 , 108 , 108 , 108 , 109 , 109 , 109 , 109 , 109 , 109 , 109 ,
                     110 , 110 , 110 , 110 , 110 , 110 , 110 , 110 , 111 , 111 , 111 , 111 , 111 , 112 , 112 , 112
-                }
-            }, //RF_CHAN_6
+             }
+           }, //RF_CHAN_6
 
             //ch 7
             {
@@ -2634,7 +2634,7 @@ const sHalNv nvDefaults =
                 }
             }, //RF_CHAN_60
 
-            //5500: ch 64
+           //5500: ch 64
             {
                 {
                     4 , 4 , 5 , 5 , 5 , 5 , 5 , 6 , 6 , 6 , 6 , 7 , 7 , 7 , 7 , 8 , 8 , 8 , 8 , 9 , 9 , 9 , 9 , 10 , 10 , 10 , 11 , 11,
@@ -2685,7 +2685,7 @@ const sHalNv nvDefaults =
                 }
             }, //RF_CHAN_104
 
-            //5500: ch 108
+           //5500: ch 108
             {
                 {
                     4 , 4 , 5 , 5 , 5 , 5 , 5 , 6 , 6 , 6 , 6 , 7 , 7 , 7 , 7 , 8 , 8 , 8 , 8 , 9 , 9 , 9 , 9 , 10 , 10 , 10 , 11 , 11,
@@ -2982,7 +2982,7 @@ const sHalNv nvDefaults =
             {
                 {
                     10 , 10 , 11 , 12 , 12 , 13 , 14 , 15 , 15 , 16 , 17 , 17 , 18 , 19 , 20 , 20 , 22 , 23 , 25 , 26 , 28 , 29 , 31 ,
-                    33 , 34 , 36 , 37 , 38 , 40 , 41 , 42 , 44 , 45 , 46 , 47 , 48 , 49 , 50 , 51 , 52 , 52 , 53 , 54 , 55 , 55 , 56 ,
+                     33 , 34 , 36 , 37 , 38 , 40 , 41 , 42 , 44 , 45 , 46 , 47 , 48 , 49 , 50 , 51 , 52 , 52 , 53 , 54 , 55 , 55 , 56 ,
                     57 , 57 , 58 , 59 , 59 , 60 , 61 , 61 , 62 , 62 , 63 , 64 , 64 , 65 , 66 , 66 , 67 , 67 , 68 , 68 , 69 , 69 , 70 ,
                     70 , 71 , 71 , 71 , 72 , 72 , 72 , 73 , 73 , 73 , 73 , 74 , 74 , 74 , 75 , 75 , 76 , 76 , 76 , 77 , 77 , 77 , 78 ,
                     78 , 78 , 79 , 79 , 79 , 80 , 80 , 80 , 81 , 81 , 81 , 82 , 82 , 82 , 83 , 83 , 83 , 84 , 84 , 84 , 85 , 85 , 85 ,
@@ -3004,7 +3004,7 @@ const sHalNv nvDefaults =
                     57 , 57 , 58 , 59 , 59 , 60 , 61 , 61 , 62 , 62 , 63 , 64 , 64 , 65 , 66 , 66 , 67 , 67 , 68 , 68 , 69 , 69 , 70 ,
                     70 , 71 , 71 , 71 , 72 , 72 , 72 , 73 , 73 , 73 , 73 , 74 , 74 , 74 , 75 , 75 , 76 , 76 , 76 , 77 , 77 , 77 , 78 ,
                     78 , 78 , 79 , 79 , 79 , 80 , 80 , 80 , 81 , 81 , 81 , 82 , 82 , 82 , 83 , 83 , 83 , 84 , 84 , 84 , 85 , 85 , 85 ,
-                    86 , 86 , 86 , 86 , 87 , 87 , 87 , 87 , 88 , 88 , 88 , 88 , 88 , 89 , 89 , 89 , 89 , 90 , 90 , 90 , 90 , 91 , 91 ,
+                     86 , 86 , 86 , 86 , 87 , 87 , 87 , 87 , 88 , 88 , 88 , 88 , 88 , 89 , 89 , 89 , 89 , 90 , 90 , 90 , 90 , 91 , 91 ,
                     91 , 91 , 91 , 92 , 92 , 92 , 92 , 93 , 93 , 93 , 93 , 93 , 94 , 94 , 94 , 94 , 95 , 95 , 95 , 95 , 96 , 96 , 96 ,
                     96 , 97 , 97 , 97 , 97 , 97 , 98 , 98 , 98 , 98 , 98 , 98 , 98 , 99 , 99 , 99 , 99 , 99 , 99 , 100 , 100 , 100 ,
                     100 , 101 , 101 , 101 , 101 , 101 , 102 , 102 , 102 , 102 , 102 , 102 , 102 , 102 , 102 , 103 , 103 , 103 , 103 ,
@@ -3064,7 +3064,7 @@ const sHalNv nvDefaults =
                     73 , 73 , 74 , 74 , 74 , 74 , 74 , 74 , 75 , 75 , 75 , 75 , 75 , 75 , 76 , 76 , 76 , 76 , 76 , 76 , 76 , 77 , 77 ,
                     77 , 77 , 77 , 77 , 78 , 78 , 78 , 78 , 78 , 78 , 78 , 79 , 79 , 79 , 79 , 79 , 79 , 80 , 80 , 80 , 80 , 80 , 80 ,
                     81 , 81 , 81 , 81 , 81 , 81 , 81 , 82 , 82 , 82 , 82 , 82 , 82 , 83 , 83 , 83 , 83 , 84 , 84 , 85 , 85
-                }
+                    }
             }, //RF_CHAN_BOND_9
 
             //ch 10
@@ -3799,7 +3799,7 @@ const sHalNv nvDefaults =
             0x7FFF,        // tANI_U16    tempStart;
             0x7FFF,        // tANI_U16    tempFinish;
 
-            {   //txLoCorrections
+            { //txLoCorrections
                 {
                     { 0x00, 0x00 }, // TX_GAIN_STEP_0
                     { 0x00, 0x00 }, // TX_GAIN_STEP_1
@@ -4054,7 +4054,7 @@ const sHalNv nvDefaults =
                 }  //RF_CHAN_14
             },        // tTxLoCorrections    txLoValues;
 
-            {   //sTxIQChannel
+            { //sTxIQChannel
                 {
                     { 0x0000, 0x0000, 0x0000 }, // TX_GAIN_STEP_0
                     { 0x0000, 0x0000, 0x0000 }, // TX_GAIN_STEP_1
@@ -4309,7 +4309,7 @@ const sHalNv nvDefaults =
                 }  //RF_CHAN_14
             },        // sTxIQChannel        txIqValues;
 
-            {   //sRxIQChannel
+            { //sRxIQChannel
                 {
                     { 0x0000, 0x0000, 0x0000 }, // RX_GAIN_STEP_0
                     { 0x0000, 0x0000, 0x0000 }, // RX_GAIN_STEP_1
@@ -4564,7 +4564,7 @@ const sHalNv nvDefaults =
                 }  //RF_CHAN_14
             },        // sRxIQChannel        rxIqValues;
 
-            {   // tTpcConfig          clpcData[MAX_TPC_CHANNELS]
+            { // tTpcConfig          clpcData[MAX_TPC_CHANNELS]
                 {
                     {
                         {
@@ -5240,7 +5240,7 @@ const sHalNvV2 nvDefaultsV2 =
 
 #ifdef WLAN_FEATURE_11AC
                 //11AC rates
-                //11A duplicate 80MHz Rates
+               //11A duplicate 80MHz Rates
                 {1700},    // HAL_PHY_RATE_11AC_DUP_6_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_9_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_12_MBPS,
@@ -5250,7 +5250,7 @@ const sHalNvV2 nvDefaultsV2 =
                 {1550},    // HAL_PHY_RATE_11AC_DUP_48_MBPS,
                 {1500},    // HAL_PHY_RATE_11AC_DUP_54_MBPS,
 
-                //11ac 20MHZ NG, SG
+               //11ac 20MHZ NG, SG
                 {0000},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_6_5_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_13_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_19_5_MBPS,
@@ -5276,7 +5276,7 @@ const sHalNvV2 nvDefaultsV2 =
                 {0000},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_SGI_96_1_MBPS,
 #endif
 
-                //11ac 40MHZ NG, SG
+               //11ac 40MHZ NG, SG
                 {0000},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_13_5_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_27_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_40_5_MBPS,
@@ -5298,7 +5298,7 @@ const sHalNvV2 nvDefaultsV2 =
                 {0000},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_SGI_180_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_SGI_200_MBPS,
 
-                //11ac 80MHZ NG, SG
+               //11ac 80MHZ NG, SG
                 {0000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_29_3_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_58_5_MBPS,
                 {0000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_87_8_MBPS,
@@ -5390,7 +5390,7 @@ const sHalNvV2 nvDefaultsV2 =
 
 #ifdef WLAN_FEATUURE_11AC
                 ///11AC rates
-                ///11A duplicate 80MHz Rates
+               ///11A duplicate 80MHz Rates
                 {1700},    // HAL_PHY_RATE_11AC_DUP_6_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_9_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_12_MBPS,
@@ -5400,7 +5400,7 @@ const sHalNvV2 nvDefaultsV2 =
                 {1550},    // HAL_PHY_RATE_11AC_DUP_48_MBPS,
                 {1500},    // HAL_PHY_RATE_11AC_DUP_54_MBPS,
 
-                ///11ac 20MHZ NG, SG
+               ///11ac 20MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_6_5_MBPS,
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_13_MBPS,
                 {1350},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_19_5_MBPS,
@@ -5425,7 +5425,7 @@ const sHalNvV2 nvDefaultsV2 =
 #ifdef WCN_PRONTO
                 { 800},     // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_SGI_96_1_MBPS,
 #endif
-                //11ac 40MHZ NG, SG
+               //11ac 40MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_13_5_MBPS,
                 {1300},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_27_MBPS,
                 {1250},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_40_5_MBPS,
@@ -5448,7 +5448,7 @@ const sHalNvV2 nvDefaultsV2 =
                 { 800},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_SGI_200_MBPS,
 
 
-                //11ac 80MHZ NG, SG
+               //11ac 80MHZ NG, SG
                 {1300},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_29_3_MBPS,
                 {1100},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_58_5_MBPS,
                 {1000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_87_8_MBPS,
@@ -5540,7 +5540,7 @@ const sHalNvV2 nvDefaultsV2 =
 
 #ifdef WLAN_FEATUURE_111AC
                 ///11CAC rates
-                ///11Ad duplicate 80MHz Rates
+               ///11Ad duplicate 80MHz Rates
                 {1700},    // HAL_PHY_RATE_11AC_DUP_6_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_9_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_12_MBPS,
@@ -5550,7 +5550,7 @@ const sHalNvV2 nvDefaultsV2 =
                 {1550},    // HAL_PHY_RATE_11AC_DUP_48_MBPS,
                 {1500},    // HAL_PHY_RATE_11AC_DUP_54_MBPS,
 
-                ///11a c 20MHZ NG, SG
+               ///11a c 20MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_6_5_MBPS,
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_13_MBPS,
                 {1350},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_19_5_MBPS,
@@ -5575,7 +5575,7 @@ const sHalNvV2 nvDefaultsV2 =
 #ifdef WCN_PRONTO
                 { 800},     // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_SGI_96_1_MBPS,
 #endif
-                //11ac 40MHZ NG, SG
+               //11ac 40MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_13_5_MBPS,
                 {1300},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_27_MBPS,
                 {1250},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_40_5_MBPS,
@@ -5598,7 +5598,7 @@ const sHalNvV2 nvDefaultsV2 =
                 { 800},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_SGI_200_MBPS,
 
 
-                ///11a c 80MHZ NG, SG
+               ///11a c 80MHZ NG, SG
                 {1300},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_29_3_MBPS,
                 {1100},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_58_5_MBPS,
                 {1000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_87_8_MBPS,
@@ -5690,7 +5690,7 @@ const sHalNvV2 nvDefaultsV2 =
 
 #ifdef WLAN_FEATUURE_11AC
                 ///11CAC rates
-                ///11Ad duplicate 80MHz Rates
+               ///11Ad duplicate 80MHz Rates
                 {1700},    // HAL_PHY_RATE_11AC_DUP_6_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_9_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_12_MBPS,
@@ -5700,7 +5700,7 @@ const sHalNvV2 nvDefaultsV2 =
                 {1550},    // HAL_PHY_RATE_11AC_DUP_48_MBPS,
                 {1500},    // HAL_PHY_RATE_11AC_DUP_54_MBPS,
 
-                ///11a c 20MHZ NG, SG
+               ///11a c 20MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_6_5_MBPS,
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_13_MBPS,
                 {1350},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_19_5_MBPS,
@@ -5725,7 +5725,7 @@ const sHalNvV2 nvDefaultsV2 =
 #ifdef WCN_PRONTO
                 { 800},     // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_SGI_96_1_MBPS,
 #endif
-                //11ac 40MHZ NG, SG
+               //11ac 40MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_13_5_MBPS,
                 {1300},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_27_MBPS,
                 {1250},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_40_5_MBPS,
@@ -5748,7 +5748,7 @@ const sHalNvV2 nvDefaultsV2 =
                 { 800},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_SGI_200_MBPS,
 
 
-                ///11a c 80MHZ NG, SG
+               ///11a c 80MHZ NG, SG
                 {1300},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_29_3_MBPS,
                 {1100},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_58_5_MBPS,
                 {1000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_87_8_MBPS,
@@ -5841,7 +5841,7 @@ const sHalNvV2 nvDefaultsV2 =
 
 #ifdef WLAN_FEATUURE_11AC
                 ///11CAC rates
-                ///11Ad duplicate 80MHz Rates
+               ///11Ad duplicate 80MHz Rates
                 {1700},    // HAL_PHY_RATE_11AC_DUP_6_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_9_MBPS,
                 {1700},    // HAL_PHY_RATE_11AC_DUP_12_MBPS,
@@ -5851,7 +5851,7 @@ const sHalNvV2 nvDefaultsV2 =
                 {1550},    // HAL_PHY_RATE_11AC_DUP_48_MBPS,
                 {1500},    // HAL_PHY_RATE_11AC_DUP_54_MBPS,
 
-                ///11a c 20MHZ NG, SG
+               ///11a c 20MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_6_5_MBPS,
                 {1400},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_13_MBPS,
                 {1350},    // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_CB_NGI_19_5_MBPS,
@@ -5876,7 +5876,7 @@ const sHalNvV2 nvDefaultsV2 =
 #ifdef WCN_PRONTO
                 { 800},     // HAL_PHY_RATE_VHT_20MHZ_MCS_1NSS_SGI_96_1_MBPS,
 #endif
-                //11ac 40MHZ NG, SG
+               //11ac 40MHZ NG, SG
                 {1400},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_13_5_MBPS,
                 {1300},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_27_MBPS,
                 {1250},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_NGI_40_5_MBPS,
@@ -5899,7 +5899,7 @@ const sHalNvV2 nvDefaultsV2 =
                 { 800},    // HAL_PHY_RATE_VHT_40MHZ_MCS_1NSS_CB_SGI_200_MBPS,
 
 
-                ///11a c 80MHZ NG, SG
+               ///11a c 80MHZ NG, SG
                 {1300},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_29_3_MBPS,
                 {1100},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_58_5_MBPS,
                 {1000},    // HAL_PHY_RATE_VHT_80MHZ_MCS_1NSS_CB_NGI_87_8_MBPS,
@@ -5943,7 +5943,7 @@ const sHalNvV2 nvDefaultsV2 =
 
 
             {   // REG_DOMAIN_FCC start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 23},           //RF_CHAN_1,
@@ -6054,7 +6054,7 @@ const sHalNvV2 nvDefaultsV2 =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6072,7 +6072,7 @@ const sHalNvV2 nvDefaultsV2 =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6092,7 +6092,7 @@ const sHalNvV2 nvDefaultsV2 =
             }, // REG_DOMAIN_FCC end
 
             {   // REG_DOMAIN_ETSI start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 20},           //RF_CHAN_1,
@@ -6203,7 +6203,7 @@ const sHalNvV2 nvDefaultsV2 =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6221,7 +6221,7 @@ const sHalNvV2 nvDefaultsV2 =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6241,7 +6241,7 @@ const sHalNvV2 nvDefaultsV2 =
             }, // REG_DOMAIN_ETSI end
 
             {   // REG_DOMAIN_JAPAN start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 20},           //RF_CHAN_1,
@@ -6352,7 +6352,7 @@ const sHalNvV2 nvDefaultsV2 =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6370,7 +6370,7 @@ const sHalNvV2 nvDefaultsV2 =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6390,9 +6390,9 @@ const sHalNvV2 nvDefaultsV2 =
             }, // REG_DOMAIN_JAPAN end
 
             {   // REG_DOMAIN_WORLD start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
-                    //2.4GHz Band
+                                       //2.4GHz Band
                     {NV_CHANNEL_ENABLE, 16},           //RF_CHAN_1,
                     {NV_CHANNEL_ENABLE, 16},           //RF_CHAN_2,
                     {NV_CHANNEL_ENABLE, 16},           //RF_CHAN_3,
@@ -6501,7 +6501,7 @@ const sHalNvV2 nvDefaultsV2 =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6519,7 +6519,7 @@ const sHalNvV2 nvDefaultsV2 =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6539,7 +6539,7 @@ const sHalNvV2 nvDefaultsV2 =
             }, // REG_DOMAIN_WORLD end
 
             {   // REG_DOMAIN_N_AMER_EXC_FCC start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 16},           //RF_CHAN_1,
@@ -6650,7 +6650,7 @@ const sHalNvV2 nvDefaultsV2 =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6668,7 +6668,7 @@ const sHalNvV2 nvDefaultsV2 =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6688,7 +6688,7 @@ const sHalNvV2 nvDefaultsV2 =
             },   // REG_DOMAIN_N_AMER_EXC_FCC end
 
             {   // REG_DOMAIN_APAC start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 26},           //RF_CHAN_1,
@@ -6799,7 +6799,7 @@ const sHalNvV2 nvDefaultsV2 =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6817,7 +6817,7 @@ const sHalNvV2 nvDefaultsV2 =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6837,7 +6837,7 @@ const sHalNvV2 nvDefaultsV2 =
             }, // REG_DOMAIN_APAC end
 
             {   // REG_DOMAIN_KOREA start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 15},           //RF_CHAN_1,
@@ -6948,7 +6948,7 @@ const sHalNvV2 nvDefaultsV2 =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6966,7 +6966,7 @@ const sHalNvV2 nvDefaultsV2 =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -6986,7 +6986,7 @@ const sHalNvV2 nvDefaultsV2 =
             }, // REG_DOMAIN_KOREA end
 
             {   // REG_DOMAIN_HI_5GHZ start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
                     //2.4GHz Band, none CB
                     {NV_CHANNEL_ENABLE, 14},           //RF_CHAN_1,
@@ -7097,7 +7097,7 @@ const sHalNvV2 nvDefaultsV2 =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -7115,7 +7115,7 @@ const sHalNvV2 nvDefaultsV2 =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -7135,9 +7135,9 @@ const sHalNvV2 nvDefaultsV2 =
             }, // REG_DOMAIN_HI_5GHZ end
 
             {   // REG_DOMAIN_NO_5GHZ start
-                {   //sRegulatoryChannel start
+                { //sRegulatoryChannel start
                     //enabled, pwrLimit
-                    //2.4GHz Band
+                                       //2.4GHz Band
                     {NV_CHANNEL_ENABLE, 12},           //RF_CHAN_1,
                     {NV_CHANNEL_ENABLE, 12},           //RF_CHAN_2,
                     {NV_CHANNEL_ENABLE, 12},           //RF_CHAN_3,
@@ -7162,7 +7162,7 @@ const sHalNvV2 nvDefaultsV2 =
                     {0}    // RF_SUBBAND_4_9_GHZ
                 },
 
-                {   // bRatePowerOffset start
+                { // bRatePowerOffset start
                     //2.4GHz Band
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -7180,7 +7180,7 @@ const sHalNvV2 nvDefaultsV2 =
                     { 0 },                       //RF_CHAN_14,
                 }, // bRatePowerOffset end
 
-                {   // gnRatePowerOffset start
+                { // gnRatePowerOffset start
                     //apply to all 2.4 and 5G channels
                     { 0 },                       //RF_CHAN_1,
                     { 0 },                       //RF_CHAN_2,
@@ -7480,1601 +7480,1601 @@ const sHalNvV2 nvDefaultsV2 =
                     107,
                 }
             }, //RF_CHAN_2
-            {
                 {
-                    0  , //0
-                    41 , //1
-                    43 , //2
-                    45 , //3
-                    47 , //4
-                    49 , //5
-                    51 , //6
-                    52 , //7
-                    54 , //8
-                    55 , //9
-                    57 , //10
-                    58 , //11
-                    60 , //12
-                    61 , //13
-                    62 , //14
-                    64 , //15
-                    65 , //16
-                    66 , //17
-                    67 , //18
-                    68 , //19
-                    69 , //20
-                    70 , //21
-                    71 , //22
-                    72 , //23
-                    73 , //24
-                    74 , //25
-                    75 , //26
-                    75 , //27
-                    76 , //28
-                    77 , //29
-                    78 , //30
-                    78 , //31
-                    79 , //32
-                    80 , //33
-                    81 , //34
-                    82 , //35
-                    82 , //36
-                    83 , //37
-                    84 , //38
-                    84 , //39
-                    85 , //40
-                    86 , //41
-                    87 , //42
-                    87 , //43
-                    88 , //44
-                    89 , //45
-                    89 , //46
-                    90 , //47
-                    90 , //48
-                    91 , //49
-                    91 , //50
-                    92 , //51
-                    93 , //52
-                    93 , //53
-                    94 , //54
-                    94 , //55
-                    94 , //56
-                    95 , //57
-                    95 , //58
-                    96 , //59
-                    96 , //60
-                    97 , //61
-                    97 , //62
-                    97 , //63
-                    98 , //64
-                    98 , //65
-                    99 , //66
-                    99 , //67
-                    99 , //68
-                    100, //69
-                    100, //70
-                    100, //71
-                    101, //72
-                    101, //73
-                    101, //74
-                    102, //75
-                    102, //76
-                    102, //77
-                    103, //78
-                    103, //79
-                    103, //80
-                    103, //81
-                    104, //82
-                    104, //83
-                    104, //84
-                    104, //85
-                    104, //86
-                    105, //87
-                    105, //88
-                    105, //89
-                    105, //90
-                    105, //91
-                    105, //92
-                    105, //93
-                    105, //94
-                    105, //95
-                    105, //96
-                    105, //97
-                    105, //98
-                    106, //99
-                    106, //100
-                    106, //101
-                    106, //102
-                    106, //103
-                    106, //104
-                    106, //105
-                    106, //106
-                    106, //107
-                    106, //108
-                    106, //109
-                    106, //110
-                    106, //111
-                    106, //112
-                    106, //113
-                    106, //114
-                    106, //115
-                    106, //116
-                    106, //117
-                    106, //118
-                    106, //119
-                    106, //120
-                    106, //121
-                    106, //122
-                    106, //123
-                    106, //124
-                    106, //125
-                    106, //126
-                    106, //127
-                    107,
-                }
-            }, //RF_CHAN_3
-            {
+                    {
+                        0  , //0
+                        41 , //1
+                        43 , //2
+                        45 , //3
+                        47 , //4
+                        49 , //5
+                        51 , //6
+                        52 , //7
+                        54 , //8
+                        55 , //9
+                        57 , //10
+                        58 , //11
+                        60 , //12
+                        61 , //13
+                        62 , //14
+                        64 , //15
+                        65 , //16
+                        66 , //17
+                        67 , //18
+                        68 , //19
+                        69 , //20
+                        70 , //21
+                        71 , //22
+                        72 , //23
+                        73 , //24
+                        74 , //25
+                        75 , //26
+                        75 , //27
+                        76 , //28
+                        77 , //29
+                        78 , //30
+                        78 , //31
+                        79 , //32
+                        80 , //33
+                        81 , //34
+                        82 , //35
+                        82 , //36
+                        83 , //37
+                        84 , //38
+                        84 , //39
+                        85 , //40
+                        86 , //41
+                        87 , //42
+                        87 , //43
+                        88 , //44
+                        89 , //45
+                        89 , //46
+                        90 , //47
+                        90 , //48
+                        91 , //49
+                        91 , //50
+                        92 , //51
+                        93 , //52
+                        93 , //53
+                        94 , //54
+                        94 , //55
+                        94 , //56
+                        95 , //57
+                        95 , //58
+                        96 , //59
+                        96 , //60
+                        97 , //61
+                        97 , //62
+                        97 , //63
+                        98 , //64
+                        98 , //65
+                        99 , //66
+                        99 , //67
+                        99 , //68
+                        100, //69
+                        100, //70
+                        100, //71
+                        101, //72
+                        101, //73
+                        101, //74
+                        102, //75
+                        102, //76
+                        102, //77
+                        103, //78
+                        103, //79
+                        103, //80
+                        103, //81
+                        104, //82
+                        104, //83
+                        104, //84
+                        104, //85
+                        104, //86
+                        105, //87
+                        105, //88
+                        105, //89
+                        105, //90
+                        105, //91
+                        105, //92
+                        105, //93
+                        105, //94
+                        105, //95
+                        105, //96
+                        105, //97
+                        105, //98
+                        106, //99
+                        106, //100
+                        106, //101
+                        106, //102
+                        106, //103
+                        106, //104
+                        106, //105
+                        106, //106
+                        106, //107
+                        106, //108
+                        106, //109
+                        106, //110
+                        106, //111
+                        106, //112
+                        106, //113
+                        106, //114
+                        106, //115
+                        106, //116
+                        106, //117
+                        106, //118
+                        106, //119
+                        106, //120
+                        106, //121
+                        106, //122
+                        106, //123
+                        106, //124
+                        106, //125
+                        106, //126
+                        106, //127
+                        107,
+                    }
+                }, //RF_CHAN_3
                 {
-                    0  , //0
-                    42 , //1
-                    44 , //2
-                    46 , //3
-                    48 , //4
-                    49 , //5
-                    51 , //6
-                    53 , //7
-                    55 , //8
-                    57 , //9
-                    58 , //10
-                    60 , //11
-                    61 , //12
-                    62 , //13
-                    63 , //14
-                    64 , //15
-                    66 , //16
-                    67 , //17
-                    68 , //18
-                    69 , //19
-                    70 , //20
-                    71 , //21
-                    72 , //22
-                    73 , //23
-                    74 , //24
-                    75 , //25
-                    75 , //26
-                    76 , //27
-                    77 , //28
-                    78 , //29
-                    78 , //30
-                    79 , //31
-                    80 , //32
-                    81 , //33
-                    82 , //34
-                    82 , //35
-                    83 , //36
-                    84 , //37
-                    84 , //38
-                    85 , //39
-                    86 , //40
-                    87 , //41
-                    87 , //42
-                    88 , //43
-                    88 , //44
-                    89 , //45
-                    90 , //46
-                    90 , //47
-                    91 , //48
-                    91 , //49
-                    92 , //50
-                    92 , //51
-                    93 , //52
-                    93 , //53
-                    94 , //54
-                    94 , //55
-                    95 , //56
-                    95 , //57
-                    95 , //58
-                    96 , //59
-                    96 , //60
-                    97 , //61
-                    97 , //62
-                    98 , //63
-                    98 , //64
-                    98 , //65
-                    99 , //66
-                    99 , //67
-                    99 , //68
-                    100, //69
-                    100, //70
-                    100, //71
-                    101, //72
-                    101, //73
-                    101, //74
-                    102, //75
-                    102, //76
-                    102, //77
-                    103, //78
-                    103, //79
-                    103, //80
-                    103, //81
-                    104, //82
-                    104, //83
-                    104, //84
-                    104, //85
-                    104, //86
-                    104, //87
-                    104, //88
-                    104, //89
-                    105, //90
-                    105, //91
-                    105, //92
-                    105, //93
-                    105, //94
-                    105, //95
-                    105, //96
-                    105, //97
-                    105, //98
-                    105, //99
-                    105, //100
-                    105, //101
-                    105, //102
-                    105, //103
-                    105, //104
-                    106, //105
-                    106, //106
-                    106, //107
-                    106, //108
-                    106, //109
-                    106, //110
-                    106, //111
-                    106, //112
-                    106, //113
-                    106, //114
-                    106, //115
-                    106, //116
-                    106, //117
-                    106, //118
-                    106, //119
-                    106, //120
-                    106, //121
-                    106, //122
-                    106, //123
-                    106, //124
-                    106, //125
-                    106, //126
-                    106, //127
-                    106,
-                }
-            }, //RF_CHAN_4
-            {
+                    {
+                        0  , //0
+                        42 , //1
+                        44 , //2
+                        46 , //3
+                        48 , //4
+                        49 , //5
+                        51 , //6
+                        53 , //7
+                        55 , //8
+                        57 , //9
+                        58 , //10
+                        60 , //11
+                        61 , //12
+                        62 , //13
+                        63 , //14
+                        64 , //15
+                        66 , //16
+                        67 , //17
+                        68 , //18
+                        69 , //19
+                        70 , //20
+                        71 , //21
+                        72 , //22
+                        73 , //23
+                        74 , //24
+                        75 , //25
+                        75 , //26
+                        76 , //27
+                        77 , //28
+                        78 , //29
+                        78 , //30
+                        79 , //31
+                        80 , //32
+                        81 , //33
+                        82 , //34
+                        82 , //35
+                        83 , //36
+                        84 , //37
+                        84 , //38
+                        85 , //39
+                        86 , //40
+                        87 , //41
+                        87 , //42
+                        88 , //43
+                        88 , //44
+                        89 , //45
+                        90 , //46
+                        90 , //47
+                        91 , //48
+                        91 , //49
+                        92 , //50
+                        92 , //51
+                        93 , //52
+                        93 , //53
+                        94 , //54
+                        94 , //55
+                        95 , //56
+                        95 , //57
+                        95 , //58
+                        96 , //59
+                        96 , //60
+                        97 , //61
+                        97 , //62
+                        98 , //63
+                        98 , //64
+                        98 , //65
+                        99 , //66
+                        99 , //67
+                        99 , //68
+                        100, //69
+                        100, //70
+                        100, //71
+                        101, //72
+                        101, //73
+                        101, //74
+                        102, //75
+                        102, //76
+                        102, //77
+                        103, //78
+                        103, //79
+                        103, //80
+                        103, //81
+                        104, //82
+                        104, //83
+                        104, //84
+                        104, //85
+                        104, //86
+                        104, //87
+                        104, //88
+                        104, //89
+                        105, //90
+                        105, //91
+                        105, //92
+                        105, //93
+                        105, //94
+                        105, //95
+                        105, //96
+                        105, //97
+                        105, //98
+                        105, //99
+                        105, //100
+                        105, //101
+                        105, //102
+                        105, //103
+                        105, //104
+                        106, //105
+                        106, //106
+                        106, //107
+                        106, //108
+                        106, //109
+                        106, //110
+                        106, //111
+                        106, //112
+                        106, //113
+                        106, //114
+                        106, //115
+                        106, //116
+                        106, //117
+                        106, //118
+                        106, //119
+                        106, //120
+                        106, //121
+                        106, //122
+                        106, //123
+                        106, //124
+                        106, //125
+                        106, //126
+                        106, //127
+                        106,
+                    }
+                }, //RF_CHAN_4
                 {
-                    0  , //0
-                    41 , //1
-                    43 , //2
-                    45 , //3
-                    47 , //4
-                    49 , //5
-                    51 , //6
-                    53 , //7
-                    54 , //8
-                    56 , //9
-                    57 , //10
-                    59 , //11
-                    60 , //12
-                    62 , //13
-                    63 , //14
-                    65 , //15
-                    66 , //16
-                    67 , //17
-                    68 , //18
-                    69 , //19
-                    69 , //20
-                    71 , //21
-                    72 , //22
-                    72 , //23
-                    73 , //24
-                    74 , //25
-                    75 , //26
-                    76 , //27
-                    77 , //28
-                    78 , //29
-                    79 , //30
-                    79 , //31
-                    80 , //32
-                    81 , //33
-                    82 , //34
-                    83 , //35
-                    83 , //36
-                    84 , //37
-                    85 , //38
-                    86 , //39
-                    87 , //40
-                    87 , //41
-                    88 , //42
-                    89 , //43
-                    89 , //44
-                    90 , //45
-                    91 , //46
-                    91 , //47
-                    92 , //48
-                    92 , //49
-                    93 , //50
-                    93 , //51
-                    94 , //52
-                    94 , //53
-                    95 , //54
-                    95 , //55
-                    96 , //56
-                    96 , //57
-                    96 , //58
-                    97 , //59
-                    97 , //60
-                    98 , //61
-                    98 , //62
-                    98 , //63
-                    99 , //64
-                    99 , //65
-                    100, //66
-                    100, //67
-                    100, //68
-                    101, //69
-                    101, //70
-                    101, //71
-                    102, //72
-                    102, //73
-                    102, //74
-                    103, //75
-                    103, //76
-                    103, //77
-                    103, //78
-                    104, //79
-                    104, //80
-                    104, //81
-                    104, //82
-                    105, //83
-                    105, //84
-                    105, //85
-                    105, //86
-                    105, //87
-                    105, //88
-                    105, //89
-                    105, //90
-                    105, //91
-                    106, //92
-                    106, //93
-                    106, //94
-                    106, //95
-                    106, //96
-                    106, //97
-                    106, //98
-                    106, //99
-                    106, //100
-                    106, //101
-                    106, //102
-                    106, //103
-                    106, //104
-                    106, //105
-                    106, //106
-                    106, //107
-                    106, //108
-                    106, //109
-                    106, //110
-                    106, //111
-                    106, //112
-                    106, //113
-                    106, //114
-                    106, //115
-                    106, //116
-                    106, //117
-                    106, //118
-                    106, //119
-                    106, //120
-                    106, //121
-                    106, //122
-                    106, //123
-                    106, //124
-                    106, //125
-                    106, //126
-                    106, //127
-                    106,
-                }
-            }, //RF_CHAN_5
-            {
+                    {
+                        0  , //0
+                        41 , //1
+                        43 , //2
+                        45 , //3
+                        47 , //4
+                        49 , //5
+                        51 , //6
+                        53 , //7
+                        54 , //8
+                        56 , //9
+                        57 , //10
+                        59 , //11
+                        60 , //12
+                        62 , //13
+                        63 , //14
+                        65 , //15
+                        66 , //16
+                        67 , //17
+                        68 , //18
+                        69 , //19
+                        69 , //20
+                        71 , //21
+                        72 , //22
+                        72 , //23
+                        73 , //24
+                        74 , //25
+                        75 , //26
+                        76 , //27
+                        77 , //28
+                        78 , //29
+                        79 , //30
+                        79 , //31
+                        80 , //32
+                        81 , //33
+                        82 , //34
+                        83 , //35
+                        83 , //36
+                        84 , //37
+                        85 , //38
+                        86 , //39
+                        87 , //40
+                        87 , //41
+                        88 , //42
+                        89 , //43
+                        89 , //44
+                        90 , //45
+                        91 , //46
+                        91 , //47
+                        92 , //48
+                        92 , //49
+                        93 , //50
+                        93 , //51
+                        94 , //52
+                        94 , //53
+                        95 , //54
+                        95 , //55
+                        96 , //56
+                        96 , //57
+                        96 , //58
+                        97 , //59
+                        97 , //60
+                        98 , //61
+                        98 , //62
+                        98 , //63
+                        99 , //64
+                        99 , //65
+                        100, //66
+                        100, //67
+                        100, //68
+                        101, //69
+                        101, //70
+                        101, //71
+                        102, //72
+                        102, //73
+                        102, //74
+                        103, //75
+                        103, //76
+                        103, //77
+                        103, //78
+                        104, //79
+                        104, //80
+                        104, //81
+                        104, //82
+                        105, //83
+                        105, //84
+                        105, //85
+                        105, //86
+                        105, //87
+                        105, //88
+                        105, //89
+                        105, //90
+                        105, //91
+                        106, //92
+                        106, //93
+                        106, //94
+                        106, //95
+                        106, //96
+                        106, //97
+                        106, //98
+                        106, //99
+                        106, //100
+                        106, //101
+                        106, //102
+                        106, //103
+                        106, //104
+                        106, //105
+                        106, //106
+                        106, //107
+                        106, //108
+                        106, //109
+                        106, //110
+                        106, //111
+                        106, //112
+                        106, //113
+                        106, //114
+                        106, //115
+                        106, //116
+                        106, //117
+                        106, //118
+                        106, //119
+                        106, //120
+                        106, //121
+                        106, //122
+                        106, //123
+                        106, //124
+                        106, //125
+                        106, //126
+                        106, //127
+                        106,
+                    }
+                }, //RF_CHAN_5
                 {
-                    0  , //0
-                    41 , //1
-                    43 , //2
-                    45 , //3
-                    47 , //4
-                    49 , //5
-                    51 , //6
-                    53 , //7
-                    55 , //8
-                    56 , //9
-                    58 , //10
-                    59 , //11
-                    61 , //12
-                    62 , //13
-                    63 , //14
-                    64 , //15
-                    65 , //16
-                    66 , //17
-                    68 , //18
-                    69 , //19
-                    70 , //20
-                    71 , //21
-                    72 , //22
-                    73 , //23
-                    74 , //24
-                    75 , //25
-                    76 , //26
-                    77 , //27
-                    77 , //28
-                    78 , //29
-                    79 , //30
-                    80 , //31
-                    80 , //32
-                    81 , //33
-                    82 , //34
-                    83 , //35
-                    83 , //36
-                    84 , //37
-                    85 , //38
-                    86 , //39
-                    87 , //40
-                    87 , //41
-                    88 , //42
-                    89 , //43
-                    89 , //44
-                    90 , //45
-                    91 , //46
-                    91 , //47
-                    92 , //48
-                    92 , //49
-                    93 , //50
-                    93 , //51
-                    94 , //52
-                    94 , //53
-                    95 , //54
-                    95 , //55
-                    96 , //56
-                    96 , //57
-                    97 , //58
-                    97 , //59
-                    98 , //60
-                    98 , //61
-                    98 , //62
-                    99 , //63
-                    99 , //64
-                    100, //65
-                    100, //66
-                    100, //67
-                    101, //68
-                    101, //69
-                    101, //70
-                    102, //71
-                    102, //72
-                    102, //73
-                    103, //74
-                    103, //75
-                    103, //76
-                    103, //77
-                    104, //78
-                    104, //79
-                    104, //80
-                    104, //81
-                    104, //82
-                    105, //83
-                    105, //84
-                    105, //85
-                    105, //86
-                    105, //87
-                    105, //88
-                    105, //89
-                    106, //90
-                    106, //91
-                    106, //92
-                    106, //93
-                    106, //94
-                    106, //95
-                    106, //96
-                    106, //97
-                    106, //98
-                    106, //99
-                    106, //100
-                    106, //101
-                    106, //102
-                    106, //103
-                    106, //104
-                    106, //105
-                    106, //106
-                    106, //107
-                    106, //108
-                    106, //109
-                    106, //110
-                    107, //111
-                    107, //112
-                    107, //113
-                    107, //114
-                    107, //115
-                    107, //116
-                    107, //117
-                    107, //118
-                    107, //119
-                    107, //120
-                    107, //121
-                    107, //122
-                    107, //123
-                    107, //124
-                    107, //125
-                    107, //126
-                    107, //127
-                    107,
-                }
-            }, //RF_CHAN_6
-            {
+                    {
+                        0  , //0
+                        41 , //1
+                        43 , //2
+                        45 , //3
+                        47 , //4
+                        49 , //5
+                        51 , //6
+                        53 , //7
+                        55 , //8
+                        56 , //9
+                        58 , //10
+                        59 , //11
+                        61 , //12
+                        62 , //13
+                        63 , //14
+                        64 , //15
+                        65 , //16
+                        66 , //17
+                        68 , //18
+                        69 , //19
+                        70 , //20
+                        71 , //21
+                        72 , //22
+                        73 , //23
+                        74 , //24
+                        75 , //25
+                        76 , //26
+                        77 , //27
+                        77 , //28
+                        78 , //29
+                        79 , //30
+                        80 , //31
+                        80 , //32
+                        81 , //33
+                        82 , //34
+                        83 , //35
+                        83 , //36
+                        84 , //37
+                        85 , //38
+                        86 , //39
+                        87 , //40
+                        87 , //41
+                        88 , //42
+                        89 , //43
+                        89 , //44
+                        90 , //45
+                        91 , //46
+                        91 , //47
+                        92 , //48
+                        92 , //49
+                        93 , //50
+                        93 , //51
+                        94 , //52
+                        94 , //53
+                        95 , //54
+                        95 , //55
+                        96 , //56
+                        96 , //57
+                        97 , //58
+                        97 , //59
+                        98 , //60
+                        98 , //61
+                        98 , //62
+                        99 , //63
+                        99 , //64
+                        100, //65
+                        100, //66
+                        100, //67
+                        101, //68
+                        101, //69
+                        101, //70
+                        102, //71
+                        102, //72
+                        102, //73
+                        103, //74
+                        103, //75
+                        103, //76
+                        103, //77
+                        104, //78
+                        104, //79
+                        104, //80
+                        104, //81
+                        104, //82
+                        105, //83
+                        105, //84
+                        105, //85
+                        105, //86
+                        105, //87
+                        105, //88
+                        105, //89
+                        106, //90
+                        106, //91
+                        106, //92
+                        106, //93
+                        106, //94
+                        106, //95
+                        106, //96
+                        106, //97
+                        106, //98
+                        106, //99
+                        106, //100
+                        106, //101
+                        106, //102
+                        106, //103
+                        106, //104
+                        106, //105
+                        106, //106
+                        106, //107
+                        106, //108
+                        106, //109
+                        106, //110
+                        107, //111
+                        107, //112
+                        107, //113
+                        107, //114
+                        107, //115
+                        107, //116
+                        107, //117
+                        107, //118
+                        107, //119
+                        107, //120
+                        107, //121
+                        107, //122
+                        107, //123
+                        107, //124
+                        107, //125
+                        107, //126
+                        107, //127
+                        107,
+                    }
+                }, //RF_CHAN_6
                 {
-                    0  , //0
-                    41 , //1
-                    43 , //2
-                    45 , //3
-                    47 , //4
-                    49 , //5
-                    51 , //6
-                    53 , //7
-                    55 , //8
-                    56 , //9
-                    58 , //10
-                    60 , //11
-                    61 , //12
-                    62 , //13
-                    63 , //14
-                    64 , //15
-                    66 , //16
-                    67 , //17
-                    68 , //18
-                    69 , //19
-                    70 , //20
-                    71 , //21
-                    72 , //22
-                    73 , //23
-                    74 , //24
-                    75 , //25
-                    76 , //26
-                    77 , //27
-                    77 , //28
-                    78 , //29
-                    79 , //30
-                    80 , //31
-                    80 , //32
-                    81 , //33
-                    82 , //34
-                    83 , //35
-                    84 , //36
-                    84 , //37
-                    85 , //38
-                    86 , //39
-                    87 , //40
-                    87 , //41
-                    88 , //42
-                    88 , //43
-                    89 , //44
-                    90 , //45
-                    90 , //46
-                    91 , //47
-                    91 , //48
-                    92 , //49
-                    92 , //50
-                    93 , //51
-                    93 , //52
-                    94 , //53
-                    94 , //54
-                    95 , //55
-                    95 , //56
-                    96 , //57
-                    96 , //58
-                    97 , //59
-                    97 , //60
-                    97 , //61
-                    98 , //62
-                    98 , //63
-                    99 , //64
-                    99 , //65
-                    99 , //66
-                    100, //67
-                    100, //68
-                    100, //69
-                    101, //70
-                    101, //71
-                    101, //72
-                    102, //73
-                    102, //74
-                    102, //75
-                    103, //76
-                    103, //77
-                    103, //78
-                    103, //79
-                    104, //80
-                    104, //81
-                    104, //82
-                    104, //83
-                    104, //84
-                    104, //85
-                    105, //86
-                    105, //87
-                    105, //88
-                    105, //89
-                    105, //90
-                    105, //91
-                    105, //92
-                    105, //93
-                    105, //94
-                    105, //95
-                    105, //96
-                    105, //97
-                    106, //98
-                    106, //99
-                    106, //100
-                    106, //101
-                    106, //102
-                    106, //103
-                    106, //104
-                    106, //105
-                    106, //106
-                    106, //107
-                    106, //108
-                    106, //109
-                    106, //110
-                    106, //111
-                    106, //112
-                    106, //113
-                    106, //114
-                    106, //115
-                    106, //116
-                    106, //117
-                    106, //118
-                    106, //119
-                    106, //120
-                    106, //121
-                    106, //122
-                    106, //123
-                    106, //124
-                    106, //125
-                    106, //126
-                    106, //127
-                    106,
-                }
-            }, //RF_CHAN_7
-            {
+                    {
+                        0  , //0
+                        41 , //1
+                        43 , //2
+                        45 , //3
+                        47 , //4
+                        49 , //5
+                        51 , //6
+                        53 , //7
+                        55 , //8
+                        56 , //9
+                        58 , //10
+                        60 , //11
+                        61 , //12
+                        62 , //13
+                        63 , //14
+                        64 , //15
+                        66 , //16
+                        67 , //17
+                        68 , //18
+                        69 , //19
+                        70 , //20
+                        71 , //21
+                        72 , //22
+                        73 , //23
+                        74 , //24
+                        75 , //25
+                        76 , //26
+                        77 , //27
+                        77 , //28
+                        78 , //29
+                        79 , //30
+                        80 , //31
+                        80 , //32
+                        81 , //33
+                        82 , //34
+                        83 , //35
+                        84 , //36
+                        84 , //37
+                        85 , //38
+                        86 , //39
+                        87 , //40
+                        87 , //41
+                        88 , //42
+                        88 , //43
+                        89 , //44
+                        90 , //45
+                        90 , //46
+                        91 , //47
+                        91 , //48
+                        92 , //49
+                        92 , //50
+                        93 , //51
+                        93 , //52
+                        94 , //53
+                        94 , //54
+                        95 , //55
+                        95 , //56
+                        96 , //57
+                        96 , //58
+                        97 , //59
+                        97 , //60
+                        97 , //61
+                        98 , //62
+                        98 , //63
+                        99 , //64
+                        99 , //65
+                        99 , //66
+                        100, //67
+                        100, //68
+                        100, //69
+                        101, //70
+                        101, //71
+                        101, //72
+                        102, //73
+                        102, //74
+                        102, //75
+                        103, //76
+                        103, //77
+                        103, //78
+                        103, //79
+                        104, //80
+                        104, //81
+                        104, //82
+                        104, //83
+                        104, //84
+                        104, //85
+                        105, //86
+                        105, //87
+                        105, //88
+                        105, //89
+                        105, //90
+                        105, //91
+                        105, //92
+                        105, //93
+                        105, //94
+                        105, //95
+                        105, //96
+                        105, //97
+                        106, //98
+                        106, //99
+                        106, //100
+                        106, //101
+                        106, //102
+                        106, //103
+                        106, //104
+                        106, //105
+                        106, //106
+                        106, //107
+                        106, //108
+                        106, //109
+                        106, //110
+                        106, //111
+                        106, //112
+                        106, //113
+                        106, //114
+                        106, //115
+                        106, //116
+                        106, //117
+                        106, //118
+                        106, //119
+                        106, //120
+                        106, //121
+                        106, //122
+                        106, //123
+                        106, //124
+                        106, //125
+                        106, //126
+                        106, //127
+                        106,
+                    }
+                }, //RF_CHAN_7
                 {
-                    0  , //0
-                    40 , //1
-                    42 , //2
-                    45 , //3
-                    47 , //4
-                    49 , //5
-                    51 , //6
-                    52 , //7
-                    54 , //8
-                    56 , //9
-                    58 , //10
-                    59 , //11
-                    61 , //12
-                    62 , //13
-                    63 , //14
-                    65 , //15
-                    66 , //16
-                    67 , //17
-                    68 , //18
-                    69 , //19
-                    70 , //20
-                    71 , //21
-                    72 , //22
-                    73 , //23
-                    74 , //24
-                    75 , //25
-                    76 , //26
-                    77 , //27
-                    77 , //28
-                    78 , //29
-                    79 , //30
-                    80 , //31
-                    81 , //32
-                    81 , //33
-                    82 , //34
-                    83 , //35
-                    84 , //36
-                    85 , //37
-                    86 , //38
-                    86 , //39
-                    87 , //40
-                    88 , //41
-                    89 , //42
-                    89 , //43
-                    90 , //44
-                    91 , //45
-                    91 , //46
-                    92 , //47
-                    92 , //48
-                    93 , //49
-                    93 , //50
-                    94 , //51
-                    94 , //52
-                    95 , //53
-                    95 , //54
-                    96 , //55
-                    96 , //56
-                    97 , //57
-                    97 , //58
-                    97 , //59
-                    98 , //60
-                    98 , //61
-                    99 , //62
-                    99 , //63
-                    99 , //64
-                    100, //65
-                    100, //66
-                    100, //67
-                    101, //68
-                    101, //69
-                    102, //70
-                    102, //71
-                    102, //72
-                    103, //73
-                    103, //74
-                    103, //75
-                    104, //76
-                    104, //77
-                    104, //78
-                    104, //79
-                    105, //80
-                    105, //81
-                    105, //82
-                    105, //83
-                    105, //84
-                    105, //85
-                    105, //86
-                    105, //87
-                    106, //88
-                    106, //89
-                    106, //90
-                    106, //91
-                    106, //92
-                    106, //93
-                    106, //94
-                    106, //95
-                    106, //96
-                    106, //97
-                    106, //98
-                    106, //99
-                    106, //100
-                    106, //101
-                    106, //102
-                    106, //103
-                    106, //104
-                    107, //105
-                    107, //106
-                    107, //107
-                    107, //108
-                    107, //109
-                    107, //110
-                    107, //111
-                    107, //112
-                    107, //113
-                    107, //114
-                    107, //115
-                    107, //116
-                    107, //117
-                    107, //118
-                    107, //119
-                    107, //120
-                    107, //121
-                    107, //122
-                    107, //123
-                    107, //124
-                    107, //125
-                    107, //126
-                    107, //127
-                    107,
-                }
-            }, //RF_CHAN_8
-            {
+                    {
+                        0  , //0
+                        40 , //1
+                        42 , //2
+                        45 , //3
+                        47 , //4
+                        49 , //5
+                        51 , //6
+                        52 , //7
+                        54 , //8
+                        56 , //9
+                        58 , //10
+                        59 , //11
+                        61 , //12
+                        62 , //13
+                        63 , //14
+                        65 , //15
+                        66 , //16
+                        67 , //17
+                        68 , //18
+                        69 , //19
+                        70 , //20
+                        71 , //21
+                        72 , //22
+                        73 , //23
+                        74 , //24
+                        75 , //25
+                        76 , //26
+                        77 , //27
+                        77 , //28
+                        78 , //29
+                        79 , //30
+                        80 , //31
+                        81 , //32
+                        81 , //33
+                        82 , //34
+                        83 , //35
+                        84 , //36
+                        85 , //37
+                        86 , //38
+                        86 , //39
+                        87 , //40
+                        88 , //41
+                        89 , //42
+                        89 , //43
+                        90 , //44
+                        91 , //45
+                        91 , //46
+                        92 , //47
+                        92 , //48
+                        93 , //49
+                        93 , //50
+                        94 , //51
+                        94 , //52
+                        95 , //53
+                        95 , //54
+                        96 , //55
+                        96 , //56
+                        97 , //57
+                        97 , //58
+                        97 , //59
+                        98 , //60
+                        98 , //61
+                        99 , //62
+                        99 , //63
+                        99 , //64
+                        100, //65
+                        100, //66
+                        100, //67
+                        101, //68
+                        101, //69
+                        102, //70
+                        102, //71
+                        102, //72
+                        103, //73
+                        103, //74
+                        103, //75
+                        104, //76
+                        104, //77
+                        104, //78
+                        104, //79
+                        105, //80
+                        105, //81
+                        105, //82
+                        105, //83
+                        105, //84
+                        105, //85
+                        105, //86
+                        105, //87
+                        106, //88
+                        106, //89
+                        106, //90
+                        106, //91
+                        106, //92
+                        106, //93
+                        106, //94
+                        106, //95
+                        106, //96
+                        106, //97
+                        106, //98
+                        106, //99
+                        106, //100
+                        106, //101
+                        106, //102
+                        106, //103
+                        106, //104
+                        107, //105
+                        107, //106
+                        107, //107
+                        107, //108
+                        107, //109
+                        107, //110
+                        107, //111
+                        107, //112
+                        107, //113
+                        107, //114
+                        107, //115
+                        107, //116
+                        107, //117
+                        107, //118
+                        107, //119
+                        107, //120
+                        107, //121
+                        107, //122
+                        107, //123
+                        107, //124
+                        107, //125
+                        107, //126
+                        107, //127
+                        107,
+                    }
+                }, //RF_CHAN_8
                 {
-                    0  , //0
-                    41 , //1
-                    44 , //2
-                    46 , //3
-                    48 , //4
-                    50 , //5
-                    52 , //6
-                    54 , //7
-                    56 , //8
-                    58 , //9
-                    59 , //10
-                    60 , //11
-                    62 , //12
-                    63 , //13
-                    64 , //14
-                    66 , //15
-                    67 , //16
-                    68 , //17
-                    69 , //18
-                    70 , //19
-                    71 , //20
-                    72 , //21
-                    73 , //22
-                    74 , //23
-                    75 , //24
-                    76 , //25
-                    77 , //26
-                    78 , //27
-                    79 , //28
-                    79 , //29
-                    80 , //30
-                    81 , //31
-                    82 , //32
-                    83 , //33
-                    83 , //34
-                    84 , //35
-                    85 , //36
-                    86 , //37
-                    87 , //38
-                    87 , //39
-                    88 , //40
-                    89 , //41
-                    89 , //42
-                    90 , //43
-                    91 , //44
-                    91 , //45
-                    92 , //46
-                    92 , //47
-                    93 , //48
-                    93 , //49
-                    94 , //50
-                    94 , //51
-                    95 , //52
-                    95 , //53
-                    96 , //54
-                    96 , //55
-                    97 , //56
-                    97 , //57
-                    98 , //58
-                    98 , //59
-                    98 , //60
-                    99 , //61
-                    99 , //62
-                    100, //63
-                    100, //64
-                    100, //65
-                    101, //66
-                    101, //67
-                    101, //68
-                    102, //69
-                    102, //70
-                    103, //71
-                    103, //72
-                    103, //73
-                    104, //74
-                    104, //75
-                    104, //76
-                    104, //77
-                    105, //78
-                    105, //79
-                    105, //80
-                    105, //81
-                    105, //82
-                    105, //83
-                    106, //84
-                    106, //85
-                    106, //86
-                    106, //87
-                    106, //88
-                    106, //89
-                    106, //90
-                    106, //91
-                    106, //92
-                    106, //93
-                    106, //94
-                    106, //95
-                    106, //96
-                    106, //97
-                    106, //98
-                    107, //99
-                    107, //100
-                    107, //101
-                    107, //102
-                    107, //103
-                    107, //104
-                    107, //105
-                    107, //106
-                    107, //107
-                    107, //108
-                    107, //109
-                    107, //110
-                    107, //111
-                    107, //112
-                    107, //113
-                    107, //114
-                    107, //115
-                    107, //116
-                    107, //117
-                    107, //118
-                    107, //119
-                    107, //120
-                    107, //121
-                    107, //122
-                    107, //123
-                    107, //124
-                    107, //125
-                    107, //126
-                    107, //127
-                    107,
-                }
-            }, //RF_CHAN_9
-            {
+                    {
+                        0  , //0
+                        41 , //1
+                        44 , //2
+                        46 , //3
+                        48 , //4
+                        50 , //5
+                        52 , //6
+                        54 , //7
+                        56 , //8
+                        58 , //9
+                        59 , //10
+                        60 , //11
+                        62 , //12
+                        63 , //13
+                        64 , //14
+                        66 , //15
+                        67 , //16
+                        68 , //17
+                        69 , //18
+                        70 , //19
+                        71 , //20
+                        72 , //21
+                        73 , //22
+                        74 , //23
+                        75 , //24
+                        76 , //25
+                        77 , //26
+                        78 , //27
+                        79 , //28
+                        79 , //29
+                        80 , //30
+                        81 , //31
+                        82 , //32
+                        83 , //33
+                        83 , //34
+                        84 , //35
+                        85 , //36
+                        86 , //37
+                        87 , //38
+                        87 , //39
+                        88 , //40
+                        89 , //41
+                        89 , //42
+                        90 , //43
+                        91 , //44
+                        91 , //45
+                        92 , //46
+                        92 , //47
+                        93 , //48
+                        93 , //49
+                        94 , //50
+                        94 , //51
+                        95 , //52
+                        95 , //53
+                        96 , //54
+                        96 , //55
+                        97 , //56
+                        97 , //57
+                        98 , //58
+                        98 , //59
+                        98 , //60
+                        99 , //61
+                        99 , //62
+                        100, //63
+                        100, //64
+                        100, //65
+                        101, //66
+                        101, //67
+                        101, //68
+                        102, //69
+                        102, //70
+                        103, //71
+                        103, //72
+                        103, //73
+                        104, //74
+                        104, //75
+                        104, //76
+                        104, //77
+                        105, //78
+                        105, //79
+                        105, //80
+                        105, //81
+                        105, //82
+                        105, //83
+                        106, //84
+                        106, //85
+                        106, //86
+                        106, //87
+                        106, //88
+                        106, //89
+                        106, //90
+                        106, //91
+                        106, //92
+                        106, //93
+                        106, //94
+                        106, //95
+                        106, //96
+                        106, //97
+                        106, //98
+                        107, //99
+                        107, //100
+                        107, //101
+                        107, //102
+                        107, //103
+                        107, //104
+                        107, //105
+                        107, //106
+                        107, //107
+                        107, //108
+                        107, //109
+                        107, //110
+                        107, //111
+                        107, //112
+                        107, //113
+                        107, //114
+                        107, //115
+                        107, //116
+                        107, //117
+                        107, //118
+                        107, //119
+                        107, //120
+                        107, //121
+                        107, //122
+                        107, //123
+                        107, //124
+                        107, //125
+                        107, //126
+                        107, //127
+                        107,
+                    }
+                }, //RF_CHAN_9
                 {
-                    0  , //0
-                    41 , //1
-                    43 , //2
-                    47 , //3
-                    48 , //4
-                    50 , //5
-                    52 , //6
-                    53 , //7
-                    55 , //8
-                    57 , //9
-                    58 , //10
-                    60 , //11
-                    62 , //12
-                    63 , //13
-                    64 , //14
-                    65 , //15
-                    67 , //16
-                    68 , //17
-                    69 , //18
-                    70 , //19
-                    71 , //20
-                    72 , //21
-                    73 , //22
-                    74 , //23
-                    75 , //24
-                    76 , //25
-                    77 , //26
-                    77 , //27
-                    78 , //28
-                    79 , //29
-                    80 , //30
-                    81 , //31
-                    82 , //32
-                    83 , //33
-                    84 , //34
-                    85 , //35
-                    85 , //36
-                    86 , //37
-                    87 , //38
-                    88 , //39
-                    89 , //40
-                    89 , //41
-                    90 , //42
-                    90 , //43
-                    91 , //44
-                    92 , //45
-                    92 , //46
-                    93 , //47
-                    94 , //48
-                    94 , //49
-                    95 , //50
-                    95 , //51
-                    96 , //52
-                    96 , //53
-                    96 , //54
-                    97 , //55
-                    97 , //56
-                    98 , //57
-                    98 , //58
-                    99 , //59
-                    99 , //60
-                    99 , //61
-                    100, //62
-                    100, //63
-                    101, //64
-                    101, //65
-                    102, //66
-                    102, //67
-                    102, //68
-                    103, //69
-                    103, //70
-                    103, //71
-                    104, //72
-                    104, //73
-                    104, //74
-                    105, //75
-                    105, //76
-                    105, //77
-                    105, //78
-                    105, //79
-                    106, //80
-                    106, //81
-                    106, //82
-                    106, //83
-                    106, //84
-                    106, //85
-                    106, //86
-                    106, //87
-                    106, //88
-                    107, //89
-                    107, //90
-                    107, //91
-                    107, //92
-                    107, //93
-                    107, //94
-                    107, //95
-                    107, //96
-                    107, //97
-                    107, //98
-                    107, //99
-                    107, //100
-                    107, //101
-                    107, //102
-                    107, //103
-                    107, //104
-                    107, //105
-                    107, //106
-                    107, //107
-                    107, //108
-                    107, //109
-                    107, //110
-                    107, //111
-                    107, //112
-                    107, //113
-                    107, //114
-                    107, //115
-                    107, //116
-                    107, //117
-                    107, //118
-                    107, //119
-                    107, //120
-                    107, //121
-                    107, //122
-                    107, //123
-                    107, //124
-                    107, //125
-                    107, //126
-                    107, //127
-                    107,
-                }
-            }, //RF_CHAN_10
-            {
+                    {
+                        0  , //0
+                        41 , //1
+                        43 , //2
+                        47 , //3
+                        48 , //4
+                        50 , //5
+                        52 , //6
+                        53 , //7
+                        55 , //8
+                        57 , //9
+                        58 , //10
+                        60 , //11
+                        62 , //12
+                        63 , //13
+                        64 , //14
+                        65 , //15
+                        67 , //16
+                        68 , //17
+                        69 , //18
+                        70 , //19
+                        71 , //20
+                        72 , //21
+                        73 , //22
+                        74 , //23
+                        75 , //24
+                        76 , //25
+                        77 , //26
+                        77 , //27
+                        78 , //28
+                        79 , //29
+                        80 , //30
+                        81 , //31
+                        82 , //32
+                        83 , //33
+                        84 , //34
+                        85 , //35
+                        85 , //36
+                        86 , //37
+                        87 , //38
+                        88 , //39
+                        89 , //40
+                        89 , //41
+                        90 , //42
+                        90 , //43
+                        91 , //44
+                        92 , //45
+                        92 , //46
+                        93 , //47
+                        94 , //48
+                        94 , //49
+                        95 , //50
+                        95 , //51
+                        96 , //52
+                        96 , //53
+                        96 , //54
+                        97 , //55
+                        97 , //56
+                        98 , //57
+                        98 , //58
+                        99 , //59
+                        99 , //60
+                        99 , //61
+                        100, //62
+                        100, //63
+                        101, //64
+                        101, //65
+                        102, //66
+                        102, //67
+                        102, //68
+                        103, //69
+                        103, //70
+                        103, //71
+                        104, //72
+                        104, //73
+                        104, //74
+                        105, //75
+                        105, //76
+                        105, //77
+                        105, //78
+                        105, //79
+                        106, //80
+                        106, //81
+                        106, //82
+                        106, //83
+                        106, //84
+                        106, //85
+                        106, //86
+                        106, //87
+                        106, //88
+                        107, //89
+                        107, //90
+                        107, //91
+                        107, //92
+                        107, //93
+                        107, //94
+                        107, //95
+                        107, //96
+                        107, //97
+                        107, //98
+                        107, //99
+                        107, //100
+                        107, //101
+                        107, //102
+                        107, //103
+                        107, //104
+                        107, //105
+                        107, //106
+                        107, //107
+                        107, //108
+                        107, //109
+                        107, //110
+                        107, //111
+                        107, //112
+                        107, //113
+                        107, //114
+                        107, //115
+                        107, //116
+                        107, //117
+                        107, //118
+                        107, //119
+                        107, //120
+                        107, //121
+                        107, //122
+                        107, //123
+                        107, //124
+                        107, //125
+                        107, //126
+                        107, //127
+                        107,
+                    }
+                }, //RF_CHAN_10
                 {
-                    0  , //0
-                    42 , //1
-                    44 , //2
-                    47 , //3
-                    49 , //4
-                    51 , //5
-                    52 , //6
-                    54 , //7
-                    55 , //8
-                    57 , //9
-                    58 , //10
-                    60 , //11
-                    61 , //12
-                    63 , //13
-                    64 , //14
-                    65 , //15
-                    66 , //16
-                    67 , //17
-                    69 , //18
-                    70 , //19
-                    71 , //20
-                    72 , //21
-                    73 , //22
-                    74 , //23
-                    75 , //24
-                    76 , //25
-                    77 , //26
-                    77 , //27
-                    78 , //28
-                    79 , //29
-                    80 , //30
-                    81 , //31
-                    82 , //32
-                    82 , //33
-                    83 , //34
-                    84 , //35
-                    85 , //36
-                    86 , //37
-                    86 , //38
-                    87 , //39
-                    88 , //40
-                    89 , //41
-                    90 , //42
-                    90 , //43
-                    91 , //44
-                    91 , //45
-                    92 , //46
-                    92 , //47
-                    93 , //48
-                    93 , //49
-                    94 , //50
-                    94 , //51
-                    95 , //52
-                    96 , //53
-                    96 , //54
-                    97 , //55
-                    97 , //56
-                    97 , //57
-                    98 , //58
-                    98 , //59
-                    99 , //60
-                    99 , //61
-                    100, //62
-                    100, //63
-                    100, //64
-                    101, //65
-                    101, //66
-                    101, //67
-                    102, //68
-                    102, //69
-                    102, //70
-                    103, //71
-                    103, //72
-                    103, //73
-                    103, //74
-                    103, //75
-                    103, //76
-                    104, //77
-                    104, //78
-                    104, //79
-                    104, //80
-                    104, //81
-                    104, //82
-                    104, //83
-                    104, //84
-                    104, //85
-                    104, //86
-                    104, //87
-                    105, //88
-                    105, //89
-                    105, //90
-                    105, //91
-                    105, //92
-                    105, //93
-                    105, //94
-                    105, //95
-                    105, //96
-                    105, //97
-                    105, //98
-                    105, //99
-                    105, //100
-                    105, //101
-                    105, //102
-                    105, //103
-                    105, //104
-                    105, //105
-                    105, //106
-                    105, //107
-                    105, //108
-                    105, //109
-                    105, //110
-                    105, //111
-                    105, //112
-                    105, //113
-                    105, //114
-                    105, //115
-                    105, //116
-                    105, //117
-                    105, //118
-                    105, //119
-                    105, //120
-                    105, //121
-                    105, //122
-                    105, //123
-                    105, //124
-                    105, //125
-                    105, //126
-                    105, //127
-                }
-            }, //RF_CHAN_11
-            {
+                    {
+                        0  , //0
+                        42 , //1
+                        44 , //2
+                        47 , //3
+                        49 , //4
+                        51 , //5
+                        52 , //6
+                        54 , //7
+                        55 , //8
+                        57 , //9
+                        58 , //10
+                        60 , //11
+                        61 , //12
+                        63 , //13
+                        64 , //14
+                        65 , //15
+                        66 , //16
+                        67 , //17
+                        69 , //18
+                        70 , //19
+                        71 , //20
+                        72 , //21
+                        73 , //22
+                        74 , //23
+                        75 , //24
+                        76 , //25
+                        77 , //26
+                        77 , //27
+                        78 , //28
+                        79 , //29
+                        80 , //30
+                        81 , //31
+                        82 , //32
+                        82 , //33
+                        83 , //34
+                        84 , //35
+                        85 , //36
+                        86 , //37
+                        86 , //38
+                        87 , //39
+                        88 , //40
+                        89 , //41
+                        90 , //42
+                        90 , //43
+                        91 , //44
+                        91 , //45
+                        92 , //46
+                        92 , //47
+                        93 , //48
+                        93 , //49
+                        94 , //50
+                        94 , //51
+                        95 , //52
+                        96 , //53
+                        96 , //54
+                        97 , //55
+                        97 , //56
+                        97 , //57
+                        98 , //58
+                        98 , //59
+                        99 , //60
+                        99 , //61
+                        100, //62
+                        100, //63
+                        100, //64
+                        101, //65
+                        101, //66
+                        101, //67
+                        102, //68
+                        102, //69
+                        102, //70
+                        103, //71
+                        103, //72
+                        103, //73
+                        103, //74
+                        103, //75
+                        103, //76
+                        104, //77
+                        104, //78
+                        104, //79
+                        104, //80
+                        104, //81
+                        104, //82
+                        104, //83
+                        104, //84
+                        104, //85
+                        104, //86
+                        104, //87
+                        105, //88
+                        105, //89
+                        105, //90
+                        105, //91
+                        105, //92
+                        105, //93
+                        105, //94
+                        105, //95
+                        105, //96
+                        105, //97
+                        105, //98
+                        105, //99
+                        105, //100
+                        105, //101
+                        105, //102
+                        105, //103
+                        105, //104
+                        105, //105
+                        105, //106
+                        105, //107
+                        105, //108
+                        105, //109
+                        105, //110
+                        105, //111
+                        105, //112
+                        105, //113
+                        105, //114
+                        105, //115
+                        105, //116
+                        105, //117
+                        105, //118
+                        105, //119
+                        105, //120
+                        105, //121
+                        105, //122
+                        105, //123
+                        105, //124
+                        105, //125
+                        105, //126
+                        105, //127
+                    }
+                }, //RF_CHAN_11
                 {
-                    0  , //0
-                    41 , //1
-                    44 , //2
-                    46 , //3
-                    48 , //4
-                    50 , //5
-                    52 , //6
-                    54 , //7
-                    56 , //8
-                    57 , //9
-                    59 , //10
-                    60 , //11
-                    61 , //12
-                    63 , //13
-                    64 , //14
-                    65 , //15
-                    66 , //16
-                    67 , //17
-                    69 , //18
-                    70 , //19
-                    71 , //20
-                    72 , //21
-                    73 , //22
-                    74 , //23
-                    75 , //24
-                    76 , //25
-                    77 , //26
-                    77 , //27
-                    78 , //28
-                    79 , //29
-                    80 , //30
-                    80 , //31
-                    81 , //32
-                    82 , //33
-                    83 , //34
-                    83 , //35
-                    84 , //36
-                    85 , //37
-                    86 , //38
-                    86 , //39
-                    87 , //40
-                    88 , //41
-                    88 , //42
-                    89 , //43
-                    90 , //44
-                    90 , //45
-                    91 , //46
-                    92 , //47
-                    92 , //48
-                    93 , //49
-                    93 , //50
-                    94 , //51
-                    94 , //52
-                    95 , //53
-                    95 , //54
-                    96 , //55
-                    96 , //56
-                    96 , //57
-                    97 , //58
-                    97 , //59
-                    98 , //60
-                    98 , //61
-                    99 , //62
-                    99 , //63
-                    99 , //64
-                    100, //65
-                    100, //66
-                    100, //67
-                    101, //68
-                    101, //69
-                    101, //70
-                    102, //71
-                    102, //72
-                    102, //73
-                    103, //74
-                    103, //75
-                    103, //76
-                    103, //77
-                    103, //78
-                    103, //79
-                    103, //80
-                    104, //81
-                    104, //82
-                    104, //83
-                    104, //84
-                    104, //85
-                    104, //86
-                    104, //87
-                    104, //88
-                    104, //89
-                    104, //90
-                    104, //91
-                    104, //92
-                    104, //93
-                    105, //94
-                    105, //95
-                    105, //96
-                    105, //97
-                    105, //98
-                    105, //99
-                    105, //100
-                    105, //101
-                    105, //102
-                    105, //103
-                    105, //104
-                    105, //105
-                    105, //106
-                    105, //107
-                    105, //108
-                    105, //109
-                    105, //110
-                    105, //111
-                    105, //112
-                    105, //113
-                    105, //114
-                    105, //115
-                    105, //116
-                    105, //117
-                    105, //118
-                    105, //119
-                    105, //120
-                    105, //121
-                    105, //122
-                    105, //123
-                    105, //124
-                    105, //125
-                    105, //126
-                    105, //127
-                    105,
-                }
-            }, //RF_CHAN_12
-            {
+                    {
+                        0  , //0
+                        41 , //1
+                        44 , //2
+                        46 , //3
+                        48 , //4
+                        50 , //5
+                        52 , //6
+                        54 , //7
+                        56 , //8
+                        57 , //9
+                        59 , //10
+                        60 , //11
+                        61 , //12
+                        63 , //13
+                        64 , //14
+                        65 , //15
+                        66 , //16
+                        67 , //17
+                        69 , //18
+                        70 , //19
+                        71 , //20
+                        72 , //21
+                        73 , //22
+                        74 , //23
+                        75 , //24
+                        76 , //25
+                        77 , //26
+                        77 , //27
+                        78 , //28
+                        79 , //29
+                        80 , //30
+                        80 , //31
+                        81 , //32
+                        82 , //33
+                        83 , //34
+                        83 , //35
+                        84 , //36
+                        85 , //37
+                        86 , //38
+                        86 , //39
+                        87 , //40
+                        88 , //41
+                        88 , //42
+                        89 , //43
+                        90 , //44
+                        90 , //45
+                        91 , //46
+                        92 , //47
+                        92 , //48
+                        93 , //49
+                        93 , //50
+                        94 , //51
+                        94 , //52
+                        95 , //53
+                        95 , //54
+                        96 , //55
+                        96 , //56
+                        96 , //57
+                        97 , //58
+                        97 , //59
+                        98 , //60
+                        98 , //61
+                        99 , //62
+                        99 , //63
+                        99 , //64
+                        100, //65
+                        100, //66
+                        100, //67
+                        101, //68
+                        101, //69
+                        101, //70
+                        102, //71
+                        102, //72
+                        102, //73
+                        103, //74
+                        103, //75
+                        103, //76
+                        103, //77
+                        103, //78
+                        103, //79
+                        103, //80
+                        104, //81
+                        104, //82
+                        104, //83
+                        104, //84
+                        104, //85
+                        104, //86
+                        104, //87
+                        104, //88
+                        104, //89
+                        104, //90
+                        104, //91
+                        104, //92
+                        104, //93
+                        105, //94
+                        105, //95
+                        105, //96
+                        105, //97
+                        105, //98
+                        105, //99
+                        105, //100
+                        105, //101
+                        105, //102
+                        105, //103
+                        105, //104
+                        105, //105
+                        105, //106
+                        105, //107
+                        105, //108
+                        105, //109
+                        105, //110
+                        105, //111
+                        105, //112
+                        105, //113
+                        105, //114
+                        105, //115
+                        105, //116
+                        105, //117
+                        105, //118
+                        105, //119
+                        105, //120
+                        105, //121
+                        105, //122
+                        105, //123
+                        105, //124
+                        105, //125
+                        105, //126
+                        105, //127
+                        105,
+                    }
+                }, //RF_CHAN_12
                 {
-                    0  , //0
-                    42 , //1
-                    44 , //2
-                    46 , //3
-                    48 , //4
-                    50 , //5
-                    52 , //6
-                    54 , //7
-                    56 , //8
-                    58 , //9
-                    59 , //10
-                    60 , //11
-                    61 , //12
-                    63 , //13
-                    64 , //14
-                    65 , //15
-                    66 , //16
-                    68 , //17
-                    69 , //18
-                    70 , //19
-                    71 , //20
-                    72 , //21
-                    73 , //22
-                    74 , //23
-                    75 , //24
-                    75 , //25
-                    76 , //26
-                    77 , //27
-                    78 , //28
-                    79 , //29
-                    80 , //30
-                    80 , //31
-                    81 , //32
-                    82 , //33
-                    83 , //34
-                    83 , //35
-                    84 , //36
-                    85 , //37
-                    86 , //38
-                    86 , //39
-                    87 , //40
-                    88 , //41
-                    89 , //42
-                    89 , //43
-                    90 , //44
-                    91 , //45
-                    91 , //46
-                    92 , //47
-                    93 , //48
-                    93 , //49
-                    94 , //50
-                    94 , //51
-                    95 , //52
-                    95 , //53
-                    96 , //54
-                    96 , //55
-                    97 , //56
-                    97 , //57
-                    97 , //58
-                    98 , //59
-                    98 , //60
-                    99 , //61
-                    99 , //62
-                    100, //63
-                    100, //64
-                    100, //65
-                    101, //66
-                    101, //67
-                    101, //68
-                    102, //69
-                    102, //70
-                    102, //71
-                    103, //72
-                    103, //73
-                    103, //74
-                    103, //75
-                    103, //76
-                    103, //77
-                    104, //78
-                    104, //79
-                    104, //80
-                    104, //81
-                    104, //82
-                    104, //83
-                    104, //84
-                    104, //85
-                    104, //86
-                    104, //87
-                    104, //88
-                    104, //89
-                    105, //90
-                    105, //91
-                    105, //92
-                    105, //93
-                    105, //94
-                    105, //95
-                    105, //96
-                    105, //97
-                    105, //98
-                    105, //99
-                    105, //100
-                    105, //101
-                    105, //102
-                    105, //103
-                    105, //104
-                    105, //105
-                    105, //106
-                    105, //107
-                    105, //108
-                    105, //109
-                    105, //110
-                    105, //111
-                    105, //112
-                    105, //113
-                    105, //114
-                    105, //115
-                    105, //116
-                    105, //117
-                    105, //118
-                    105, //119
-                    105, //120
-                    105, //121
-                    105, //122
-                    105, //123
-                    105, //124
-                    105, //125
-                    105, //126
-                    105, //127
-                    105,
-                }
-            }, //RF_CHAN_13
-            {
+                    {
+                        0  , //0
+                        42 , //1
+                        44 , //2
+                        46 , //3
+                        48 , //4
+                        50 , //5
+                        52 , //6
+                        54 , //7
+                        56 , //8
+                        58 , //9
+                        59 , //10
+                        60 , //11
+                        61 , //12
+                        63 , //13
+                        64 , //14
+                        65 , //15
+                        66 , //16
+                        68 , //17
+                        69 , //18
+                        70 , //19
+                        71 , //20
+                        72 , //21
+                        73 , //22
+                        74 , //23
+                        75 , //24
+                        75 , //25
+                        76 , //26
+                        77 , //27
+                        78 , //28
+                        79 , //29
+                        80 , //30
+                        80 , //31
+                        81 , //32
+                        82 , //33
+                        83 , //34
+                        83 , //35
+                        84 , //36
+                        85 , //37
+                        86 , //38
+                        86 , //39
+                        87 , //40
+                        88 , //41
+                        89 , //42
+                        89 , //43
+                        90 , //44
+                        91 , //45
+                        91 , //46
+                        92 , //47
+                        93 , //48
+                        93 , //49
+                        94 , //50
+                        94 , //51
+                        95 , //52
+                        95 , //53
+                        96 , //54
+                        96 , //55
+                        97 , //56
+                        97 , //57
+                        97 , //58
+                        98 , //59
+                        98 , //60
+                        99 , //61
+                        99 , //62
+                        100, //63
+                        100, //64
+                        100, //65
+                        101, //66
+                        101, //67
+                        101, //68
+                        102, //69
+                        102, //70
+                        102, //71
+                        103, //72
+                        103, //73
+                        103, //74
+                        103, //75
+                        103, //76
+                        103, //77
+                        104, //78
+                        104, //79
+                        104, //80
+                        104, //81
+                        104, //82
+                        104, //83
+                        104, //84
+                        104, //85
+                        104, //86
+                        104, //87
+                        104, //88
+                        104, //89
+                        105, //90
+                        105, //91
+                        105, //92
+                        105, //93
+                        105, //94
+                        105, //95
+                        105, //96
+                        105, //97
+                        105, //98
+                        105, //99
+                        105, //100
+                        105, //101
+                        105, //102
+                        105, //103
+                        105, //104
+                        105, //105
+                        105, //106
+                        105, //107
+                        105, //108
+                        105, //109
+                        105, //110
+                        105, //111
+                        105, //112
+                        105, //113
+                        105, //114
+                        105, //115
+                        105, //116
+                        105, //117
+                        105, //118
+                        105, //119
+                        105, //120
+                        105, //121
+                        105, //122
+                        105, //123
+                        105, //124
+                        105, //125
+                        105, //126
+                        105, //127
+                        105,
+                    }
+                }, //RF_CHAN_13
                 {
-                    0,  //0
-                    40,  //1
-                    43,  //2
-                    45,  //3
-                    47,  //4
-                    49,  //5
-                    50,  //6
-                    52,  //7
-                    54,  //8
-                    56,  //9
-                    57,  //10
-                    58,  //11
-                    59,  //12
-                    60,  //13
-                    62,  //14
-                    63,  //15
-                    64,  //16
-                    65,  //17
-                    66,  //18
-                    67,  //19
-                    68,  //20
-                    69,  //21
-                    70,  //22
-                    71,  //23
-                    72,  //24
-                    73,  //25
-                    74,  //26
-                    74,  //27
-                    75,  //28
-                    76,  //29
-                    77,  //30
-                    78,  //31
-                    78,  //32
-                    79,  //33
-                    80,  //34
-                    81,  //35
-                    82,  //36
-                    83,  //37
-                    83,  //38
-                    84,  //39
-                    85,  //40
-                    85,  //41
-                    86,  //42
-                    87,  //43
-                    87,  //44
-                    88,  //45
-                    89,  //46
-                    89,  //47
-                    90,  //48
-                    90,  //49
-                    91,  //50
-                    91,  //51
-                    92,  //52
-                    92,  //53
-                    93,  //54
-                    93,  //55
-                    94,  //56
-                    94,  //57
-                    95,  //58
-                    95,  //59
-                    96,  //60
-                    96,  //61
-                    96,  //62
-                    97,  //63
-                    97,  //64
-                    97,  //65
-                    98,  //66
-                    98,  //67
-                    98,  //68
-                    98,  //69
-                    99,  //70
-                    99,  //71
-                    99,  //72
-                    99,  //73
-                    99,  //74
-                    99,  //75
-                    99,  //76
-                    99,  //77
-                    99,  //78
-                    99,  //79
-                    100,  //80
-                    100,  //81
-                    100,  //82
-                    100,  //83
-                    100,  //84
-                    100,  //85
-                    100,  //86
-                    100,  //87
-                    100,  //88
-                    100,  //89
-                    100,  //90
-                    100,  //91
-                    100,  //92
-                    100,  //93
-                    100,  //94
-                    100,  //95
-                    100,  //96
-                    100,  //97
-                    100, //98
-                    100, //99
-                    100, //100
-                    100, //101
-                    100, //102
-                    100, //103
-                    100, //104
-                    100, //105
-                    100, //106
-                    100, //107
-                    100, //108
-                    100, //109
-                    100, //110
-                    100, //111
-                    100, //112
-                    100, //113
-                    100, //114
-                    100, //115
-                    100, //116
-                    100, //117
-                    100, //118
-                    100, //119
-                    100, //120
-                    100, //121
-                    100, //122
-                    100, //123
-                    100, //124
-                    100, //125
-                    100, //126
-                    100, //127
-                    100,
-                }
-            }, //RF_CHAN_14
+                    {
+                       0,  //0
+                       40,  //1
+                       43,  //2
+                       45,  //3
+                       47,  //4
+                       49,  //5
+                       50,  //6
+                       52,  //7
+                       54,  //8
+                       56,  //9
+                       57,  //10
+                       58,  //11
+                       59,  //12
+                       60,  //13
+                       62,  //14
+                       63,  //15
+                       64,  //16
+                       65,  //17
+                       66,  //18
+                       67,  //19
+                       68,  //20
+                       69,  //21
+                       70,  //22
+                       71,  //23
+                       72,  //24
+                       73,  //25
+                       74,  //26
+                       74,  //27
+                       75,  //28
+                       76,  //29
+                       77,  //30
+                       78,  //31
+                       78,  //32
+                       79,  //33
+                       80,  //34
+                       81,  //35
+                       82,  //36
+                       83,  //37
+                       83,  //38
+                       84,  //39
+                       85,  //40
+                       85,  //41
+                       86,  //42
+                       87,  //43
+                       87,  //44
+                       88,  //45
+                       89,  //46
+                       89,  //47
+                       90,  //48
+                       90,  //49
+                       91,  //50
+                       91,  //51
+                       92,  //52
+                       92,  //53
+                       93,  //54
+                       93,  //55
+                       94,  //56
+                       94,  //57
+                       95,  //58
+                       95,  //59
+                       96,  //60
+                       96,  //61
+                       96,  //62
+                       97,  //63
+                       97,  //64
+                       97,  //65
+                       98,  //66
+                       98,  //67
+                       98,  //68
+                       98,  //69
+                       99,  //70
+                       99,  //71
+                       99,  //72
+                       99,  //73
+                       99,  //74
+                       99,  //75
+                       99,  //76
+                       99,  //77
+                       99,  //78
+                       99,  //79
+                       100,  //80
+                       100,  //81
+                       100,  //82
+                       100,  //83
+                       100,  //84
+                       100,  //85
+                       100,  //86
+                       100,  //87
+                       100,  //88
+                       100,  //89
+                       100,  //90
+                       100,  //91
+                       100,  //92
+                       100,  //93
+                       100,  //94
+                       100,  //95
+                       100,  //96
+                       100,  //97
+                       100, //98
+                       100, //99
+                       100, //100
+                       100, //101
+                       100, //102
+                       100, //103
+                       100, //104
+                       100, //105
+                       100, //106
+                       100, //107
+                       100, //108
+                       100, //109
+                       100, //110
+                       100, //111
+                       100, //112
+                       100, //113
+                       100, //114
+                       100, //115
+                       100, //116
+                       100, //117
+                       100, //118
+                       100, //119
+                       100, //120
+                       100, //121
+                       100, //122
+                       100, //123
+                       100, //124
+                       100, //125
+                       100, //126
+                       100, //127
+                       100,
+                    }
+                }, //RF_CHAN_14
         },
 
         //NV_TABLE_TPC_PDADC_OFFSETS
@@ -9307,7 +9307,7 @@ const sHalNvV2 nvDefaultsV2 =
             0x7FFF,        // tANI_U16    tempStart;
             0x7FFF,        // tANI_U16    tempFinish;
 
-            {   //txLoCorrections
+            { //txLoCorrections
                 {
                     { 0x00, 0x00 }, // TX_GAIN_STEP_0
                     { 0x00, 0x00 }, // TX_GAIN_STEP_1
@@ -9562,7 +9562,7 @@ const sHalNvV2 nvDefaultsV2 =
                 }  //RF_CHAN_14
             },        // tTxLoCorrections    txLoValues;
 
-            {   //sTxIQChannel
+            { //sTxIQChannel
                 {
                     { 0x0000, 0x0000, 0x0000 }, // TX_GAIN_STEP_0
                     { 0x0000, 0x0000, 0x0000 }, // TX_GAIN_STEP_1
@@ -9817,7 +9817,7 @@ const sHalNvV2 nvDefaultsV2 =
                 }  //RF_CHAN_14
             },        // sTxIQChannel        txIqValues;
 
-            {   //sRxIQChannel
+            { //sRxIQChannel
                 {
                     { 0x0000, 0x0000, 0x0000 }, // RX_GAIN_STEP_0
                     { 0x0000, 0x0000, 0x0000 }, // RX_GAIN_STEP_1
@@ -10072,7 +10072,7 @@ const sHalNvV2 nvDefaultsV2 =
                 }  //RF_CHAN_14
             },        // sRxIQChannel        rxIqValues;
 
-            {   // tTpcConfig          clpcData[MAX_TPC_CHANNELS]
+            { // tTpcConfig          clpcData[MAX_TPC_CHANNELS]
                 {
                     {
                         {
@@ -10301,17 +10301,17 @@ const sHalNvV2 nvDefaultsV2 =
             0,   //xPA5G;
             0,   //paPolarityTx;
             0,   //paPolarityRx;
-
+                
             0,   //xLNA2G;
             0,   //xLNA5G;
             0,   //xCoupler2G;
             0,   //xCoupler5G;
-
+                
             0,   //xPdet2G;
             0,   //xPdet5G;
             0,   //enableDPD2G;
             1,   //enableDPD5G;
-
+                
             1,   //pdadcSelect2G;
             1,   //pdadcSelect5GLow;
             1,   //pdadcSelect5GMid;
@@ -10349,9 +10349,9 @@ const sHalNvV2 nvDefaultsV2 =
             {
                 1400,        //psSlpTimeOvrHd2G;
                 1400,        //psSlpTimeOvrHd5G;
-
+                
                 1600,        //psSlpTimeOvrHdxLNA5G;
-                0,           //nv_TxBBFSel9MHz
+                0,           //nv_TxBBFSel9MHz 
                 0,           //hwParam1
                 0,           //hwParam2
 

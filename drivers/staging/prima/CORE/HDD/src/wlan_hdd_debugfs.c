@@ -35,7 +35,7 @@
 #define MAX_USER_COMMAND_SIZE_FRAME 4096
 
 static ssize_t __wcnss_wowenable_write(struct file *file,
-                                       const char __user *buf, size_t count, loff_t *ppos)
+               const char __user *buf, size_t count, loff_t *ppos)
 {
     hdd_adapter_t *pAdapter;
     hdd_context_t *pHddCtx;
@@ -96,10 +96,10 @@ static ssize_t __wcnss_wowenable_write(struct file *file,
     if (!wow_enable) {
         if (!hdd_exit_wowl(pAdapter, eWOWL_EXIT_USER))
         {
-            VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
-                      "%s: hdd_exit_wowl failed!", __func__);
+          VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                    "%s: hdd_exit_wowl failed!", __func__);
 
-            return -EFAULT;
+          return -EFAULT;
         }
 
         return count;
@@ -125,17 +125,17 @@ static ssize_t __wcnss_wowenable_write(struct file *file,
 
     if (!hdd_enter_wowl(pAdapter, wow_mp, wow_pbm))
     {
-        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
-                  "%s: hdd_enter_wowl failed!", __func__);
+      VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                "%s: hdd_enter_wowl failed!", __func__);
 
-        return -EFAULT;
+      return -EFAULT;
     }
     EXIT();
     return count;
 }
 
 static ssize_t wcnss_wowenable_write(struct file *file,
-                                     const char __user *buf, size_t count, loff_t *ppos)
+               const char __user *buf, size_t count, loff_t *ppos)
 {
     ssize_t ret;
 
@@ -147,7 +147,7 @@ static ssize_t wcnss_wowenable_write(struct file *file,
 }
 
 static ssize_t __wcnss_wowpattern_write(struct file *file,
-                                        const char __user *buf, size_t count, loff_t *ppos)
+               const char __user *buf, size_t count, loff_t *ppos)
 {
     hdd_adapter_t *pAdapter;
     hdd_context_t *pHddCtx;
@@ -241,7 +241,7 @@ static ssize_t __wcnss_wowpattern_write(struct file *file,
 }
 
 static ssize_t wcnss_wowpattern_write(struct file *file,
-                                      const char __user *buf, size_t count, loff_t *ppos)
+               const char __user *buf, size_t count, loff_t *ppos)
 {
     ssize_t ret;
 
@@ -253,7 +253,7 @@ static ssize_t wcnss_wowpattern_write(struct file *file,
 }
 
 static ssize_t __wcnss_patterngen_write(struct file *file,
-                                        const char __user *buf, size_t count, loff_t *ppos)
+               const char __user *buf, size_t count, loff_t *ppos)
 {
     hdd_adapter_t *pAdapter;
     hdd_context_t *pHddCtx;
@@ -364,7 +364,7 @@ static ssize_t __wcnss_patterngen_write(struct file *file,
 
         /* Delete pattern */
         if (eHAL_STATUS_SUCCESS != sme_DelPeriodicTxPtrn(pHddCtx->hHal,
-                delPeriodicTxPtrnParams))
+                                                delPeriodicTxPtrnParams))
         {
             VOS_TRACE( VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
                        "%s: sme_DelPeriodicTxPtrn() failed!", __func__);
@@ -436,7 +436,7 @@ static ssize_t __wcnss_patterngen_write(struct file *file,
     for(i = 0; i < addPeriodicTxPtrnParams->ucPtrnSize; i++)
     {
         addPeriodicTxPtrnParams->ucPattern[i] =
-            (hdd_parse_hex(pattern_buf[0]) << 4) + hdd_parse_hex(pattern_buf[1]);
+        (hdd_parse_hex(pattern_buf[0]) << 4) + hdd_parse_hex(pattern_buf[1]);
 
         /* Skip to next byte */
         pattern_buf += 2;
@@ -444,7 +444,7 @@ static ssize_t __wcnss_patterngen_write(struct file *file,
 
     /* Add pattern */
     if (eHAL_STATUS_SUCCESS != sme_AddPeriodicTxPtrn(pHddCtx->hHal,
-            addPeriodicTxPtrnParams))
+                                            addPeriodicTxPtrnParams))
     {
         VOS_TRACE( VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
                    "%s: sme_AddPeriodicTxPtrn() failed!", __func__);
@@ -464,7 +464,7 @@ failure:
 }
 
 static ssize_t wcnss_patterngen_write(struct file *file,
-                                      const char __user *buf, size_t count, loff_t *ppos)
+               const char __user *buf, size_t count, loff_t *ppos)
 {
     ssize_t ret;
 
@@ -546,15 +546,15 @@ VOS_STATUS hdd_debugfs_init(hdd_adapter_t *pAdapter)
         return VOS_STATUS_E_FAILURE;
 
     if (NULL == debugfs_create_file("wow_enable", S_IRUSR | S_IWUSR,
-                                    pHddCtx->debugfs_phy, pAdapter, &fops_wowenable))
+        pHddCtx->debugfs_phy, pAdapter, &fops_wowenable))
         return VOS_STATUS_E_FAILURE;
 
     if (NULL == debugfs_create_file("wow_pattern", S_IRUSR | S_IWUSR,
-                                    pHddCtx->debugfs_phy, pAdapter, &fops_wowpattern))
+        pHddCtx->debugfs_phy, pAdapter, &fops_wowpattern))
         return VOS_STATUS_E_FAILURE;
 
     if (NULL == debugfs_create_file("pattern_gen", S_IRUSR | S_IWUSR,
-                                    pHddCtx->debugfs_phy, pAdapter, &fops_patterngen))
+        pHddCtx->debugfs_phy, pAdapter, &fops_patterngen))
         return VOS_STATUS_E_FAILURE;
 
     return VOS_STATUS_SUCCESS;

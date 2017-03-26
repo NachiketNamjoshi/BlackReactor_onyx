@@ -26,14 +26,14 @@
  */
 
 /**=========================================================================
-
+  
   \file  wlan_qct_pal_timer.c
-
+  
   \brief Implementation trace/logging APIs PAL exports. wpt = (Wlan Pal Type) wpal = (Wlan PAL)
-
+               
    Definitions for platform Windows.
-
-
+  
+  
   ========================================================================*/
 
 #include "wlan_qct_pal_timer.h"
@@ -53,18 +53,18 @@
 ---------------------------------------------------------------------------*/
 static void wpalTimerCback( void * userData )
 {
-    wpt_timer *pTimer = (wpt_timer *)userData;
+   wpt_timer *pTimer = (wpt_timer *)userData;
 
-    if(NULL != pTimer->callback)
-    {
-        pTimer->callback(pTimer->pUserData);
-    }
-    else
-    {
-        WPAL_TRACE( eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_WARN,
-                    " %s pTimer(%p) callback after deleted",
-                    __func__, pTimer );
-    }
+   if(NULL != pTimer->callback)
+   {
+      pTimer->callback(pTimer->pUserData);
+   }
+   else
+   {
+      WPAL_TRACE( eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_WARN,
+                  " %s pTimer(%p) callback after deleted",
+                  __func__, pTimer );
+   }
 }/*wpalTimerCback*/
 
 /*---------------------------------------------------------------------------
@@ -78,24 +78,24 @@ static void wpalTimerCback( void * userData )
 ---------------------------------------------------------------------------*/
 wpt_status wpalTimerInit(wpt_timer * pTimer, wpal_timer_callback callback, void *pUserData)
 {
-    /* Sanity Checks */
-    if( pTimer == NULL || callback == NULL )
-    {
-        WPAL_TRACE( eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
-                    " %s Wrong param pTimer(%p) callback(%p)",
-                    __func__, pTimer, callback );
-        return eWLAN_PAL_STATUS_E_INVAL;
-    }
+   /* Sanity Checks */
+   if( pTimer == NULL || callback == NULL )
+   {
+      WPAL_TRACE( eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
+                  " %s Wrong param pTimer(%p) callback(%p)",
+                  __func__, pTimer, callback );
+      return eWLAN_PAL_STATUS_E_INVAL;
+   }
 
-    if ( vos_timer_init( &pTimer->timer.timerObj, VOS_TIMER_TYPE_SW,
-                         wpalTimerCback, (void*)pTimer ) == VOS_STATUS_SUCCESS )
-    {
-        pTimer->callback = callback;
-        pTimer->pUserData = pUserData;
-        return eWLAN_PAL_STATUS_SUCCESS;
-    }
+   if ( vos_timer_init( &pTimer->timer.timerObj, VOS_TIMER_TYPE_SW, 
+                        wpalTimerCback, (void*)pTimer ) == VOS_STATUS_SUCCESS )
+   {
+      pTimer->callback = callback;
+      pTimer->pUserData = pUserData;
+      return eWLAN_PAL_STATUS_SUCCESS;
+   }
 
-    return eWLAN_PAL_STATUS_E_FAILURE;
+   return eWLAN_PAL_STATUS_E_FAILURE;
 }/*wpalTimerInit*/
 
 
@@ -108,26 +108,26 @@ wpt_status wpalTimerInit(wpt_timer * pTimer, wpal_timer_callback callback, void 
 ---------------------------------------------------------------------------*/
 wpt_status wpalTimerDelete(wpt_timer *pTimer)
 {
-    wpt_status status;
+   wpt_status status;
 
-    /* Sanity Checks */
-    if( pTimer == NULL )
-    {
-        WPAL_TRACE( eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
-                    " %s Wrong param pTimer(%p)",
-                    __func__, pTimer );
-        return eWLAN_PAL_STATUS_E_INVAL;
-    }
+   /* Sanity Checks */
+   if( pTimer == NULL )
+   {
+      WPAL_TRACE( eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
+                  " %s Wrong param pTimer(%p)",
+                  __func__, pTimer );
+      return eWLAN_PAL_STATUS_E_INVAL;
+   }
 
-    status = WPAL_VOS_TO_WPAL_STATUS( vos_timer_destroy(&pTimer->timer.timerObj));
+   status = WPAL_VOS_TO_WPAL_STATUS( vos_timer_destroy(&pTimer->timer.timerObj));
 
-    if( status == eWLAN_PAL_STATUS_SUCCESS )
-    {
-        pTimer->callback = NULL;
-        pTimer->pUserData = NULL;
-    }
+   if( status == eWLAN_PAL_STATUS_SUCCESS )
+   {
+      pTimer->callback = NULL;
+      pTimer->pUserData = NULL;
+   }
 
-    return status;
+   return status;
 }/*wpalTimerDelete*/
 
 
@@ -142,16 +142,16 @@ wpt_status wpalTimerDelete(wpt_timer *pTimer)
 ---------------------------------------------------------------------------*/
 wpt_status wpalTimerStart(wpt_timer * pTimer, wpt_uint32 timeout)
 {
-    /* Sanity Checks */
-    if( pTimer == NULL )
-    {
-        WPAL_TRACE( eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
-                    " %s Wrong param pTimer(%p)",
-                    __func__, pTimer );
-        return eWLAN_PAL_STATUS_E_INVAL;
-    }
-    return ( WPAL_VOS_TO_WPAL_STATUS( vos_timer_start( &pTimer->timer.timerObj,
-                                      timeout ) ) );
+   /* Sanity Checks */
+   if( pTimer == NULL )
+   {
+      WPAL_TRACE( eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
+                  " %s Wrong param pTimer(%p)",
+                  __func__, pTimer );
+      return eWLAN_PAL_STATUS_E_INVAL;
+   }
+   return ( WPAL_VOS_TO_WPAL_STATUS( vos_timer_start( &pTimer->timer.timerObj,
+                                                     timeout ) ) );
 }/*wpalTimerStart*/
 
 
@@ -166,15 +166,15 @@ wpt_status wpalTimerStart(wpt_timer * pTimer, wpt_uint32 timeout)
 ---------------------------------------------------------------------------*/
 wpt_status wpalTimerStop(wpt_timer * pTimer)
 {
-    /* Sanity Checks */
-    if( pTimer == NULL )
-    {
-        WPAL_TRACE( eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
-                    " %s Wrong param pTimer(%p)",
-                    __func__, pTimer );
-        return eWLAN_PAL_STATUS_E_INVAL;
-    }
-    return (WPAL_VOS_TO_WPAL_STATUS( vos_timer_stop( &pTimer->timer.timerObj )));
+   /* Sanity Checks */
+   if( pTimer == NULL )
+   {
+      WPAL_TRACE( eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
+                  " %s Wrong param pTimer(%p)",
+                  __func__, pTimer );
+      return eWLAN_PAL_STATUS_E_INVAL;
+   }
+   return (WPAL_VOS_TO_WPAL_STATUS( vos_timer_stop( &pTimer->timer.timerObj )));
 }/*wpalTimerStop*/
 
 /*---------------------------------------------------------------------------
@@ -187,15 +187,15 @@ wpt_status wpalTimerStop(wpt_timer * pTimer)
 ---------------------------------------------------------------------------*/
 WPAL_TIMER_STATE wpalTimerGetCurStatus(wpt_timer * pTimer)
 {
-    /* Sanity Checks */
-    if( pTimer == NULL )
-    {
-        WPAL_TRACE( eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
-                    " %s Wrong param pTimer(%p)",
-                    __func__, pTimer );
-        return eWLAN_PAL_STATUS_E_INVAL;
-    }
-    return vos_timer_getCurrentState( &pTimer->timer.timerObj );
+   /* Sanity Checks */
+   if( pTimer == NULL )
+   {
+      WPAL_TRACE( eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
+                  " %s Wrong param pTimer(%p)",
+                  __func__, pTimer );
+      return eWLAN_PAL_STATUS_E_INVAL;
+   }
+   return vos_timer_getCurrentState( &pTimer->timer.timerObj );
 }/*wpalTimerGetCurStatus*/
 
 /*---------------------------------------------------------------------------
@@ -206,7 +206,7 @@ WPAL_TIMER_STATE wpalTimerGetCurStatus(wpt_timer * pTimer)
 ---------------------------------------------------------------------------*/
 wpt_uint32 wpalGetSystemTime(void)
 {
-    return vos_timer_get_system_time();
+   return vos_timer_get_system_time();
 }/*wpalGetSystemTime*/
 
 /*---------------------------------------------------------------------------
@@ -218,12 +218,12 @@ wpt_uint32 wpalGetSystemTime(void)
 #if defined(ANI_OS_TYPE_ANDROID)
 wpt_uint64 wpalGetArchCounterTime(void)
 {
-    return arch_counter_get_cntpct();
+   return arch_counter_get_cntpct();
 }/*wpalGetArchCounterTime*/
 #else
 wpt_uint64 wpalGetArchCounterTime(void)
 {
-    return 0;
+   return 0;
 }/*wpalGetArchCounterTime*/
 #endif
 
@@ -236,8 +236,8 @@ wpt_uint64 wpalGetArchCounterTime(void)
 ---------------------------------------------------------------------------*/
 wpt_status wpalSleep(wpt_uint32 timeout)
 {
-    vos_sleep( timeout );
-    return eWLAN_PAL_STATUS_SUCCESS;
+   vos_sleep( timeout );
+   return eWLAN_PAL_STATUS_SUCCESS;
 }
 
 /*---------------------------------------------------------------------------
@@ -249,6 +249,6 @@ wpt_status wpalSleep(wpt_uint32 timeout)
 ---------------------------------------------------------------------------*/
 void wpalBusyWait(wpt_uint32 usecDelay)
 {
-    vos_busy_wait(usecDelay);
-    return;
+   vos_busy_wait(usecDelay);
+   return;
 }

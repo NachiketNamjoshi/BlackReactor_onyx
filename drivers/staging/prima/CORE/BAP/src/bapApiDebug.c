@@ -28,20 +28,20 @@
 /*===========================================================================
 
                       b a p A p i D e b u g . C
-
+                                               
   OVERVIEW:
-
+  
   This software unit holds the implementation of the WLAN BAP modules
   Debug functions.
-
-  The functions externalized by this module are to be called ONLY by other
+  
+  The functions externalized by this module are to be called ONLY by other 
   WLAN modules (HDD) that properly register with the BAP Layer initially.
 
-  DEPENDENCIES:
+  DEPENDENCIES: 
 
-  Are listed for each API below.
-
-
+  Are listed for each API below. 
+  
+  
 ===========================================================================*/
 
 /*===========================================================================
@@ -68,9 +68,9 @@
 //#include "wlan_qct_tl.h"
 #include "vos_trace.h"
 
-/* BT-AMP PAL API header file */
-#include "bapApi.h"
-#include "bapInternal.h"
+/* BT-AMP PAL API header file */ 
+#include "bapApi.h" 
+#include "bapInternal.h" 
 
 //
 //#define BAP_DEBUG
@@ -111,42 +111,42 @@ Debug Commands
 
   FUNCTION    WLAN_BAPReadLoopbackMode()
 
-  DESCRIPTION
-    Implements the actual HCI Read Loopback Mode command.  There
-    is no need for a callback because when this call returns the action
+  DESCRIPTION 
+    Implements the actual HCI Read Loopback Mode command.  There 
+    is no need for a callback because when this call returns the action 
     has been completed.
 
-  DEPENDENCIES
-    NA.
+  DEPENDENCIES 
+    NA. 
 
-  PARAMETERS
+  PARAMETERS 
 
     IN
     btampHandle: pointer to the BAP handle.  Returned from WLANBAP_GetNewHndl.
     pBapHCIReadLoopbackMode:  pointer to the "HCI Read Loopback Mode".
-
+   
     IN/OUT
-    pBapHCIEvent:  Return event value for the command complete event.
-                (The caller of this routine is responsible for sending
+    pBapHCIEvent:  Return event value for the command complete event. 
+                (The caller of this routine is responsible for sending 
                 the Command Complete event up the HCI interface.)
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  pointer to pBapHCIReadLoopbackMode or
+    VOS_STATUS_E_FAULT:  pointer to pBapHCIReadLoopbackMode or 
                          pBapHCILoopbackMode is NULL.
     VOS_STATUS_SUCCESS:  Success
-
-  SIDE EFFECTS
-
+  
+  SIDE EFFECTS 
+  
 ----------------------------------------------------------------------------*/
-VOS_STATUS
+VOS_STATUS  
 WLAN_BAPReadLoopbackMode
-(
-    ptBtampHandle btampHandle,
-    tBtampTLVHCI_Read_Loopback_Mode_Cmd  *pBapHCIReadLoopbackMode,
-    tpBtampHCI_Event pBapHCIEvent /* This now encodes ALL event types */
-    /* Including Command Complete and Command Status*/
+( 
+  ptBtampHandle btampHandle,
+  tBtampTLVHCI_Read_Loopback_Mode_Cmd  *pBapHCIReadLoopbackMode,
+  tpBtampHCI_Event pBapHCIEvent /* This now encodes ALL event types */
+                                /* Including Command Complete and Command Status*/
 )
 {
 
@@ -157,41 +157,41 @@ WLAN_BAPReadLoopbackMode
 
   FUNCTION    WLAN_BAPWriteLoopbackMode()
 
-  DESCRIPTION
-    Implements the actual HCI Write Loopback Mode command.  There
-    is no need for a callback because when this call returns the action
+  DESCRIPTION 
+    Implements the actual HCI Write Loopback Mode command.  There 
+    is no need for a callback because when this call returns the action 
     has been completed.
 
-  DEPENDENCIES
-    NA.
+  DEPENDENCIES 
+    NA. 
 
-  PARAMETERS
+  PARAMETERS 
 
     IN
     btampHandle: pointer to the BAP handle.  Returned from WLANBAP_GetNewHndl.
     pBapHCIWriteLoopbackMode:  pointer to the "HCI Write Loopback Mode" Structure.
-
+    
     IN/OUT
-    pBapHCIEvent:  Return event value for the command complete event.
-                (The caller of this routine is responsible for sending
+    pBapHCIEvent:  Return event value for the command complete event. 
+                (The caller of this routine is responsible for sending 
                 the Command Complete event up the HCI interface.)
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  pointer to pBapHCIWriteLoopbackMode is NULL
+    VOS_STATUS_E_FAULT:  pointer to pBapHCIWriteLoopbackMode is NULL 
     VOS_STATUS_SUCCESS:  Success
-
-  SIDE EFFECTS
-
+  
+  SIDE EFFECTS 
+  
 ----------------------------------------------------------------------------*/
-VOS_STATUS
+VOS_STATUS  
 WLAN_BAPWriteLoopbackMode
-(
-    ptBtampHandle btampHandle,
-    tBtampTLVHCI_Write_Loopback_Mode_Cmd   *pBapHCIWriteLoopbackMode,
-    tpBtampHCI_Event pBapHCIEvent /* This now encodes ALL event types */
-    /* Including Command Complete and Command Status*/
+( 
+  ptBtampHandle btampHandle,
+  tBtampTLVHCI_Write_Loopback_Mode_Cmd   *pBapHCIWriteLoopbackMode,
+  tpBtampHCI_Event pBapHCIEvent /* This now encodes ALL event types */
+                                /* Including Command Complete and Command Status*/
 )
 {
 

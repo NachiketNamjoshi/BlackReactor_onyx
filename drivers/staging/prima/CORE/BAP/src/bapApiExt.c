@@ -28,22 +28,22 @@
 /*===========================================================================
 
                       b a p A p i E x t . C
-
+                                               
   OVERVIEW:
-
+  
   This software unit holds the implementation of the external interfaces
-  required by the WLAN BAP module.  It is currently a temporary
+  required by the WLAN BAP module.  It is currently a temporary 
   respository for API routines which should be furnished by CSR
   or TL, but aren't yet implemented.
-
-  The functions provide by this module are called by the rest of
+  
+  The functions provide by this module are called by the rest of 
   the BT-AMP PAL module.
 
-  DEPENDENCIES:
+  DEPENDENCIES: 
 
-  Are listed for each API below.
-
-
+  Are listed for each API below. 
+  
+  
 ===========================================================================*/
 
 /*===========================================================================
@@ -84,7 +84,7 @@
  * -------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------
- *  External declarations for global context
+ *  External declarations for global context 
  * -------------------------------------------------------------------------*/
 
 
@@ -105,77 +105,77 @@
  * -------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------
- * Utility Function implementations
+ * Utility Function implementations 
  * -------------------------------------------------------------------------*/
 
 /*==========================================================================
 
   FUNCTION    WLANBAP_GetCurrentChannel
 
-  DESCRIPTION
+  DESCRIPTION 
     Clear out all fields in the BAP context.
-
-  DEPENDENCIES
-
-  PARAMETERS
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
     pBtampCtx:   pointer to the BAP control block
     channel:     current configured channel number.
     activeFlag:  flag indicating whether there is an active link.
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  pointer to return channel is NULL ; access would cause a page
-                         fault
-    VOS_STATUS_SUCCESS:  Everything is good :)
+    VOS_STATUS_E_FAULT:  pointer to return channel is NULL ; access would cause a page 
+                         fault  
+    VOS_STATUS_SUCCESS:  Everything is good :) 
 
-  SIDE EFFECTS
-
+  SIDE EFFECTS 
+  
 ============================================================================*/
-VOS_STATUS
+VOS_STATUS 
 WLANBAP_GetCurrentChannel
-(
-    ptBtampContext  pBtampCtx,
-    v_U32_t *channel, // return current channel here
-    v_U32_t *activeFlag   // return active flag here
+( 
+  ptBtampContext  pBtampCtx,
+  v_U32_t *channel, // return current channel here
+  v_U32_t *activeFlag   // return active flag here
 )
 {
-    //v_U32_t cb_enabled;
-    tHalHandle halHandle;
+  //v_U32_t cb_enabled;
+  tHalHandle halHandle;
 
-    /*------------------------------------------------------------------------
-      Sanity check BAP control block
-     ------------------------------------------------------------------------*/
+  /*------------------------------------------------------------------------
+    Sanity check BAP control block 
+   ------------------------------------------------------------------------*/
 
-    if (( NULL == pBtampCtx ) || (NULL == channel) || (NULL == activeFlag))
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "Invalid BAP pointer in %s", __func__);
-        return VOS_STATUS_E_FAULT;
-    }
+  if (( NULL == pBtampCtx ) || (NULL == channel) || (NULL == activeFlag))
+  {
+    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                 "Invalid BAP pointer in %s", __func__);
+    return VOS_STATUS_E_FAULT;
+  }
 
-    halHandle =  VOS_GET_HAL_CB(pBtampCtx->pvosGCtx);
+  halHandle =  VOS_GET_HAL_CB(pBtampCtx->pvosGCtx);
 
-    if(NULL == halHandle)
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "halHandle is NULL in %s", __func__);
-        return VOS_STATUS_E_FAULT;
-    }
+  if(NULL == halHandle)
+  {
+     VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                  "halHandle is NULL in %s", __func__);
+     return VOS_STATUS_E_FAULT;
+  }
 
-    if (ccmCfgGetInt(halHandle, WNI_CFG_CURRENT_CHANNEL, channel)
-            != eHAL_STATUS_SUCCESS )
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "Get CFG failed in %s", __func__);
-        return VOS_STATUS_E_FAULT;
-    }
+  if (ccmCfgGetInt(halHandle, WNI_CFG_CURRENT_CHANNEL, channel) 
+          != eHAL_STATUS_SUCCESS ) 
+  {
+    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                 "Get CFG failed in %s", __func__);
+    return VOS_STATUS_E_FAULT;
+  }
 
-    *activeFlag  = FALSE;  // return active flag here
+  *activeFlag  = FALSE;  // return active flag here
 
-    return VOS_STATUS_SUCCESS;
+  return VOS_STATUS_SUCCESS;
 }/* WLANBAP_GetCurrentChannel */
 
 

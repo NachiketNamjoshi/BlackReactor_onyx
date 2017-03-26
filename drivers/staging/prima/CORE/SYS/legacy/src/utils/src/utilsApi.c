@@ -29,7 +29,7 @@
 //
 //  File:         utilsApi.cc
 //
-//  Description:  Implemention of a few utility routines.
+//  Description:  Implemention of a few utility routines. 
 //
 //  Author:       Neelay Das
 //
@@ -77,15 +77,15 @@ sirDumpBuf(tpAniSirGlobal pMac, tANI_U8 modId, tANI_U32 level, tANI_U8 *buf, tAN
     for (i=0; (i+7)<size; i+=8)
     {
         logDbg(pMac, modId, level,
-               "%02x %02x %02x %02x %02x %02x %02x %02x \n",
-               buf[i],
-               buf[i+1],
-               buf[i+2],
-               buf[i+3],
-               buf[i+4],
-               buf[i+5],
-               buf[i+6],
-               buf[i+7]);
+                 "%02x %02x %02x %02x %02x %02x %02x %02x \n",
+                 buf[i],
+                 buf[i+1],
+                 buf[i+2],
+                 buf[i+3],
+                 buf[i+4],
+                 buf[i+5],
+                 buf[i+6],
+                 buf[i+7]);
     }
 
     // Dump the bytes in the last line

@@ -114,7 +114,7 @@ int
 aagPtkPrf(v_U32_t cryptHandle,
           v_U8_t result[AAG_PRF_MAX_OUTPUT_SIZE],
           v_U32_t prfLen,
-          tAniPacket *pmk,
+          tAniPacket *pmk, 
           tAniMacAddr authAddr,
           tAniMacAddr suppAddr,
           v_U8_t aNonce[ANI_EAPOL_KEY_RSN_NONCE_SIZE],
@@ -159,8 +159,8 @@ aagPtkPrf(v_U32_t cryptHandle,
     }
 
     return aagPrf(cryptHandle,
-                  result,
-                  keyBytes, keyLen,
+                  result, 
+                  keyBytes, keyLen, 
                   (v_U8_t *)AAG_PTK_PRF_CONST, AAG_PTK_PRF_CONST_LEN,
                   text, sizeof(text),
                   prfLen);
@@ -250,10 +250,10 @@ aagPrf(v_U32_t cryptHandle,
     numLoops = prfLen + AAG_PTK_PRF_ADD_PARAM;
     numLoops /= AAG_PTK_PRF_DIV_PARAM;
 
-    for (i = 0; i < numLoops; i++)
+    for (i = 0; i < numLoops; i++) 
     {
         VOS_ASSERT((resultOffset - result + VOS_DIGEST_SHA1_SIZE)
-                   <= AAG_PRF_MAX_OUTPUT_SIZE);
+               <= AAG_PRF_MAX_OUTPUT_SIZE);
         hmacText[loopCtrPos] = i;
         if( VOS_IS_STATUS_SUCCESS( vos_sha1_hmac_str(cryptHandle, hmacText, loopCtrPos + 1, key, keyLen, resultOffset) ) )
         {

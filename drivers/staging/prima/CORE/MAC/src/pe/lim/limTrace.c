@@ -92,9 +92,9 @@ static tANI_U8* __limTraceGetTimerString( tANI_U16 timerId )
         CASE_RETURN_STRING(eLIM_INSERT_SINGLESHOT_NOA_TIMER);
         CASE_RETURN_STRING(eLIM_CONVERT_ACTIVE_CHANNEL_TO_PASSIVE);
         CASE_RETURN_STRING(eLIM_AUTH_RETRY_TIMER);
-    default:
-        return( "UNKNOWN" );
-        break;
+        default:
+            return( "UNKNOWN" );
+            break;
     }
 }
 
@@ -111,9 +111,9 @@ static tANI_U8* __limTraceGetMgmtDropReasonString( tANI_U16 dropReason )
         CASE_RETURN_STRING(eMGMT_DROP_NO_DROP);
         CASE_RETURN_STRING(eMGMT_DROP_SCAN_MODE_FRAME);
 
-    default:
-        return( "UNKNOWN" );
-        break;
+        default:
+            return( "UNKNOWN" );
+            break;
     }
 }
 
@@ -150,156 +150,156 @@ void limTraceDump(tpAniSirGlobal pMac, tpvosTraceRecord pRecord, tANI_U16 recInd
 
 
     switch (pRecord->code) {
-    case TRACE_CODE_MLM_STATE:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s  %-30s(0x%x)",
+        case TRACE_CODE_MLM_STATE:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s  %-30s(0x%x)",
                recIndex, pRecord->time, pRecord->session,
                "MLM State:",
                limTraceGetMlmStateString((tANI_U16)pRecord->data),
                pRecord->data);
-        break;
-    case TRACE_CODE_SME_STATE:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+            break;
+        case TRACE_CODE_SME_STATE:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
                recIndex, pRecord->time, pRecord->session,
                "SME State:",
                limTraceGetSmeStateString((tANI_U16)pRecord->data),
                pRecord->data);
-        break;
-    case TRACE_CODE_TX_MGMT:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+            break;
+        case TRACE_CODE_TX_MGMT:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
                recIndex, pRecord->time, pRecord->session,
                "TX Mgmt:", frameSubtypeStr[pRecord->data], pRecord->data);
-        break;
+            break;
 
-    case TRACE_CODE_RX_MGMT:
-        if (LIM_TRACE_MAX_SUBTYPES <= LIM_TRACE_GET_SUBTYPE(pRecord->data))
-        {
-            limLog(pMac, LOG1, "Wrong Subtype - %d",
-                   LIM_TRACE_GET_SUBTYPE(pRecord->data));
-        }
-        else
-        {
-            limLog(pMac,
-                   LOG1, "%04d %012u S%d %-14s %-30s(%d) SN: %d ",
+        case TRACE_CODE_RX_MGMT:
+            if (LIM_TRACE_MAX_SUBTYPES <= LIM_TRACE_GET_SUBTYPE(pRecord->data))
+            {
+                limLog(pMac, LOG1, "Wrong Subtype - %d",
+                    LIM_TRACE_GET_SUBTYPE(pRecord->data));
+            }
+            else
+            {
+                limLog(pMac,
+                    LOG1, "%04d %012u S%d %-14s %-30s(%d) SN: %d ",
+                    recIndex, pRecord->time, pRecord->session,
+                    "RX Mgmt:",
+                    frameSubtypeStr[LIM_TRACE_GET_SUBTYPE(pRecord->data)],
+                    LIM_TRACE_GET_SUBTYPE(pRecord->data),
+                    LIM_TRACE_GET_SSN(pRecord->data));
+            }
+            break;
+        case TRACE_CODE_RX_MGMT_DROP:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(%d)",
                    recIndex, pRecord->time, pRecord->session,
-                   "RX Mgmt:",
-                   frameSubtypeStr[LIM_TRACE_GET_SUBTYPE(pRecord->data)],
-                   LIM_TRACE_GET_SUBTYPE(pRecord->data),
-                   LIM_TRACE_GET_SSN(pRecord->data));
-        }
-        break;
-    case TRACE_CODE_RX_MGMT_DROP:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(%d)",
-               recIndex, pRecord->time, pRecord->session,
-               "Drop RX Mgmt:",
-               __limTraceGetMgmtDropReasonString((tANI_U16)pRecord->data),
-               pRecord->data);
-        break;
+                   "Drop RX Mgmt:",
+                   __limTraceGetMgmtDropReasonString((tANI_U16)pRecord->data),
+                   pRecord->data);
+            break;
 
 
-    case TRACE_CODE_RX_MGMT_TSF:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s0x%x(%d)",
-               recIndex, pRecord->time, pRecord->session,
-               "RX Mgmt TSF:", " ", pRecord->data, pRecord->data);
-        break;
+        case TRACE_CODE_RX_MGMT_TSF:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s0x%x(%d)",
+                   recIndex, pRecord->time, pRecord->session,
+                   "RX Mgmt TSF:", " ", pRecord->data, pRecord->data);
+            break;
 
-    case TRACE_CODE_TX_COMPLETE:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s  %d",
-               recIndex, pRecord->time, pRecord->session,
-               "TX Complete", pRecord->data);
-        break;
+        case TRACE_CODE_TX_COMPLETE:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s  %d",
+                   recIndex, pRecord->time, pRecord->session,
+                   "TX Complete", pRecord->data);
+            break;
 
-    case TRACE_CODE_TX_SME_MSG:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session,
-               "TX SME Msg:",
-               macTraceGetSmeMsgString((tANI_U16)pRecord->data),
-               pRecord->data );
-        break;
-    case TRACE_CODE_RX_SME_MSG:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session,
-               LIM_TRACE_GET_DEFRD_OR_DROPPED(pRecord->data)
-               ? "Def/Drp LIM Msg:": "RX Sme Msg:",
-               macTraceGetSmeMsgString((tANI_U16)pRecord->data),
-               pRecord->data);
-        break;
+        case TRACE_CODE_TX_SME_MSG:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                   recIndex, pRecord->time, pRecord->session,
+                   "TX SME Msg:",
+                   macTraceGetSmeMsgString((tANI_U16)pRecord->data),
+                   pRecord->data );
+            break;
+        case TRACE_CODE_RX_SME_MSG:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                   recIndex, pRecord->time, pRecord->session,
+                   LIM_TRACE_GET_DEFRD_OR_DROPPED(pRecord->data)
+                   ? "Def/Drp LIM Msg:": "RX Sme Msg:",
+                   macTraceGetSmeMsgString((tANI_U16)pRecord->data),
+                   pRecord->data);
+            break;
 
-    case TRACE_CODE_TX_WDA_MSG:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session,
-               "TX WDA Msg:",
-               macTraceGetWdaMsgString((tANI_U16)pRecord->data),
-               pRecord->data);
-        break;
+        case TRACE_CODE_TX_WDA_MSG:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                   recIndex, pRecord->time, pRecord->session,
+                   "TX WDA Msg:",
+                   macTraceGetWdaMsgString((tANI_U16)pRecord->data),
+                   pRecord->data);
+            break;
 
-    case TRACE_CODE_RX_WDA_MSG:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session,
-               LIM_TRACE_GET_DEFRD_OR_DROPPED(pRecord->data)
-               ? "Def/Drp LIM Msg:": "RX WDA Msg:",
-               macTraceGetWdaMsgString((tANI_U16)pRecord->data),
-               pRecord->data );
-        break;
+        case TRACE_CODE_RX_WDA_MSG:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                   recIndex, pRecord->time, pRecord->session,
+                   LIM_TRACE_GET_DEFRD_OR_DROPPED(pRecord->data)
+                   ? "Def/Drp LIM Msg:": "RX WDA Msg:",
+                   macTraceGetWdaMsgString((tANI_U16)pRecord->data),
+                   pRecord->data );
+            break;
 
-    case TRACE_CODE_TX_LIM_MSG:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session,
-               "TX LIM Msg:",
-               macTraceGetLimMsgString((tANI_U16)pRecord->data),
-               pRecord->data);
-        break;
-    case TRACE_CODE_RX_LIM_MSG:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session,
-               LIM_TRACE_GET_DEFRD_OR_DROPPED(pRecord->data)
-               ? "Def/Drp LIM Msg:": "RX LIM Msg",
-               macTraceGetLimMsgString((tANI_U16)pRecord->data),
-               pRecord->data );
-        break;
-    case TRACE_CODE_TX_CFG_MSG:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session,
-               "TX CFG Msg:",
-               macTraceGetCfgMsgString((tANI_U16)pRecord->data),
-               pRecord->data);
-        break;
-    case TRACE_CODE_RX_CFG_MSG:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session,
-               LIM_TRACE_GET_DEFRD_OR_DROPPED(pRecord->data)
-               ? "Def/Drp LIM Msg:": "RX CFG Msg:",
-               macTraceGetCfgMsgString
-               ((tANI_U16)MAC_TRACE_GET_MSG_ID(pRecord->data)),
-               pRecord->data);
-        break;
+        case TRACE_CODE_TX_LIM_MSG:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                   recIndex, pRecord->time, pRecord->session,
+                   "TX LIM Msg:",
+                   macTraceGetLimMsgString((tANI_U16)pRecord->data),
+                   pRecord->data);
+            break;
+        case TRACE_CODE_RX_LIM_MSG:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                   recIndex, pRecord->time, pRecord->session,
+                   LIM_TRACE_GET_DEFRD_OR_DROPPED(pRecord->data)
+                   ? "Def/Drp LIM Msg:": "RX LIM Msg",
+                   macTraceGetLimMsgString((tANI_U16)pRecord->data),
+                   pRecord->data );
+            break;
+        case TRACE_CODE_TX_CFG_MSG:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                   recIndex, pRecord->time, pRecord->session,
+                   "TX CFG Msg:",
+                   macTraceGetCfgMsgString((tANI_U16)pRecord->data),
+                   pRecord->data);
+            break;
+        case TRACE_CODE_RX_CFG_MSG:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                   recIndex, pRecord->time, pRecord->session,
+                   LIM_TRACE_GET_DEFRD_OR_DROPPED(pRecord->data)
+                   ? "Def/Drp LIM Msg:": "RX CFG Msg:",
+                   macTraceGetCfgMsgString
+                   ((tANI_U16)MAC_TRACE_GET_MSG_ID(pRecord->data)),
+                   pRecord->data);
+            break;
 
-    case TRACE_CODE_TIMER_ACTIVATE:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session,
-               "Timer Actvtd",
-               __limTraceGetTimerString((tANI_U16)pRecord->data),
-               pRecord->data);
-        break;
-    case TRACE_CODE_TIMER_DEACTIVATE:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session,
-               "Timer DeActvtd",
-               __limTraceGetTimerString((tANI_U16)pRecord->data),
-               pRecord->data);
-        break;
+        case TRACE_CODE_TIMER_ACTIVATE:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                   recIndex, pRecord->time, pRecord->session,
+                   "Timer Actvtd",
+                   __limTraceGetTimerString((tANI_U16)pRecord->data),
+                   pRecord->data);
+            break;
+        case TRACE_CODE_TIMER_DEACTIVATE:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                  recIndex, pRecord->time, pRecord->session,
+                  "Timer DeActvtd",
+                  __limTraceGetTimerString((tANI_U16)pRecord->data),
+                  pRecord->data);
+            break;
 
-    case TRACE_CODE_INFO_LOG:
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
-               recIndex, pRecord->time, pRecord->session,
-               "INFORMATION_LOG",
-               macTraceGetInfoLogString((tANI_U16)pRecord->data),
-               pRecord->data);
-        break;
-    default :
-        limLog(pMac, LOG1, "%04d %012u S%d %-14s(%d) (0x%x)",
-               recIndex, pRecord->time, pRecord->session,
-               "Unknown Code", pRecord->code, pRecord->data);
-        break;
+        case TRACE_CODE_INFO_LOG:
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s %-30s(0x%x)",
+                  recIndex, pRecord->time, pRecord->session,
+                  "INFORMATION_LOG",
+                  macTraceGetInfoLogString((tANI_U16)pRecord->data),
+                  pRecord->data);
+            break;
+        default :
+            limLog(pMac, LOG1, "%04d %012u S%d %-14s(%d) (0x%x)",
+                  recIndex, pRecord->time, pRecord->session,
+                  "Unknown Code", pRecord->code, pRecord->data);
+            break;
     }
 }
 
@@ -312,21 +312,21 @@ void macTraceMsgTx(tpAniSirGlobal pMac, tANI_U8 session, tANI_U32 data)
 
     switch(moduleId)
     {
-    case SIR_LIM_MODULE_ID:
-        if(msgId >= SIR_LIM_ITC_MSG_TYPES_BEGIN)
-            macTrace(pMac, TRACE_CODE_TX_LIM_MSG, session, data);
-        else
-            macTrace(pMac, TRACE_CODE_TX_SME_MSG, session, data);
-        break;
-    case SIR_WDA_MODULE_ID:
-        macTrace(pMac, TRACE_CODE_TX_WDA_MSG, session, data);
-        break;
-    case SIR_CFG_MODULE_ID:
-        macTrace(pMac, TRACE_CODE_TX_CFG_MSG, session, data);
-        break;
-    default:
-        macTrace(pMac, moduleId, session, data);
-        break;
+        case SIR_LIM_MODULE_ID:
+            if(msgId >= SIR_LIM_ITC_MSG_TYPES_BEGIN)
+                macTrace(pMac, TRACE_CODE_TX_LIM_MSG, session, data);
+            else
+                macTrace(pMac, TRACE_CODE_TX_SME_MSG, session, data);
+            break;
+        case SIR_WDA_MODULE_ID:
+            macTrace(pMac, TRACE_CODE_TX_WDA_MSG, session, data);
+            break;
+        case SIR_CFG_MODULE_ID:
+            macTrace(pMac, TRACE_CODE_TX_CFG_MSG, session, data);
+            break;
+        default:
+            macTrace(pMac, moduleId, session, data);
+            break;
     }
 }
 
@@ -338,22 +338,22 @@ void macTraceMsgTxNew(tpAniSirGlobal pMac, tANI_U8 module, tANI_U8 session, tANI
 
     switch(moduleId)
     {
-    case SIR_LIM_MODULE_ID:
-        if(msgId >= SIR_LIM_ITC_MSG_TYPES_BEGIN)
-            macTraceNew(pMac, module, TRACE_CODE_TX_LIM_MSG, session, data);
-        else
-            macTraceNew(pMac, module, TRACE_CODE_TX_SME_MSG, session, data);
-        break;
-    case SIR_WDA_MODULE_ID:
-        macTraceNew(pMac, module, TRACE_CODE_TX_WDA_MSG, session, data);
-        break;
-    case SIR_CFG_MODULE_ID:
-        macTraceNew(pMac, module, TRACE_CODE_TX_CFG_MSG, session, data);
-        break;
-    default:
-        macTrace(pMac, moduleId, session, data);
-        break;
-    }
+        case SIR_LIM_MODULE_ID:
+            if(msgId >= SIR_LIM_ITC_MSG_TYPES_BEGIN)
+                macTraceNew(pMac, module, TRACE_CODE_TX_LIM_MSG, session, data);
+            else
+                macTraceNew(pMac, module, TRACE_CODE_TX_SME_MSG, session, data);
+            break;
+        case SIR_WDA_MODULE_ID:
+            macTraceNew(pMac, module, TRACE_CODE_TX_WDA_MSG, session, data);
+            break;
+        case SIR_CFG_MODULE_ID:
+            macTraceNew(pMac, module, TRACE_CODE_TX_CFG_MSG, session, data);
+            break;
+        default:
+            macTrace(pMac, moduleId, session, data);
+            break;
+        }
 }
 
 /*
@@ -368,22 +368,22 @@ void macTraceMsgRx(tpAniSirGlobal pMac, tANI_U8 session, tANI_U32 data)
 
     switch(moduleId)
     {
-    case SIR_LIM_MODULE_ID:
-        if(msgId >= SIR_LIM_ITC_MSG_TYPES_BEGIN)
-            macTrace(pMac, TRACE_CODE_RX_LIM_MSG, session, data);
-        else
-            macTrace(pMac, TRACE_CODE_RX_SME_MSG, session, data);
-        break;
-    case SIR_WDA_MODULE_ID:
-        macTrace(pMac, TRACE_CODE_RX_WDA_MSG, session, data);
-        break;
-    case SIR_CFG_MODULE_ID:
-        macTrace(pMac, TRACE_CODE_RX_CFG_MSG, session, data);
-        break;
-    default:
-        macTrace(pMac, moduleId, session, data);
-        break;
-    }
+        case SIR_LIM_MODULE_ID:
+            if(msgId >= SIR_LIM_ITC_MSG_TYPES_BEGIN)
+                macTrace(pMac, TRACE_CODE_RX_LIM_MSG, session, data);
+            else
+                macTrace(pMac, TRACE_CODE_RX_SME_MSG, session, data);
+            break;
+        case SIR_WDA_MODULE_ID:
+            macTrace(pMac, TRACE_CODE_RX_WDA_MSG, session, data);
+            break;
+        case SIR_CFG_MODULE_ID:
+            macTrace(pMac, TRACE_CODE_RX_CFG_MSG, session, data);
+            break;
+        default:
+            macTrace(pMac, moduleId, session, data);
+            break;
+        }
 }
 
 
@@ -400,22 +400,22 @@ void macTraceMsgRxNew(tpAniSirGlobal pMac, tANI_U8 module, tANI_U8 session, tANI
 
     switch(moduleId)
     {
-    case SIR_LIM_MODULE_ID:
-        if(msgId >= SIR_LIM_ITC_MSG_TYPES_BEGIN)
-            macTraceNew(pMac, module, TRACE_CODE_RX_LIM_MSG, session, data);
-        else
-            macTraceNew(pMac, module, TRACE_CODE_RX_SME_MSG, session, data);
-        break;
-    case SIR_WDA_MODULE_ID:
-        macTraceNew(pMac, module, TRACE_CODE_RX_WDA_MSG, session, data);
-        break;
-    case SIR_CFG_MODULE_ID:
-        macTraceNew(pMac, module, TRACE_CODE_RX_CFG_MSG, session, data);
-        break;
-    default:
-        macTrace(pMac, moduleId, session, data);
-        break;
-    }
+        case SIR_LIM_MODULE_ID:
+            if(msgId >= SIR_LIM_ITC_MSG_TYPES_BEGIN)
+                macTraceNew(pMac, module, TRACE_CODE_RX_LIM_MSG, session, data);
+            else
+                macTraceNew(pMac, module, TRACE_CODE_RX_SME_MSG, session, data);
+            break;
+        case SIR_WDA_MODULE_ID:
+            macTraceNew(pMac, module, TRACE_CODE_RX_WDA_MSG, session, data);
+            break;
+        case SIR_CFG_MODULE_ID:
+            macTraceNew(pMac, module, TRACE_CODE_RX_CFG_MSG, session, data);
+            break;
+        default:
+            macTrace(pMac, moduleId, session, data);
+            break;
+        }
 }
 
 
@@ -463,9 +463,9 @@ tANI_U8* limTraceGetMlmStateString( tANI_U32 mlmState )
         CASE_RETURN_STRING(eLIM_MLM_WT_FT_REASSOC_RSP_STATE);
 #endif
         CASE_RETURN_STRING(eLIM_MLM_P2P_LISTEN_STATE);
-    default:
-        return( "UNKNOWN" );
-        break;
+        default:
+            return( "UNKNOWN" );
+            break;
     }
 }
 
@@ -475,28 +475,28 @@ tANI_U8* limTraceGetSmeStateString( tANI_U32 smeState )
     switch( smeState )
     {
 
-        CASE_RETURN_STRING(eLIM_SME_OFFLINE_STATE);
-        CASE_RETURN_STRING(eLIM_SME_IDLE_STATE);
-        CASE_RETURN_STRING(eLIM_SME_SUSPEND_STATE);
-        CASE_RETURN_STRING(eLIM_SME_WT_SCAN_STATE);
-        CASE_RETURN_STRING(eLIM_SME_WT_JOIN_STATE);
-        CASE_RETURN_STRING(eLIM_SME_WT_AUTH_STATE);
-        CASE_RETURN_STRING(eLIM_SME_WT_ASSOC_STATE);
-        CASE_RETURN_STRING(eLIM_SME_WT_REASSOC_STATE);
-        CASE_RETURN_STRING(eLIM_SME_WT_REASSOC_LINK_FAIL_STATE);
-        CASE_RETURN_STRING(eLIM_SME_JOIN_FAILURE_STATE);
-        CASE_RETURN_STRING(eLIM_SME_ASSOCIATED_STATE);
-        CASE_RETURN_STRING(eLIM_SME_REASSOCIATED_STATE);
-        CASE_RETURN_STRING(eLIM_SME_LINK_EST_STATE);
-        CASE_RETURN_STRING(eLIM_SME_LINK_EST_WT_SCAN_STATE);
-        CASE_RETURN_STRING(eLIM_SME_WT_PRE_AUTH_STATE);
-        CASE_RETURN_STRING(eLIM_SME_WT_DISASSOC_STATE);
-        CASE_RETURN_STRING(eLIM_SME_WT_DEAUTH_STATE);
-        CASE_RETURN_STRING(eLIM_SME_WT_START_BSS_STATE);
-        CASE_RETURN_STRING(eLIM_SME_WT_STOP_BSS_STATE);
-        CASE_RETURN_STRING(eLIM_SME_NORMAL_STATE);
-        CASE_RETURN_STRING(eLIM_SME_CHANNEL_SCAN_STATE);
-        CASE_RETURN_STRING(eLIM_SME_NORMAL_CHANNEL_SCAN_STATE);
+    CASE_RETURN_STRING(eLIM_SME_OFFLINE_STATE);
+    CASE_RETURN_STRING(eLIM_SME_IDLE_STATE);
+    CASE_RETURN_STRING(eLIM_SME_SUSPEND_STATE);
+    CASE_RETURN_STRING(eLIM_SME_WT_SCAN_STATE);
+    CASE_RETURN_STRING(eLIM_SME_WT_JOIN_STATE);
+    CASE_RETURN_STRING(eLIM_SME_WT_AUTH_STATE);
+    CASE_RETURN_STRING(eLIM_SME_WT_ASSOC_STATE);
+    CASE_RETURN_STRING(eLIM_SME_WT_REASSOC_STATE);
+    CASE_RETURN_STRING(eLIM_SME_WT_REASSOC_LINK_FAIL_STATE);
+    CASE_RETURN_STRING(eLIM_SME_JOIN_FAILURE_STATE);
+    CASE_RETURN_STRING(eLIM_SME_ASSOCIATED_STATE);
+    CASE_RETURN_STRING(eLIM_SME_REASSOCIATED_STATE);
+    CASE_RETURN_STRING(eLIM_SME_LINK_EST_STATE);
+    CASE_RETURN_STRING(eLIM_SME_LINK_EST_WT_SCAN_STATE);
+    CASE_RETURN_STRING(eLIM_SME_WT_PRE_AUTH_STATE);
+    CASE_RETURN_STRING(eLIM_SME_WT_DISASSOC_STATE);
+    CASE_RETURN_STRING(eLIM_SME_WT_DEAUTH_STATE);
+    CASE_RETURN_STRING(eLIM_SME_WT_START_BSS_STATE);
+    CASE_RETURN_STRING(eLIM_SME_WT_STOP_BSS_STATE);
+    CASE_RETURN_STRING(eLIM_SME_NORMAL_STATE);
+    CASE_RETURN_STRING(eLIM_SME_CHANNEL_SCAN_STATE);
+    CASE_RETURN_STRING(eLIM_SME_NORMAL_CHANNEL_SCAN_STATE);
     default:
         return( "UNKNOWN" );
         break;

@@ -28,20 +28,20 @@
 /*===========================================================================
 
                       b a p A p i I n f o . C
-
+                                               
   OVERVIEW:
-
+  
   This software unit holds the implementation of the WLAN BAP modules
   Information functions.
-
-  The functions externalized by this module are to be called ONLY by other
+  
+  The functions externalized by this module are to be called ONLY by other 
   WLAN modules (HDD) that properly register with the BAP Layer initially.
 
-  DEPENDENCIES:
+  DEPENDENCIES: 
 
-  Are listed for each API below.
-
-
+  Are listed for each API below. 
+  
+  
 ===========================================================================*/
 
 /*===========================================================================
@@ -68,9 +68,9 @@
 //#include "wlan_qct_tl.h"
 #include "vos_trace.h"
 #include "sme_Api.h"
-/* BT-AMP PAL API header file */
-#include "bapApi.h"
-#include "bapInternal.h"
+/* BT-AMP PAL API header file */ 
+#include "bapApi.h" 
+#include "bapInternal.h" 
 
 //#define BAP_DEBUG
 /*----------------------------------------------------------------------------
@@ -109,60 +109,60 @@
 
   FUNCTION    WLAN_BAPReadLocalVersionInfo()
 
-  DESCRIPTION
-    Implements the actual HCI Read Local Version Info command.  There
-    is no need for a callback because when this call returns the action
+  DESCRIPTION 
+    Implements the actual HCI Read Local Version Info command.  There 
+    is no need for a callback because when this call returns the action 
     has been completed.
 
-  DEPENDENCIES
-    NA.
+  DEPENDENCIES 
+    NA. 
 
-  PARAMETERS
+  PARAMETERS 
 
     IN
     btampHandle: pointer to the BAP handle.  Returned from WLANBAP_GetNewHndl.
-    // There are really no input parameters in this command.
+    // There are really no input parameters in this command.  
     // Just the command opcode itself is sufficient.
-
+   
     IN/OUT
-    pBapHCIEvent:  Return event value for the command complete event.
-                (The caller of this routine is responsible for sending
+    pBapHCIEvent:  Return event value for the command complete event. 
+                (The caller of this routine is responsible for sending 
                 the Command Complete event up the HCI interface.)
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  pointer to pBapHCIReadLocalVersionInfo is NULL
+    VOS_STATUS_E_FAULT:  pointer to pBapHCIReadLocalVersionInfo is NULL 
     VOS_STATUS_SUCCESS:  Success
-
-  SIDE EFFECTS
-
+  
+  SIDE EFFECTS 
+  
 ----------------------------------------------------------------------------*/
-VOS_STATUS
+VOS_STATUS  
 WLAN_BAPReadLocalVersionInfo
-(
-    ptBtampHandle btampHandle,
-    tpBtampHCI_Event pBapHCIEvent /* This now encodes ALL event types */
-    /* Including "Read" Command Complete*/
+( 
+  ptBtampHandle btampHandle,
+  tpBtampHCI_Event pBapHCIEvent /* This now encodes ALL event types */
+                                /* Including "Read" Command Complete*/
 )
 {
 
-    /* Validate params */
+    /* Validate params */ 
     if (btampHandle == NULL) {
-        return VOS_STATUS_E_FAULT;
+      return VOS_STATUS_E_FAULT;
     }
 
 
     VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO_HIGH, "%s: btampHandle value: %p", __func__,  btampHandle);
 
 
-    /* Format the command complete event to return... */
+    /* Format the command complete event to return... */ 
     pBapHCIEvent->bapHCIEventCode = BTAMP_TLV_HCI_COMMAND_COMPLETE_EVENT;
     pBapHCIEvent->u.btampCommandCompleteEvent.present = 1;
     pBapHCIEvent->u.btampCommandCompleteEvent.num_hci_command_packets = 1;
-    pBapHCIEvent->u.btampCommandCompleteEvent.command_opcode
+    pBapHCIEvent->u.btampCommandCompleteEvent.command_opcode 
         = BTAMP_TLV_HCI_READ_LOCAL_VERSION_INFO_CMD;
-    pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Local_Version_Info.status
+    pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Local_Version_Info.status 
         = WLANBAP_STATUS_SUCCESS;
     pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Local_Version_Info.HC_HCI_Version
         = WLANBAP_HCI_VERSION;
@@ -182,69 +182,69 @@ WLAN_BAPReadLocalVersionInfo
 
   FUNCTION    WLAN_BAPReadLocalSupportedCmds()
 
-  DESCRIPTION
-    Implements the actual HCI Read Local Supported Commands.  There
-    is no need for a callback because when this call returns the action
+  DESCRIPTION 
+    Implements the actual HCI Read Local Supported Commands.  There 
+    is no need for a callback because when this call returns the action 
     has been completed.
 
-  DEPENDENCIES
-    NA.
+  DEPENDENCIES 
+    NA. 
 
-  PARAMETERS
+  PARAMETERS 
 
     IN
     btampHandle: pointer to the BAP handle.  Returned from WLANBAP_GetNewHndl.
-    // There are really no input parameters in this command.
+    // There are really no input parameters in this command.  
     // Just the command opcode itself is sufficient.
-
+   
     IN/OUT
-    pBapHCIEvent:  Return event value for the command complete event.
-                (The caller of this routine is responsible for sending
+    pBapHCIEvent:  Return event value for the command complete event. 
+                (The caller of this routine is responsible for sending 
                 the Command Complete event up the HCI interface.)
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  pointer to pBapHCIReadLocalSupportedCmds is NULL
+    VOS_STATUS_E_FAULT:  pointer to pBapHCIReadLocalSupportedCmds is NULL 
     VOS_STATUS_SUCCESS:  Success
-
-  SIDE EFFECTS
-
+  
+  SIDE EFFECTS 
+  
 ----------------------------------------------------------------------------*/
-VOS_STATUS
+VOS_STATUS  
 WLAN_BAPReadLocalSupportedCmds
-(
-    ptBtampHandle btampHandle,
-    tpBtampHCI_Event pBapHCIEvent /* This now encodes ALL event types */
-    /* Including "Read" Command Complete*/
+( 
+  ptBtampHandle btampHandle,
+  tpBtampHCI_Event pBapHCIEvent /* This now encodes ALL event types */
+                                /* Including "Read" Command Complete*/
 )
 {
     v_U8_t supportedCmds[] = WLANBAP_PAL_SUPPORTED_HCI_CMDS;
     /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 
-    /* Validate params */
+    /* Validate params */ 
     if (btampHandle == NULL) {
-        return VOS_STATUS_E_FAULT;
+      return VOS_STATUS_E_FAULT;
     }
 
 
     VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO_HIGH, "%s: btampHandle value: %p", __func__,  btampHandle);
 
 
-    /* Format the command complete event to return... */
+    /* Format the command complete event to return... */ 
     pBapHCIEvent->bapHCIEventCode = BTAMP_TLV_HCI_COMMAND_COMPLETE_EVENT;
     pBapHCIEvent->u.btampCommandCompleteEvent.present = 1;
     pBapHCIEvent->u.btampCommandCompleteEvent.num_hci_command_packets = 1;
-    pBapHCIEvent->u.btampCommandCompleteEvent.command_opcode
+    pBapHCIEvent->u.btampCommandCompleteEvent.command_opcode 
         = BTAMP_TLV_HCI_READ_LOCAL_SUPPORTED_CMDS_CMD;
-    pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Local_Supported_Cmds.status
+    pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Local_Supported_Cmds.status 
         = WLANBAP_STATUS_SUCCESS;
-    /* Return the supported commands bitmask */
-    vos_mem_copy(
-        pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Local_Supported_Cmds.HC_Support_Cmds,
-        supportedCmds,
-        sizeof( supportedCmds));
+    /* Return the supported commands bitmask */ 
+    vos_mem_copy( 
+            pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Local_Supported_Cmds.HC_Support_Cmds,
+            supportedCmds,
+            sizeof( supportedCmds));    
 
     return VOS_STATUS_SUCCESS;
 } /* WLAN_BAPReadLocalSupportedCmds */
@@ -253,60 +253,60 @@ WLAN_BAPReadLocalSupportedCmds
 
   FUNCTION    WLAN_BAPReadBufferSize()
 
-  DESCRIPTION
-    Implements the actual HCI Read Buffer Size command.  There
-    is no need for a callback because when this call returns the action
+  DESCRIPTION 
+    Implements the actual HCI Read Buffer Size command.  There 
+    is no need for a callback because when this call returns the action 
     has been completed.
 
-  DEPENDENCIES
-    NA.
+  DEPENDENCIES 
+    NA. 
 
-  PARAMETERS
+  PARAMETERS 
 
     IN
     btampHandle: pointer to the BAP handle.  Returned from WLANBAP_GetNewHndl.
     pBapHCIReadBufferSize:  pointer to the "HCI Read Buffer Size" Structure.
-
+   
     IN/OUT
-    pBapHCIEvent:  Return event value for the command complete event.
-                (The caller of this routine is responsible for sending
+    pBapHCIEvent:  Return event value for the command complete event. 
+                (The caller of this routine is responsible for sending 
                 the Command Complete event up the HCI interface.)
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  pointer to pBapHCIReadBufferSize is NULL
+    VOS_STATUS_E_FAULT:  pointer to pBapHCIReadBufferSize is NULL 
     VOS_STATUS_SUCCESS:  Success
-
-  SIDE EFFECTS
-
+  
+  SIDE EFFECTS 
+  
 ----------------------------------------------------------------------------*/
-VOS_STATUS
+VOS_STATUS  
 WLAN_BAPReadBufferSize
-(
-    ptBtampHandle btampHandle,
-    tpBtampHCI_Event pBapHCIEvent /* This now encodes ALL event types */
-    /* Including "Read" Command Complete*/
+( 
+  ptBtampHandle btampHandle,
+  tpBtampHCI_Event pBapHCIEvent /* This now encodes ALL event types */
+                                /* Including "Read" Command Complete*/
 )
 {
-    /* Validate params */
+    /* Validate params */ 
     if (btampHandle == NULL) {
-        return VOS_STATUS_E_FAULT;
+      return VOS_STATUS_E_FAULT;
     }
 
 
     VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO_HIGH, "%s: btampHandle value: %p", __func__,  btampHandle);
 
 
-    /* Format the command complete event to return... */
+    /* Format the command complete event to return... */ 
     pBapHCIEvent->bapHCIEventCode = BTAMP_TLV_HCI_COMMAND_COMPLETE_EVENT;
     pBapHCIEvent->u.btampCommandCompleteEvent.present = 1;
     pBapHCIEvent->u.btampCommandCompleteEvent.num_hci_command_packets = 1;
-    pBapHCIEvent->u.btampCommandCompleteEvent.command_opcode
+    pBapHCIEvent->u.btampCommandCompleteEvent.command_opcode 
         = BTAMP_TLV_HCI_READ_BUFFER_SIZE_CMD;
-    pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Buffer_Size.status
+    pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Buffer_Size.status 
         = WLANBAP_STATUS_SUCCESS;
-    /* Return the supported Buffer sizes */
+    /* Return the supported Buffer sizes */ 
     pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Buffer_Size.HC_ACL_Data_Packet_Length
         = WLANBAP_MAX_80211_PAL_PDU_SIZE;
     pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Buffer_Size.HC_SCO_Packet_Length
@@ -323,66 +323,66 @@ WLAN_BAPReadBufferSize
 
   FUNCTION    WLAN_BAPReadDataBlockSize()
 
-  DESCRIPTION
-    Implements the actual HCI Read Data Block Size command.  There
-    is no need for a callback because when this call returns the action
+  DESCRIPTION 
+    Implements the actual HCI Read Data Block Size command.  There 
+    is no need for a callback because when this call returns the action 
     has been completed.
 
-  DEPENDENCIES
-    NA.
+  DEPENDENCIES 
+    NA. 
 
-  PARAMETERS
+  PARAMETERS 
 
     IN
     btampHandle: pointer to the BAP handle.  Returned from WLANBAP_GetNewHndl.
-
+   
     IN/OUT
-    pBapHCIEvent:  Return event value for the command complete event.
-                (The caller of this routine is responsible for sending
+    pBapHCIEvent:  Return event value for the command complete event. 
+                (The caller of this routine is responsible for sending 
                 the Command Complete event up the HCI interface.)
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  pointer to pBapHCIReadDataBlockSize is NULL
+    VOS_STATUS_E_FAULT:  pointer to pBapHCIReadDataBlockSize is NULL 
     VOS_STATUS_SUCCESS:  Success
-
-  SIDE EFFECTS
-
+  
+  SIDE EFFECTS 
+  
 ----------------------------------------------------------------------------*/
-VOS_STATUS
+VOS_STATUS  
 WLAN_BAPReadDataBlockSize
-(
-    ptBtampHandle btampHandle,
-    tpBtampHCI_Event pBapHCIEvent /* This now encodes ALL event types */
-    /* Including "Read" Command Complete*/
+( 
+  ptBtampHandle btampHandle,
+  tpBtampHCI_Event pBapHCIEvent /* This now encodes ALL event types */
+                                /* Including "Read" Command Complete*/
 )
 {
-    /* Validate params */
-    if ((btampHandle == NULL) || (NULL == pBapHCIEvent))
-    {
-        return VOS_STATUS_E_FAULT;
-    }
+   /* Validate params */ 
+   if ((btampHandle == NULL) || (NULL == pBapHCIEvent))
+   {
+     return VOS_STATUS_E_FAULT;
+   }
 
 
-    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO_HIGH, "%s: btampHandle value: %p", __func__,  btampHandle);
+   VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO_HIGH, "%s: btampHandle value: %p", __func__,  btampHandle);
 
 
-    /* Format the command complete event to return... */
-    pBapHCIEvent->bapHCIEventCode = BTAMP_TLV_HCI_COMMAND_COMPLETE_EVENT;
-    pBapHCIEvent->u.btampCommandCompleteEvent.present = 1;
-    pBapHCIEvent->u.btampCommandCompleteEvent.num_hci_command_packets = 1;
-    pBapHCIEvent->u.btampCommandCompleteEvent.command_opcode
-        = BTAMP_TLV_HCI_READ_DATA_BLOCK_SIZE_CMD;
-    pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Data_Block_Size.status
-        = WLANBAP_STATUS_SUCCESS;
-    /* Return the supported Block sizes */
-    pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Data_Block_Size.HC_Data_Block_Length
-        = WLANBAP_MAX_80211_PAL_PDU_SIZE;
-    pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Data_Block_Size.HC_Max_ACL_Data_Packet_Length
-        = WLANBAP_MAX_80211_PAL_PDU_SIZE;
-    pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Data_Block_Size.HC_Total_Num_Data_Blocks
-        = 16;
+   /* Format the command complete event to return... */ 
+   pBapHCIEvent->bapHCIEventCode = BTAMP_TLV_HCI_COMMAND_COMPLETE_EVENT;
+   pBapHCIEvent->u.btampCommandCompleteEvent.present = 1;
+   pBapHCIEvent->u.btampCommandCompleteEvent.num_hci_command_packets = 1;
+   pBapHCIEvent->u.btampCommandCompleteEvent.command_opcode 
+       = BTAMP_TLV_HCI_READ_DATA_BLOCK_SIZE_CMD;
+   pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Data_Block_Size.status 
+       = WLANBAP_STATUS_SUCCESS;
+   /* Return the supported Block sizes */ 
+   pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Data_Block_Size.HC_Data_Block_Length
+       = WLANBAP_MAX_80211_PAL_PDU_SIZE;
+   pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Data_Block_Size.HC_Max_ACL_Data_Packet_Length
+       = WLANBAP_MAX_80211_PAL_PDU_SIZE;
+   pBapHCIEvent->u.btampCommandCompleteEvent.cc_event.Read_Data_Block_Size.HC_Total_Num_Data_Blocks
+       = 16;
 
     return VOS_STATUS_SUCCESS;
 } /* WLAN_BAPReadDataBlockSize */
@@ -392,132 +392,132 @@ WLAN_BAPReadDataBlockSize
 
   FUNCTION    WLAN_BAPSetConfig()
 
-  DESCRIPTION
+  DESCRIPTION 
      The function updates some configuration for BAP module in SME during SMEs
      close -> open sequence.
-
+   
      BAP applies the new configuration at the next transaction.
 
 
-  DEPENDENCIES
-    NA.
+  DEPENDENCIES 
+    NA. 
 
-  PARAMETERS
+  PARAMETERS 
 
     IN
     btampHandle: pointer to the BAP handle.  Returned from WLANBAP_GetNewHndl.
     pBapHCIReadRSSI:  pointer to the "HCI Read RSSI" structure.
-
+   
     IN
     pConfig: a pointer to a caller allocated object of typedef struct WLANBAP_ConfigType.
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  pConfig or btampHandle is NULL
+    VOS_STATUS_E_FAULT:  pConfig or btampHandle is NULL 
     VOS_STATUS_SUCCESS:  Success
-
-  SIDE EFFECTS
-
+  
+  SIDE EFFECTS 
+  
 ----------------------------------------------------------------------------*/
-VOS_STATUS
+VOS_STATUS  
 WLAN_BAPSetConfig
-(
-    ptBtampHandle btampHandle,
-    WLANBAP_ConfigType *pConfig
+( 
+  ptBtampHandle btampHandle,
+  WLANBAP_ConfigType *pConfig
 )
 {
-    ptBtampContext btampContext;
-    /* Validate params */
-    if ((NULL == btampHandle)|| (NULL == pConfig))
-    {
-        return VOS_STATUS_E_FAULT;
-    }
-    btampContext = (ptBtampContext) btampHandle; /* btampContext value */
+   ptBtampContext btampContext;
+   /* Validate params */ 
+   if ((NULL == btampHandle)|| (NULL == pConfig)) 
+   {
+     return VOS_STATUS_E_FAULT;
+   }
+   btampContext = (ptBtampContext) btampHandle; /* btampContext value */ 
 
-    btampContext->config.ucPreferredChannel = pConfig->ucPreferredChannel;
-    return VOS_STATUS_SUCCESS;
+   btampContext->config.ucPreferredChannel = pConfig->ucPreferredChannel;
+   return VOS_STATUS_SUCCESS;
 }
 
 /*----------------------------------------------------------------------------
 
   FUNCTION    WLAN_BAPGetMask()
 
-  DESCRIPTION
+  DESCRIPTION 
      The function gets the updated event mask from BAP core.
+   
 
 
+  DEPENDENCIES 
+    NA. 
 
-  DEPENDENCIES
-    NA.
-
-  PARAMETERS
+  PARAMETERS 
 
     IN
     btampHandle: pointer to the BAP handle.  Returned from WLANBAP_GetNewHndl.
-
-
+    
+   
     IN
     pEvent_mask_page_2: a pointer to a caller allocated object of 8 bytes.
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  pEvent_mask_page_2 or btampHandle is NULL
+    VOS_STATUS_E_FAULT:  pEvent_mask_page_2 or btampHandle is NULL 
     VOS_STATUS_SUCCESS:  Success
-
-  SIDE EFFECTS
-
+  
+  SIDE EFFECTS 
+  
 ----------------------------------------------------------------------------*/
 VOS_STATUS
-WLAN_BAPGetMask( ptBtampHandle btampHandle,
+WLAN_BAPGetMask( ptBtampHandle btampHandle, 
                  v_U8_t       *pEvent_mask_page_2)
 {
-    ptBtampContext btampContext;
-    /* Validate params */
-    if ((NULL == btampHandle)|| (NULL == pEvent_mask_page_2))
-    {
-        return VOS_STATUS_E_FAULT;
-    }
-    btampContext = (ptBtampContext) btampHandle; /* btampContext value */
+   ptBtampContext btampContext;
+   /* Validate params */ 
+   if ((NULL == btampHandle)|| (NULL == pEvent_mask_page_2)) 
+   {
+     return VOS_STATUS_E_FAULT;
+   }
+   btampContext = (ptBtampContext) btampHandle; /* btampContext value */ 
 
-    vos_mem_copy( pEvent_mask_page_2,
-                  btampContext->event_mask_page_2,
-                  8 );
-    return VOS_STATUS_SUCCESS;
+   vos_mem_copy( pEvent_mask_page_2, 
+                 btampContext->event_mask_page_2, 
+                 8 );
+   return VOS_STATUS_SUCCESS;
 }
 
 /*----------------------------------------------------------------------------
 
   FUNCTION    WLAN_BAPDisconnect()
 
-  DESCRIPTION
+  DESCRIPTION 
      The function to request to BAP core to disconnect currecnt AMP connection.
+   
 
 
+  DEPENDENCIES 
+    NA. 
 
-  DEPENDENCIES
-    NA.
-
-  PARAMETERS
+  PARAMETERS 
 
     IN
     btampHandle: pointer to the BAP handle.  Returned from WLANBAP_GetNewHndl.
-
-
+    
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  btampHandle is NULL
+    VOS_STATUS_E_FAULT:  btampHandle is NULL 
     VOS_STATUS_SUCCESS:  Success
-
-  SIDE EFFECTS
-
+  
+  SIDE EFFECTS 
+  
 ----------------------------------------------------------------------------*/
-VOS_STATUS
+VOS_STATUS  
 WLAN_BAPDisconnect
-(
-    ptBtampHandle btampHandle
+( 
+  ptBtampHandle btampHandle
 )
 {
     ptBtampContext btampContext = (ptBtampContext) btampHandle;
@@ -528,29 +528,29 @@ WLAN_BAPDisconnect
 
     VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_FATAL, "%s: btampHandle value: %p", __func__,  btampHandle);
 
-    /* Validate params */
-    if (btampHandle == NULL)
+    /* Validate params */ 
+    if (btampHandle == NULL) 
     {
         VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_FATAL,
-                   "btampHandle is NULL in %s", __func__);
+                     "btampHandle is NULL in %s", __func__);
 
-        return VOS_STATUS_E_FAULT;
+      return VOS_STATUS_E_FAULT;
     }
 
-    /* Fill in the event structure */
+    /* Fill in the event structure */ 
     bapEvent.event = eWLAN_BAP_MAC_INDICATES_MEDIA_DISCONNECTION;
     bapEvent.params = NULL;
 
 
-    /* Handle event */
+    /* Handle event */ 
     vosStatus = btampFsm(btampContext, &bapEvent, &status);
 
 
-    /* Fill in the event structure */
+        /* Fill in the event structure */ 
     bapEvent.event =  eWLAN_BAP_MAC_READY_FOR_CONNECTIONS;
     bapEvent.params = NULL;
 
-    /* Handle event */
+        /* Handle event */ 
     vosStatus = btampFsm(btampContext, &bapEvent, &status);
 
 
@@ -561,48 +561,48 @@ WLAN_BAPDisconnect
 
   FUNCTION    WLAN_BAPSessionOn()
 
-  DESCRIPTION
+  DESCRIPTION 
      The function to check from BAP core if AMP connection is up right now.
+   
 
 
+  DEPENDENCIES 
+    NA. 
 
-  DEPENDENCIES
-    NA.
-
-  PARAMETERS
+  PARAMETERS 
 
     IN
     btampHandle: pointer to the BAP handle.  Returned from WLANBAP_GetNewHndl.
 
 
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_TRUE:  AMP connection is on
+    VOS_TRUE:  AMP connection is on 
     VOS_FALSE: AMP connection is not on
-
-  SIDE EFFECTS
-
+  
+  SIDE EFFECTS 
+  
 ----------------------------------------------------------------------------*/
 v_BOOL_t WLAN_BAPSessionOn
-(
-    ptBtampHandle btampHandle
+( 
+  ptBtampHandle btampHandle
 )
 {
-    ptBtampContext btampContext = (ptBtampContext) btampHandle;
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+   ptBtampContext btampContext = (ptBtampContext) btampHandle;
+   /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO_HIGH, "%s: btampHandle value: %p", __func__,  btampHandle);
+   VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO_HIGH, "%s: btampHandle value: %p", __func__,  btampHandle);
 
-    /* Validate params */
-    if (btampHandle == NULL)
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "btampHandle is NULL in %s", __func__);
+   /* Validate params */ 
+   if (btampHandle == NULL) 
+   {
+       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                    "btampHandle is NULL in %s", __func__);
 
-        //?? shall we say true or false
-        return VOS_FALSE;
-    }
+       //?? shall we say true or false
+       return VOS_FALSE;
+   }
 
-    return btampContext->btamp_session_on;
+   return btampContext->btamp_session_on;
 }

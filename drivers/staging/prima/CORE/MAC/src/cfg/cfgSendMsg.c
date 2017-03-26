@@ -74,7 +74,7 @@ extern void SysProcessMmhMsg(tpAniSirGlobal pMac, tSirMsgQ* pMsg);
  */
 void
 cfgSendHostMsg(tpAniSirGlobal pMac, tANI_U16 msgType, tANI_U32 msgLen, tANI_U32 paramNum, tANI_U32 *pParamList,
-               tANI_U32 dataLen, tANI_U32 *pData)
+              tANI_U32 dataLen, tANI_U32 *pData)
 {
     tANI_U32        *pMsg, *pEnd;
     tSirMsgQ    mmhMsg;
@@ -111,37 +111,37 @@ cfgSendHostMsg(tpAniSirGlobal pMac, tANI_U16 msgType, tANI_U32 msgLen, tANI_U32 
 
     switch (msgType)
     {
-    case WNI_CFG_GET_RSP:
-    case WNI_CFG_PARAM_UPDATE_IND:
-    case WNI_CFG_DNLD_REQ:
-    case WNI_CFG_DNLD_CNF:
-    case WNI_CFG_SET_CNF:
-        // Fill in parameters
-        pMsg++;
-        if (NULL != pParamList)
-        {
-            pEnd  = pMsg + paramNum;
-            while (pMsg < pEnd)
+        case WNI_CFG_GET_RSP:
+        case WNI_CFG_PARAM_UPDATE_IND:
+        case WNI_CFG_DNLD_REQ:
+        case WNI_CFG_DNLD_CNF:
+        case WNI_CFG_SET_CNF:
+            // Fill in parameters
+            pMsg++;
+            if (NULL != pParamList)
             {
-                *pMsg++ = *pParamList++;
+                pEnd  = pMsg + paramNum;
+                while (pMsg < pEnd)
+                {
+                    *pMsg++ = *pParamList++;
+                }
             }
-        }
-        // Copy data if there is any
-        if (NULL != pData)
-        {
-            pEnd = pMsg + (dataLen >> 2);
-            while (pMsg < pEnd)
+            // Copy data if there is any
+            if (NULL != pData)
             {
-                *pMsg++ = *pData++;
+                pEnd = pMsg + (dataLen >> 2);
+                while (pMsg < pEnd)
+                {
+                    *pMsg++ = *pData++;
+                }
             }
-        }
-        break;
+            break;
 
-    default:
-        PELOGE(cfgLog(pMac, LOGE,
-                      FL("Unknown msg %d!"), (int) msgType);)
-        vos_mem_free( pMsg);
-        return;
+        default:
+           PELOGE(cfgLog(pMac, LOGE,
+                         FL("Unknown msg %d!"), (int) msgType);)
+            vos_mem_free( pMsg);
+            return;
     }
 
     // Ship it

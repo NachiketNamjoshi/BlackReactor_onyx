@@ -52,7 +52,7 @@ void sme_NanRegisterCallback(tHalHandle hHal, NanCallback callback)
     if (NULL == hHal)
     {
         VOS_TRACE(VOS_MODULE_ID_SME, VOS_TRACE_LEVEL_ERROR,
-                  FL("hHal is not valid"));
+                FL("hHal is not valid"));
         return;
     }
     pMac = PMAC_STRUCT(hHal);
@@ -73,7 +73,7 @@ void sme_NanRegisterCallback(tHalHandle hHal, NanCallback callback)
  * VOS_STATUS
  *****************************************************************************/
 VOS_STATUS sme_NanRequest(tHalHandle hHalHandle, tpNanRequestReq input,
-                          tANI_U32 sessionId)
+        tANI_U32 sessionId)
 {
     tNanRequest *pNanReq = NULL;
     size_t data_len;
@@ -84,18 +84,18 @@ VOS_STATUS sme_NanRequest(tHalHandle hHalHandle, tpNanRequestReq input,
     if (NULL == pCommand)
     {
         VOS_TRACE(VOS_MODULE_ID_SME, VOS_TRACE_LEVEL_ERROR,
-                  FL("Failed to get command buffer for nan req"));
+                FL("Failed to get command buffer for nan req"));
         return eHAL_STATUS_RESOURCES;
     }
 
     data_len = sizeof(tNanRequest) - sizeof(pNanReq->request_data)
-               + input->request_data_len;
+                 + input->request_data_len;
     pNanReq = vos_mem_malloc(data_len);
 
     if (pNanReq == NULL)
     {
         VOS_TRACE(VOS_MODULE_ID_SME, VOS_TRACE_LEVEL_ERROR,
-                  FL("Memory allocation failure, size : %zu"), data_len);
+                FL("Memory allocation failure, size : %zu"), data_len);
         csrReleaseCommand(pMac, pCommand);
         return eHAL_STATUS_RESOURCES;
     }
@@ -114,7 +114,7 @@ VOS_STATUS sme_NanRequest(tHalHandle hHalHandle, tpNanRequestReq input,
     if (!HAL_STATUS_SUCCESS(csrQueueSmeCommand(pMac, pCommand, TRUE)))
     {
         VOS_TRACE(VOS_MODULE_ID_SME, VOS_TRACE_LEVEL_ERROR,
-                  FL("failed to post eSmeCommandNanReq command"));
+                 FL("failed to post eSmeCommandNanReq command"));
         csrReleaseCommand(pMac, pCommand);
         vos_mem_free(pNanReq);
         return VOS_STATUS_E_FAILURE;
@@ -145,13 +145,13 @@ VOS_STATUS sme_NanEvent(tHalHandle hHal, void* pMsg)
     if (NULL == pMsg)
     {
         VOS_TRACE(VOS_MODULE_ID_SME, VOS_TRACE_LEVEL_ERROR,
-                  FL("msg ptr is NULL"));
+                FL("msg ptr is NULL"));
         status = VOS_STATUS_E_FAILURE;
     }
     else
     {
         VOS_TRACE(VOS_MODULE_ID_SME, VOS_TRACE_LEVEL_INFO_MED,
-                  FL("SME: Received sme_NanEvent"));
+                FL("SME: Received sme_NanEvent"));
         if (pMac->sme.nanCallback)
         {
             pMac->sme.nanCallback(pMac->hHdd, (tSirNanEvent *)pMsg);
@@ -159,7 +159,7 @@ VOS_STATUS sme_NanEvent(tHalHandle hHal, void* pMsg)
         else
         {
             VOS_TRACE(VOS_MODULE_ID_SME, VOS_TRACE_LEVEL_ERROR,
-                      FL("nanCallback is NULL"));
+                    FL("nanCallback is NULL"));
         }
     }
 

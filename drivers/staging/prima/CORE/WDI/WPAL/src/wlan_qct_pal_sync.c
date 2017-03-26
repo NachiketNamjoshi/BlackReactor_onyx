@@ -26,14 +26,14 @@
  */
 
 /**=========================================================================
-
+  
   \file  wlan_qct_pal_sync.c
-
+  
   \brief Implementation trace/logging APIs PAL exports. wpt = (Wlan Pal Type) wpal = (Wlan PAL)
-
+               
    Definitions for platform Windows and with legacy UMAC.
-
-
+  
+  
   ========================================================================*/
 
 #include "wlan_qct_pal_sync.h"
@@ -56,14 +56,14 @@ wpt_status wpalMutexInit(wpt_mutex *pMutex)
 {
     /* Not doing sanity checks since VOS does them anyways */
 
-    if( vos_lock_init( (vos_lock_t*)pMutex  ) != VOS_STATUS_SUCCESS )
-    {
-        WPAL_TRACE(eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
-                   " mutex init fail");
-        return eWLAN_PAL_STATUS_E_FAILURE;
-    }
+   if( vos_lock_init( (vos_lock_t*)pMutex  ) != VOS_STATUS_SUCCESS )
+   {
+      WPAL_TRACE(eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR, 
+                 " mutex init fail");
+      return eWLAN_PAL_STATUS_E_FAILURE;
+   }
 
-    return eWLAN_PAL_STATUS_SUCCESS;
+   return eWLAN_PAL_STATUS_SUCCESS;
 }
 
 /*---------------------------------------------------------------------------
@@ -77,14 +77,14 @@ wpt_status wpalMutexDelete(wpt_mutex *pMutex)
 {
     /* Not doing sanity checks since VOS does them anyways */
 
-    if( vos_lock_destroy( (vos_lock_t*)pMutex  ) != VOS_STATUS_SUCCESS )
-    {
-        WPAL_TRACE(eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
-                   " mutex delete fail");
-        return eWLAN_PAL_STATUS_E_FAILURE;
-    }
+   if( vos_lock_destroy( (vos_lock_t*)pMutex  ) != VOS_STATUS_SUCCESS )
+   {
+      WPAL_TRACE(eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR, 
+                 " mutex delete fail");
+      return eWLAN_PAL_STATUS_E_FAILURE;
+   }
 
-    return eWLAN_PAL_STATUS_SUCCESS;
+   return eWLAN_PAL_STATUS_SUCCESS;
 }
 
 /*---------------------------------------------------------------------------
@@ -98,14 +98,14 @@ wpt_status wpalMutexAcquire(wpt_mutex *pMutex)
 {
     /* Not doing sanity checks since VOS does them anyways */
 
-    if( vos_lock_acquire( (vos_lock_t*)pMutex  ) != VOS_STATUS_SUCCESS )
-    {
-        WPAL_TRACE(eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
-                   " mutex acquire fail");
-        return eWLAN_PAL_STATUS_E_FAILURE;
-    }
+   if( vos_lock_acquire( (vos_lock_t*)pMutex  ) != VOS_STATUS_SUCCESS )
+   {
+      WPAL_TRACE(eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR, 
+                 " mutex acquire fail");
+      return eWLAN_PAL_STATUS_E_FAILURE;
+   }
 
-    return eWLAN_PAL_STATUS_SUCCESS;
+   return eWLAN_PAL_STATUS_SUCCESS;
 }
 
 /*---------------------------------------------------------------------------
@@ -119,14 +119,14 @@ wpt_status wpalMutexRelease(wpt_mutex *pMutex)
 {
     /* Not doing sanity checks since VOS does them anyways */
 
-    if( vos_lock_release( (vos_lock_t*)pMutex ) != VOS_STATUS_SUCCESS )
-    {
-        WPAL_TRACE(eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
-                   " mutex release");
-        return eWLAN_PAL_STATUS_E_FAILURE;
-    }
+   if( vos_lock_release( (vos_lock_t*)pMutex ) != VOS_STATUS_SUCCESS )
+   {
+      WPAL_TRACE(eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR, 
+                 " mutex release");
+      return eWLAN_PAL_STATUS_E_FAILURE;
+   }
 
-    return eWLAN_PAL_STATUS_SUCCESS;
+   return eWLAN_PAL_STATUS_SUCCESS;
 }
 
 /*---------------------------------------------------------------------------
@@ -138,16 +138,16 @@ wpt_status wpalMutexRelease(wpt_mutex *pMutex)
 ------------------------------------------------------------------------*/
 wpt_status wpalEventInit(wpt_event *pEvent)
 {
-    /* Not doing sanity checks since VOS does them anyways */
+   /* Not doing sanity checks since VOS does them anyways */
 
-    if( vos_event_init( (vos_event_t*)pEvent ) != VOS_STATUS_SUCCESS )
-    {
-        WPAL_TRACE(eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
-                   " create event fail");
-        return eWLAN_PAL_STATUS_E_FAILURE;
-    }
+   if( vos_event_init( (vos_event_t*)pEvent ) != VOS_STATUS_SUCCESS )
+   {
+      WPAL_TRACE(eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR, 
+                 " create event fail");
+      return eWLAN_PAL_STATUS_E_FAILURE;
+   }
 
-    return eWLAN_PAL_STATUS_SUCCESS;
+   return eWLAN_PAL_STATUS_SUCCESS;
 }
 
 /*---------------------------------------------------------------------------
@@ -160,16 +160,16 @@ wpt_status wpalEventInit(wpt_event *pEvent)
 
 wpt_status wpalEventDelete(wpt_event *pEvent)
 {
-    /* Not doing sanity checks since VOS does them anyways */
+   /* Not doing sanity checks since VOS does them anyways */
 
-    if( vos_event_destroy( (vos_event_t*)pEvent ) != VOS_STATUS_SUCCESS )
-    {
-        WPAL_TRACE(eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR,
-                   " delete event fail");
-        return eWLAN_PAL_STATUS_E_FAILURE;
-    }
+   if( vos_event_destroy( (vos_event_t*)pEvent ) != VOS_STATUS_SUCCESS )
+   {
+      WPAL_TRACE(eWLAN_MODULE_PAL, eWLAN_PAL_TRACE_LEVEL_ERROR, 
+                 " delete event fail");
+      return eWLAN_PAL_STATUS_E_FAILURE;
+   }
 
-    return eWLAN_PAL_STATUS_SUCCESS;
+   return eWLAN_PAL_STATUS_SUCCESS;
 }
 
 /*---------------------------------------------------------------------------
@@ -177,42 +177,42 @@ wpt_status wpalEventDelete(wpt_event *pEvent)
 
     \param
         pEvent – a pointer to caller allocated object of wpt_event
-        timeout - timeout value at unit of milli-seconds.
+        timeout - timeout value at unit of milli-seconds. 
                   0xffffffff means infinite wait
 
      \return eWLAN_PAL_STATUS_SUCCESS - the wait was satisifed by one of the events
-             in the event array being set.  The index into the event arry
+             in the event array being set.  The index into the event arry 
              that satisfied the wait can be found at *pEventIndex.
-
-             eWLAN_PALSTATUS_E_TIMEOUT - the timeout interval elapsed before any of
+                                  
+             eWLAN_PALSTATUS_E_TIMEOUT - the timeout interval elapsed before any of 
              the events were set.
-
+                                    
              eWLAN_PAL_STATUS_E_INVAL - At least one of the values specified in
              the event array refers to an uninitialized event object.  The
              invalid event is identified by the index in *pEventIndex.  Note
              that only the first uninitialized event is detected when this error
              is returned.
-
+             
              eWLAN_PAL_STATUS_E_EMPTY - the events array is empty.  This condition
              is detected by numEvents being 0 on input.
-
+              
              eWLAN_PAL_STATUS_E_FAULT - event or pEventIndex is an invalid pointer.
 ---------------------------------------------------------------------------*/
 wpt_status wpalEventWait(wpt_event *pEvent, wpt_uint32 timeout)
 {
-    /* Not doing sanity checks since VOS does them anyways */
+   /* Not doing sanity checks since VOS does them anyways */
 
-    wpt_status status = eWLAN_PAL_STATUS_E_FAILURE;
-    VOS_STATUS  vos_status = VOS_STATUS_E_FAILURE;
+   wpt_status status = eWLAN_PAL_STATUS_E_FAILURE;
+   VOS_STATUS  vos_status = VOS_STATUS_E_FAILURE;
 
-    /* In VOS timeout = 0 corresponds to infinite wait */
-    timeout = ( timeout == WLAN_PAL_WAIT_INFINITE ? 0 : timeout );
+   /* In VOS timeout = 0 corresponds to infinite wait */
+   timeout = ( timeout == WLAN_PAL_WAIT_INFINITE ? 0 : timeout );
 
-    vos_status = vos_wait_single_event( (vos_event_t*)pEvent, timeout );
+   vos_status = vos_wait_single_event( (vos_event_t*)pEvent, timeout );
 
-    status = WPAL_VOS_TO_WPAL_STATUS( vos_status );
+   status = WPAL_VOS_TO_WPAL_STATUS( vos_status );
 
-    return status;
+   return status;
 }
 
 /*---------------------------------------------------------------------------
@@ -224,9 +224,9 @@ wpt_status wpalEventWait(wpt_event *pEvent, wpt_uint32 timeout)
 ---------------------------------------------------------------------------*/
 wpt_status wpalEventSet(wpt_event *pEvent)
 {
-    /* Not doing sanity checks since VOS does them anyways */
+   /* Not doing sanity checks since VOS does them anyways */
 
-    return ( WPAL_VOS_TO_WPAL_STATUS(vos_event_set( (vos_event_t*)pEvent )) );
+   return ( WPAL_VOS_TO_WPAL_STATUS(vos_event_set( (vos_event_t*)pEvent )) );
 }
 
 /*---------------------------------------------------------------------------
@@ -238,9 +238,9 @@ wpt_status wpalEventSet(wpt_event *pEvent)
 ---------------------------------------------------------------------------*/
 wpt_status wpalEventReset(wpt_event *pEvent)
 {
-    /* Not doing sanity checks since VOS does them anyways */
+   /* Not doing sanity checks since VOS does them anyways */
 
-    return ( WPAL_VOS_TO_WPAL_STATUS(vos_event_reset( (vos_event_t*)pEvent )) );
+   return ( WPAL_VOS_TO_WPAL_STATUS(vos_event_reset( (vos_event_t*)pEvent )) );
 }
 
 

@@ -84,9 +84,9 @@ limProcessDeauthFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession p
         if(!(pMac->lim.deauthMsgCnt & 0xF))
         {
             PELOGE(limLog(pMac, LOGE,
-                          FL("received Deauth frame in DEAUTH_WT_STATE"
-                             "(already processing previously received DEAUTH frame).."
-                             "Dropping this.. Deauth Failed %d"),++pMac->lim.deauthMsgCnt);)
+             FL("received Deauth frame in DEAUTH_WT_STATE"
+             "(already processing previously received DEAUTH frame).."
+             "Dropping this.. Deauth Failed %d"),++pMac->lim.deauthMsgCnt);)
         }
         else
         {
@@ -100,7 +100,7 @@ limProcessDeauthFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession p
         // Received Deauth frame from a BC/MC address
         // Log error and ignore it
         PELOGE(limLog(pMac, LOGE,
-                      FL("received Deauth frame from a BC/MC address"));)
+               FL("received Deauth frame from a BC/MC address"));)
 
         return;
     }
@@ -110,7 +110,7 @@ limProcessDeauthFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession p
         // Received Deauth frame for a MC address
         // Log error and ignore it
         PELOGE(limLog(pMac, LOGE,
-                      FL("received Deauth frame for a MC address"));)
+               FL("received Deauth frame for a MC address"));)
 
         return;
     }
@@ -133,10 +133,10 @@ limProcessDeauthFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo, tpPESession p
 #endif
 
     // Get reasonCode from Deauthentication frame body
-    reasonCode = sirReadU16(pBody);
+    reasonCode = sirReadU16(pBody); 
 
     PELOGE(limLog(pMac, LOGE,
-                  FL("Received Deauth frame for Addr: "MAC_ADDRESS_STR" (mlm state = %s,"
+        FL("Received Deauth frame for Addr: "MAC_ADDRESS_STR" (mlm state = %s,"
         " sme state = %d systemrole  = %d) with reason code %d from "
         MAC_ADDRESS_STR), MAC_ADDR_ARRAY(pHdr->da),
         limMlmStateStr(psessionEntry->limMlmState), psessionEntry->limSmeState,

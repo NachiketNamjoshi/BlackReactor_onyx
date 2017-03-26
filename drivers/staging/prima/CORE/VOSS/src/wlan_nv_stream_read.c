@@ -44,7 +44,7 @@
 _STREAM_BUF streamBuf;
 
 static tANI_U32 deCodeData(tANI_U8 *ipdata, tANI_U32 length, tANI_U8 *opdata,
-                           tANI_U32 *currentIndex);
+   tANI_U32 *currentIndex);
 
 /*----------------------------------------------------------------------------
   \brief initReadStream() - stream Initialization
@@ -55,12 +55,12 @@ static tANI_U32 deCodeData(tANI_U8 *ipdata, tANI_U32 length, tANI_U8 *opdata,
 --------------------------------------------------------------------------*/
 _STREAM_RC initReadStream(tANI_U8 *readBuf, tANI_U32 length)
 {
-    _STREAM_RC rc = RC_SUCCESS;
-    streamBuf.currentIndex = 0;
-    streamBuf.totalLength = 0;
-    streamBuf.totalLength = length;
-    streamBuf.dataBuf = (_NV_STREAM_BUF *)&readBuf[0];
-    return rc;
+   _STREAM_RC rc = RC_SUCCESS;
+   streamBuf.currentIndex = 0;
+   streamBuf.totalLength = 0;
+   streamBuf.totalLength = length;
+   streamBuf.dataBuf = (_NV_STREAM_BUF *)&readBuf[0];
+   return rc;
 }
 
 /*----------------------------------------------------------------------------
@@ -73,25 +73,25 @@ _STREAM_RC initReadStream(tANI_U8 *readBuf, tANI_U32 length)
 
 _STREAM_RC nextStream(tANI_U32 *length, tANI_U8 *dataBuf)
 {
-    _STREAM_RC rc = RC_SUCCESS;
+   _STREAM_RC rc = RC_SUCCESS;
 
-    if (streamBuf.currentIndex >= streamBuf.totalLength)
-    {
-        *length = 0;
-    }
-    else
-    {
-        *length = deCodeData(&streamBuf.dataBuf[streamBuf.currentIndex],
-                             (streamBuf.totalLength - streamBuf.currentIndex), dataBuf,
-                             &streamBuf.currentIndex);
-    }
+   if (streamBuf.currentIndex >= streamBuf.totalLength)
+   {
+       *length = 0;
+   }
+   else
+   {
+       *length = deCodeData(&streamBuf.dataBuf[streamBuf.currentIndex],
+                    (streamBuf.totalLength - streamBuf.currentIndex), dataBuf,
+                    &streamBuf.currentIndex);
+   }
 
-    if (*length == 0)
-    {
-        rc = RC_FAIL;
-    }
+   if (*length == 0)
+   {
+      rc = RC_FAIL;
+   }
 
-    return rc;
+   return rc;
 }
 
 /*----------------------------------------------------------------------------
@@ -104,16 +104,16 @@ _STREAM_RC nextStream(tANI_U32 *length, tANI_U8 *dataBuf)
 --------------------------------------------------------------------------*/
 
 tANI_U32 deCodeData(tANI_U8 *ipdata, tANI_U32 length, tANI_U8 *opdata,
-                    tANI_U32 *currentIndex)
+   tANI_U32 *currentIndex)
 {
-    tANI_U16 oplength = 0;
+   tANI_U16 oplength = 0;
 
-    oplength = ipdata[0];
-    oplength = oplength | (ipdata[1] << 8);
+   oplength = ipdata[0];
+   oplength = oplength | (ipdata[1] << 8);
 
-    vos_mem_copy(opdata, &ipdata[sizeof(tANI_U16)], oplength);
+   vos_mem_copy(opdata, &ipdata[sizeof(tANI_U16)], oplength);
 
-    *currentIndex = *currentIndex + sizeof(tANI_U16) + oplength;
+   *currentIndex = *currentIndex + sizeof(tANI_U16) + oplength;
 
-    return oplength;
+   return oplength;
 }

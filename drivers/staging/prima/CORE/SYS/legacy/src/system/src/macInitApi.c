@@ -62,82 +62,82 @@ tSirRetStatus macReset(tpAniSirGlobal pMac, tANI_U32 rc);
 
 tSirRetStatus macPreStart(tHalHandle hHal)
 {
-    tSirRetStatus status = eSIR_SUCCESS;
-    tANI_BOOLEAN memAllocFailed = eANI_BOOLEAN_FALSE;
-    tpAniSirGlobal pMac = (tpAniSirGlobal) hHal;
-    tANI_U8 i;
+   tSirRetStatus status = eSIR_SUCCESS;
+   tANI_BOOLEAN memAllocFailed = eANI_BOOLEAN_FALSE;
+   tpAniSirGlobal pMac = (tpAniSirGlobal) hHal;
+   tANI_U8 i;
 
-    for(i=0; i<MAX_DUMP_TABLE_ENTRY; i++)
-    {
-        pMac->dumpTableEntry[i] = vos_mem_malloc(sizeof(tDumpModuleEntry));
-        if ( NULL == pMac->dumpTableEntry[i] )
-        {
-            memAllocFailed = eANI_BOOLEAN_TRUE;
-            break;
-        }
-        else
-        {
-            vos_mem_set(pMac->dumpTableEntry[i], sizeof(tSirMbMsg), 0);
-        }
-    }
-    if( memAllocFailed )
-    {
-        while(i>0)
-        {
-            i--;
-            vos_mem_free(pMac->dumpTableEntry[i]);
-        }
-        sysLog(pMac, LOGE, FL("pMac->dumpTableEntry is NULL\n"));
-        status = eSIR_FAILURE;
-    }
+   for(i=0; i<MAX_DUMP_TABLE_ENTRY; i++)
+   {
+      pMac->dumpTableEntry[i] = vos_mem_malloc(sizeof(tDumpModuleEntry));
+      if ( NULL == pMac->dumpTableEntry[i] )
+      {
+         memAllocFailed = eANI_BOOLEAN_TRUE;
+         break;
+      }
+      else
+      {
+         vos_mem_set(pMac->dumpTableEntry[i], sizeof(tSirMbMsg), 0);
+      }
+   }
+   if( memAllocFailed )
+   {
+      while(i>0)
+      {
+         i--;
+         vos_mem_free(pMac->dumpTableEntry[i]);
+      }
+      sysLog(pMac, LOGE, FL("pMac->dumpTableEntry is NULL\n"));
+      status = eSIR_FAILURE;
+   }
 
 #if defined(ANI_LOGDUMP)
-    //logDumpInit must be called before any module starts
-    logDumpInit(pMac);
+   //logDumpInit must be called before any module starts
+   logDumpInit(pMac);
 #endif //#if defined(ANI_LOGDUMP)
 
-    return status;
+   return status;
 }
 
 tSirRetStatus macStart(tHalHandle hHal, void* pHalMacStartParams)
 {
-    tSirRetStatus status = eSIR_SUCCESS;
-    tpAniSirGlobal pMac = (tpAniSirGlobal) hHal;
+   tSirRetStatus status = eSIR_SUCCESS;
+   tpAniSirGlobal pMac = (tpAniSirGlobal) hHal;
 
-    if (NULL == pMac)
-    {
-        VOS_ASSERT(0);
-        status = eSIR_FAILURE;
-        return status;
-    }
+   if (NULL == pMac)
+   {
+      VOS_ASSERT(0);
+      status = eSIR_FAILURE;
+      return status;
+   }
 
-    pMac->gDriverType = ((tHalMacStartParameters*)pHalMacStartParams)->driverType;
+   pMac->gDriverType = ((tHalMacStartParameters*)pHalMacStartParams)->driverType;
 
-    sysLog(pMac, LOG2, FL("called\n"));
+   sysLog(pMac, LOG2, FL("called\n"));
 
-    do
-    {
-        pMac->pResetMsg = vos_mem_malloc(sizeof(tSirMbMsg));
-        if ( NULL == pMac->pResetMsg )
-        {
-            sysLog(pMac, LOGE, FL("pMac->pResetMsg is NULL\n"));
-            status = eSIR_FAILURE;
-            break;
-        }
-        else
-        {
-            vos_mem_set(pMac->pResetMsg, sizeof(tSirMbMsg), 0);
-        }
+   do
+   {
+      pMac->pResetMsg = vos_mem_malloc(sizeof(tSirMbMsg));
+      if ( NULL == pMac->pResetMsg )
+      {
+         sysLog(pMac, LOGE, FL("pMac->pResetMsg is NULL\n"));
+         status = eSIR_FAILURE;
+         break;
+      }
+      else
+      {
+         vos_mem_set(pMac->pResetMsg, sizeof(tSirMbMsg), 0);
+      }
 
-        if (pMac->gDriverType != eDRIVER_TYPE_MFG)
-        {
-            status = peStart(pMac);
-        }
+      if (pMac->gDriverType != eDRIVER_TYPE_MFG)
+      {
+         status = peStart(pMac);
+      }
 
-    } while(0);
-    pMac->sys.abort = false;
+   } while(0);
+   pMac->sys.abort = false;
 
-    return status;
+   return status;
 }
 
 
@@ -220,8 +220,8 @@ tSirRetStatus macOpen(tHalHandle *pHalHandle, tHddHandle hHdd, tMacOpenParameter
         /* Call various PE (and other layer init here) */
         if( eSIR_SUCCESS != logInit(pMac))
         {
-            vos_mem_vfree(pMac);
-            return eSIR_FAILURE;
+           vos_mem_vfree(pMac);
+           return eSIR_FAILURE;
         }
 
         /* Call routine to initialize CFG data structures */
@@ -305,23 +305,23 @@ macSysResetReq(tpAniSirGlobal pMac, tANI_U32 rc)
 
     switch (rc)
     {
-    case eSIR_STOP_BSS:
-    case eSIR_SME_BSS_RESTART:
-    case eSIR_RADIO_HW_SWITCH_STATUS_IS_OFF:
-    case eSIR_CFB_FLAG_STUCK_EXCEPTION:
-        // FIXME
-        //macReset(pMac, rc);
-        break;
+        case eSIR_STOP_BSS:
+        case eSIR_SME_BSS_RESTART:
+        case eSIR_RADIO_HW_SWITCH_STATUS_IS_OFF:
+        case eSIR_CFB_FLAG_STUCK_EXCEPTION:
+                // FIXME
+                //macReset(pMac, rc);
+                break;
 
-    case eSIR_EOF_SOF_EXCEPTION:
-    case eSIR_BMU_EXCEPTION:
-    case eSIR_CP_EXCEPTION:
-    case eSIR_LOW_PDU_EXCEPTION:
-    case eSIR_USER_TRIG_RESET:
-    case eSIR_AHB_HANG_EXCEPTION:
-    default:
-        macReset(pMac, rc);
-        break;
+        case eSIR_EOF_SOF_EXCEPTION:
+        case eSIR_BMU_EXCEPTION:
+        case eSIR_CP_EXCEPTION:
+        case eSIR_LOW_PDU_EXCEPTION:
+        case eSIR_USER_TRIG_RESET:
+        case eSIR_AHB_HANG_EXCEPTION:
+        default:
+             macReset(pMac, rc);
+            break;
 
     }
 }

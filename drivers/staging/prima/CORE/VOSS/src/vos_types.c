@@ -26,14 +26,14 @@
  */
 
 /**=========================================================================
-
+  
   \file  vos_Types.c
-
+  
   \brief virtual Operating System Servies (vOS)
-
-   Basic type definitions
-
-
+               
+   Basic type definitions 
+  
+  
   ========================================================================*/
 
 /* $Header$ */
@@ -46,16 +46,16 @@
 
 //#include "wlan_libra_config.h"
 
-/*--------------------------------------------------------------------------
+/*-------------------------------------------------------------------------- 
   Preprocessor definitions and constants
   ------------------------------------------------------------------------*/
 
-/*--------------------------------------------------------------------------
+/*-------------------------------------------------------------------------- 
   Type declarations
   ------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------
-
+  
   \brief vos_atomic_set - set a variable atomically
 
   \param pTarget - pointer to the uintptr_t to set.
@@ -66,123 +66,123 @@
           the new value is set.
 
   \sa vos_atomic_increment_U32(), vos_atomic_decrement_U32()
-
-  --------------------------------------------------------------------------*/
+  
+  --------------------------------------------------------------------------*/                                                 
 uintptr_t vos_atomic_set( uintptr_t *pTarget, uintptr_t value )
 {
-    uintptr_t oldval;
-    unsigned long flags;
+  uintptr_t oldval;
+  unsigned long flags;
 
-    if (pTarget == NULL)
-    {
-        VOS_TRACE(VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_ERROR, "NULL ptr passed into %s",__func__);
-        return 0;
-    }
-    local_irq_save(flags);
-    oldval = *pTarget;
-    *pTarget = value;
-    local_irq_restore(flags);
-    //  v_U32_t prev = atomic_read(pTarget);
-    //  atomic_set(pTarget, value);
-    return oldval;
+  if (pTarget == NULL)
+  {
+     VOS_TRACE(VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_ERROR, "NULL ptr passed into %s",__func__);
+     return 0;
+  }
+  local_irq_save(flags);
+  oldval = *pTarget;
+  *pTarget = value;
+  local_irq_restore(flags);
+  //  v_U32_t prev = atomic_read(pTarget);
+  //  atomic_set(pTarget, value);
+  return oldval;
 }
 
 
 /*----------------------------------------------------------------------------
-
-  \brief vos_atomic_increment_U32() - Increment a U32 variable atomically
-
+  
+  \brief vos_atomic_increment_U32() - Increment a U32 variable atomically 
+  
   \param pTarget - pointer to the v_U32_t to increment.
-
-  \return This function returns the value of the variable after the
+  
+  \return This function returns the value of the variable after the 
           increment occurs.
-
+    
   \sa vos_atomic_decrement_U32(), vos_atomic_set_U32()
-
-  --------------------------------------------------------------------------*/
+  
+  --------------------------------------------------------------------------*/                                                 
 v_U32_t vos_atomic_increment_U32( v_U32_t *pTarget )
 {
-    unsigned long flags;
-    if (pTarget == NULL)
-    {
-        VOS_TRACE(VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_ERROR, "NULL ptr passed into %s",__func__);
-        return 0;
-    }
-    local_irq_save(flags);
-    ++*pTarget;
-    local_irq_restore(flags);
-    return *pTarget;
-    //  return atomic_inc_return(pTarget);
+  unsigned long flags;
+  if (pTarget == NULL)
+  {
+     VOS_TRACE(VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_ERROR, "NULL ptr passed into %s",__func__);
+     return 0;
+  }
+  local_irq_save(flags);
+  ++*pTarget; 
+  local_irq_restore(flags);
+  return *pTarget;
+  //  return atomic_inc_return(pTarget);
 }
 
 
 /*----------------------------------------------------------------------------
-
-  \brief vos_atomic_decrement_U32() - Decrement a U32 variable atomically
-
+  
+  \brief vos_atomic_decrement_U32() - Decrement a U32 variable atomically 
+  
   \param pTarget - pointer to the v_U32_t to decrement.
-
-  \return This function returns the value of the variable after the
+  
+  \return This function returns the value of the variable after the 
           decrement occurs.
-
+    
   \sa vos_atomic_increment_U32(), vos_atomic_set_U32()
-
-  --------------------------------------------------------------------------*/
+  
+  --------------------------------------------------------------------------*/                                                 
 v_U32_t vos_atomic_decrement_U32( v_U32_t *pTarget )
-{
-    unsigned long flags;
-    if (pTarget == NULL)
-    {
-        VOS_TRACE(VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_ERROR, "NULL ptr passed into %s",__func__);
-        return 0;
-    }
-    // return atomic_dec_return(pTarget);
-    local_irq_save(flags);
-    --*pTarget;
-    local_irq_restore(flags);
-    return (*pTarget);
+{ 
+  unsigned long flags;
+  if (pTarget == NULL)
+  {
+     VOS_TRACE(VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_ERROR, "NULL ptr passed into %s",__func__);
+     return 0;
+  }
+   // return atomic_dec_return(pTarget);
+   local_irq_save(flags);
+   --*pTarget; 
+   local_irq_restore(flags);
+   return (*pTarget);
 }
 
 v_U32_t vos_atomic_increment_U32_by_value( v_U32_t *pTarget, v_U32_t value )
 {
-    unsigned long flags;
-    if (pTarget == NULL)
-    {
-        VOS_TRACE(VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_ERROR, "NULL ptr passed into %s",__func__);
-        return 0;
-    }
-    local_irq_save(flags);
-    *pTarget += value ;
-    local_irq_restore(flags);
-    return (*pTarget);
-}
+   unsigned long flags;
+   if (pTarget == NULL)
+   {
+      VOS_TRACE(VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_ERROR, "NULL ptr passed into %s",__func__);
+      return 0;
+   }
+   local_irq_save(flags);
+   *pTarget += value ;
+   local_irq_restore(flags);
+   return (*pTarget);
+}    
 
 v_U32_t vos_atomic_decrement_U32_by_value( v_U32_t *pTarget, v_U32_t value )
 {
-    unsigned long flags;
-    if (pTarget == NULL)
-    {
-        VOS_TRACE(VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_ERROR, "NULL ptr passed into %s",__func__);
-        return 0;
-    }
-    local_irq_save(flags);
-    *pTarget -= value ;
-    local_irq_restore(flags);
-    return (*pTarget);
+   unsigned long flags;
+   if (pTarget == NULL)
+   {
+      VOS_TRACE(VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_ERROR, "NULL ptr passed into %s",__func__);
+      return 0;
+   }
+   local_irq_save(flags);
+   *pTarget -= value ;
+   local_irq_restore(flags);
+   return (*pTarget);
 
 }
 
 
 v_U32_t vos_get_skip_ssid_check(void)
 {
-    /**This is needed by only AMSS for interoperatability **/
+/**This is needed by only AMSS for interoperatability **/
 
     return 1;
-}
+}    
 
 
 v_U32_t vos_get_skip_11e_check(void)
 {
     /* this is needed only for AMSS for interopratability **/
     return 1;
-}
+}    

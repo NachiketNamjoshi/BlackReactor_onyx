@@ -77,10 +77,10 @@
 tSirRetStatus
 wdaPostCtrlMsg(tpAniSirGlobal pMac, tSirMsgQ *pMsg)
 {
-    if(VOS_STATUS_SUCCESS != vos_mq_post_message(VOS_MQ_ID_WDA, (vos_msg_t *) pMsg))
-        return eSIR_FAILURE;
-    else
-        return eSIR_SUCCESS;
+   if(VOS_STATUS_SUCCESS != vos_mq_post_message(VOS_MQ_ID_WDA, (vos_msg_t *) pMsg))
+      return eSIR_FAILURE;
+   else
+      return eSIR_SUCCESS;
 } // halPostMsg()
 
 /**
@@ -104,18 +104,18 @@ wdaPostCtrlMsg(tpAniSirGlobal pMac, tSirMsgQ *pMsg)
 tSirRetStatus
 wdaPostCfgMsg(tpAniSirGlobal pMac, tSirMsgQ *pMsg)
 {
-    tSirRetStatus rc = eSIR_SUCCESS;
+   tSirRetStatus rc = eSIR_SUCCESS;
 
-    do
-    {
-        // For Windows based MAC, instead of posting message to different
-        // queues we will call the handler routines directly
+   do
+   {
+      // For Windows based MAC, instead of posting message to different
+      // queues we will call the handler routines directly
 
-        cfgProcessMbMsg(pMac, (tSirMbMsg*)pMsg->bodyptr);
-        rc = eSIR_SUCCESS;
-    } while (0);
+      cfgProcessMbMsg(pMac, (tSirMbMsg*)pMsg->bodyptr);
+      rc = eSIR_SUCCESS;
+   } while (0);
 
-    return rc;
+   return rc;
 } // halMntPostMsg()
 
 
@@ -145,70 +145,70 @@ wdaPostCfgMsg(tpAniSirGlobal pMac, tSirMsgQ *pMsg)
 
 tSirRetStatus uMacPostCtrlMsg(void* pSirGlobal, tSirMbMsg* pMb)
 {
-    tSirMsgQ msg;
-    tpAniSirGlobal pMac = (tpAniSirGlobal)pSirGlobal;
+   tSirMsgQ msg;
+   tpAniSirGlobal pMac = (tpAniSirGlobal)pSirGlobal;
 
 
-    tSirMbMsg* pMbLocal;
-    msg.type = pMb->type;
-    msg.bodyval = 0;
+   tSirMbMsg* pMbLocal;
+   msg.type = pMb->type;
+   msg.bodyval = 0;
 
-    WDALOG3(wdaLog(pMac, LOG3, FL("msgType %d, msgLen %d" ),
-                   pMb->type, pMb->msgLen));
+   WDALOG3(wdaLog(pMac, LOG3, FL("msgType %d, msgLen %d" ),
+        pMb->type, pMb->msgLen));
 
-    // copy the message from host buffer to firmware buffer
-    // this will make sure that firmware allocates, uses and frees
-    // it's own buffers for mailbox message instead of working on
-    // host buffer
+   // copy the message from host buffer to firmware buffer
+   // this will make sure that firmware allocates, uses and frees
+   // it's own buffers for mailbox message instead of working on
+   // host buffer
 
-    // second parameter, 'wait option', to palAllocateMemory is ignored on Windows
-    pMbLocal = vos_mem_malloc(pMb->msgLen);
-    if ( NULL == pMbLocal )
-    {
-        WDALOGE( wdaLog(pMac, LOGE, FL("Buffer Allocation failed!")));
-        return eSIR_FAILURE;
-    }
+   // second parameter, 'wait option', to palAllocateMemory is ignored on Windows
+   pMbLocal = vos_mem_malloc(pMb->msgLen);
+   if ( NULL == pMbLocal )
+   {
+      WDALOGE( wdaLog(pMac, LOGE, FL("Buffer Allocation failed!")));
+      return eSIR_FAILURE;
+   }
 
-    vos_mem_copy((void *)pMbLocal, (void *)pMb, pMb->msgLen);
-    msg.bodyptr = pMbLocal;
+   vos_mem_copy((void *)pMbLocal, (void *)pMb, pMb->msgLen);
+   msg.bodyptr = pMbLocal;
 
-    switch (msg.type & HAL_MMH_MB_MSG_TYPE_MASK)
-    {
-    case WDA_MSG_TYPES_BEGIN:    // Posts a message to the HAL MsgQ
-    case WDA_EXT_MSG_TYPES_BEGIN:
-        wdaPostCtrlMsg(pMac, &msg);
-        break;
+   switch (msg.type & HAL_MMH_MB_MSG_TYPE_MASK)
+   {
+   case WDA_MSG_TYPES_BEGIN:    // Posts a message to the HAL MsgQ
+   case WDA_EXT_MSG_TYPES_BEGIN:
+      wdaPostCtrlMsg(pMac, &msg);
+      break;
 
-    case SIR_LIM_MSG_TYPES_BEGIN:    // Posts a message to the LIM MsgQ
-        limPostMsgApi(pMac, &msg);
-        break;
+   case SIR_LIM_MSG_TYPES_BEGIN:    // Posts a message to the LIM MsgQ
+      limPostMsgApi(pMac, &msg);
+      break;
 
-    case SIR_CFG_MSG_TYPES_BEGIN:    // Posts a message to the CFG MsgQ
-        wdaPostCfgMsg(pMac, &msg);
-        break;
+   case SIR_CFG_MSG_TYPES_BEGIN:    // Posts a message to the CFG MsgQ
+      wdaPostCfgMsg(pMac, &msg);
+      break;
 
-    case SIR_PMM_MSG_TYPES_BEGIN:    // Posts a message to the PMM MsgQ
-        pmmPostMessage(pMac, &msg);
-        break;
+   case SIR_PMM_MSG_TYPES_BEGIN:    // Posts a message to the PMM MsgQ
+      pmmPostMessage(pMac, &msg);
+      break;
 
-    case SIR_PTT_MSG_TYPES_BEGIN:
-        WDALOGW( wdaLog(pMac, LOGW, FL("%s:%d: message type = 0x%X"),
-                        __func__, __LINE__, msg.type));
-        vos_mem_free(msg.bodyptr);
-        break;
+   case SIR_PTT_MSG_TYPES_BEGIN:
+      WDALOGW( wdaLog(pMac, LOGW, FL("%s:%d: message type = 0x%X"),
+               __func__, __LINE__, msg.type));
+      vos_mem_free(msg.bodyptr);
+      break;
 
 
-    default:
-        WDALOGW( wdaLog(pMac, LOGW, FL("Unknown message type = "
-                                       "0x%X"),
-                        msg.type));
+   default:
+      WDALOGW( wdaLog(pMac, LOGW, FL("Unknown message type = "
+             "0x%X"),
+             msg.type));
 
-        // Release the memory.
-        vos_mem_free(msg.bodyptr);
-        break;
-    }
+      // Release the memory.
+      vos_mem_free(msg.bodyptr);
+      break;
+   }
 
-    return eSIR_SUCCESS;
+   return eSIR_SUCCESS;
 
 } // uMacPostCtrlMsg()
 
@@ -216,21 +216,21 @@ tSirRetStatus uMacPostCtrlMsg(void* pSirGlobal, tSirMbMsg* pMb)
 /* ---------------------------------------------------------
  * FUNCTION:  wdaGetGlobalSystemRole()
  *
- * Get the global HAL system role.
+ * Get the global HAL system role. 
  * ---------------------------------------------------------
  */
 tBssSystemRole wdaGetGlobalSystemRole(tpAniSirGlobal pMac)
 {
-    v_VOID_t * pVosContext = vos_get_global_context(VOS_MODULE_ID_WDA, NULL);
-    tWDA_CbContext *wdaContext =
-        vos_get_context(VOS_MODULE_ID_WDA, pVosContext);
-    if(NULL == wdaContext)
-    {
-        VOS_TRACE( VOS_MODULE_ID_WDA, VOS_TRACE_LEVEL_ERROR,
-                   "%s:WDA context is NULL", __func__);
-        VOS_ASSERT(0);
-        return eSYSTEM_UNKNOWN_ROLE;
-    }
-    return  wdaContext->wdaGlobalSystemRole;
+   v_VOID_t * pVosContext = vos_get_global_context(VOS_MODULE_ID_WDA, NULL);
+   tWDA_CbContext *wdaContext = 
+                       vos_get_context(VOS_MODULE_ID_WDA, pVosContext);
+   if(NULL == wdaContext)
+   {
+      VOS_TRACE( VOS_MODULE_ID_WDA, VOS_TRACE_LEVEL_ERROR,
+                           "%s:WDA context is NULL", __func__); 
+      VOS_ASSERT(0);
+      return eSYSTEM_UNKNOWN_ROLE;
+   }
+   return  wdaContext->wdaGlobalSystemRole;
 }
 

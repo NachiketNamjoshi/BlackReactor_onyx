@@ -34,7 +34,7 @@
  * Date           Modified by    Modification Information
  * --------------------------------------------------------------------
  */
-
+ 
 #include "palTypes.h"
 #include "wniCfg.h"
 #include "aniGlobal.h"
@@ -90,7 +90,7 @@ limInitPeerIdxpool(tpAniSirGlobal pMac,tpPESession pSessionEntry)
         pSessionEntry->freePeerIdxHead=LIM_START_PEER_IDX;
     }
 
-    for (i=pSessionEntry->freePeerIdxHead; i<maxAssocSta; i++)
+    for (i=pSessionEntry->freePeerIdxHead;i<maxAssocSta; i++)
     {
         pSessionEntry->gpLimPeerIdxpool[i]         = i+1;
     }

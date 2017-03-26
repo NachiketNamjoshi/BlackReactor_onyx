@@ -58,7 +58,7 @@
 #define INITIALIZE           2
 #define AUTHENTICATION       3
 #define AUTHENTICATION_2     4
-#define GET_PSK              5
+#define GET_PSK              5   
 #define GET_EAP_KEY          6
 #define PTK_START            7
 #define PTK_INIT_NEGO        8
@@ -79,27 +79,27 @@ static v_U8_t aniSsmIeRsnOui[] = ANI_SSM_IE_RSN_OUI;
  * Static functions in this module
  **************************************/
 
-static
+static 
 int zeroOutPtk(tAuthRsnFsm *fsm);
-static
+static 
 int stopAllTimers(tAuthRsnFsm *fsm);
 
 static
-int checkMic(tAuthRsnFsm *fsm,
+int checkMic(tAuthRsnFsm *fsm, 
              tAniEapolKeyAvailEventData *data);
 
-static
-int checkLocalReplayCounter(tAuthRsnFsm *fsm,
+static 
+int checkLocalReplayCounter(tAuthRsnFsm *fsm, 
                             tAniEapolKeyAvailEventData *data);
-static
-int checkPeerReplayCounter(tAuthRsnFsm *fsm,
+static 
+int checkPeerReplayCounter(tAuthRsnFsm *fsm, 
                            tAniEapolKeyAvailEventData *data);
 
 static int checkInfoElement(tAuthRsnFsm *fsm,
                             tAniEapolKeyAvailEventData *data);
 
 static
-int derivePtk(tAuthRsnFsm *fsm,
+int derivePtk(tAuthRsnFsm *fsm, 
               tAniEapolKeyAvailEventData *data);
 
 
@@ -154,7 +154,7 @@ authRsnFsmInit(tAuthRsnFsmConsts *constsIn)
  * FUNCTION
  * Allocates and initializes the state of an RSN key FSM instance for
  * the given STA context.
- *
+ * 
  * @parm staCtx the STA context whose instance is being created
  * @param pskBased pass in eANI_BOOLEAN_TRUE is this STA is to be
  * authenticated based on a pre-shared key as opposed to EAP.
@@ -171,7 +171,7 @@ authRsnFsmCreate(tBtampContext *ctx)
     vos_mem_zero( fsm, sizeof(tAuthRsnFsm));
 
     if( !VOS_IS_STATUS_SUCCESS( bapRsnRegisterTxRxCallbacks( authRsnTxCompleteHandler,
-                                authRsnRxFrameHandler ) ) )
+                                            authRsnRxFrameHandler ) ) )
     {
         return ANI_ERROR;
     }
@@ -183,7 +183,7 @@ authRsnFsmCreate(tBtampContext *ctx)
 
     // Allocate the station context
     fsm->staCtx = (tStaContext *)vos_mem_malloc( sizeof(tStaContext) );
-    if (fsm->staCtx == NULL)
+    if (fsm->staCtx == NULL) 
     {
         retVal = ANI_E_MALLOC_FAILED;
         VOS_ASSERT( 0 );
@@ -191,7 +191,7 @@ authRsnFsmCreate(tBtampContext *ctx)
     }
     // Clear out the station context
     vos_mem_zero( fsm->staCtx, sizeof(tStaContext) );
-
+    
     fsm->ctx = ctx;
     fsm->staCtx->authRsnFsm = fsm;
     //Only support CCMP
@@ -214,14 +214,14 @@ authRsnFsmCreate(tBtampContext *ctx)
     retVal = aniAsfPacketAllocateExplicit(&fsm->lastEapol,
                                           RSN_MAX_PACKET_SIZE,
                                           EAPOL_TX_HEADER_SIZE );
-    if (retVal != ANI_OK)
+    if (retVal != ANI_OK) 
     {
         VOS_ASSERT( 0 );
         goto error;
     }
 
     aniAsfPacketAllocate(&fsm->staCtx->pmk);
-    if (fsm->staCtx->pmk == NULL)
+    if (fsm->staCtx->pmk == NULL) 
     {
         retVal = ANI_E_MALLOC_FAILED;
         VOS_ASSERT( 0 );
@@ -231,7 +231,7 @@ authRsnFsmCreate(tBtampContext *ctx)
     aniAsfPacketAllocateExplicit(&fsm->staCtx->ieSta,
                                  RSN_IE_MAX_PACKET_SIZE,
                                  RSN_IE_HEADER_SIZE );
-    if (fsm->staCtx->ieSta == NULL)
+    if (fsm->staCtx->ieSta == NULL) 
     {
         retVal = ANI_E_MALLOC_FAILED;
         VOS_ASSERT( 0 );
@@ -254,11 +254,11 @@ authRsnFsmCreate(tBtampContext *ctx)
 
     return ANI_OK;
 
-error:
+ error:
     authRsnFsmFree(ctx);
 
     return retVal;
-
+    
 }
 
 /**
@@ -267,7 +267,7 @@ error:
  * FUNCTION
  * Frees a previously allocated RSN Key FSM in a STA context. If the
  * RSN Key FSM is not yet allocated, then this is an error.
- *
+ * 
  * @param ctx the STA context whose FSM instance is to be freed
  *
  * @return ANI_OK if the operation succeeds
@@ -283,8 +283,8 @@ authRsnFsmFree(tBtampContext *ctx)
     {
         vos_crypto_deinit( fsm->cryptHandle );
     }
-
-    bapRsnClearTxRxCallbacks();
+     
+    bapRsnClearTxRxCallbacks(); 
 
     if ( fsm->staCtx )
     {
@@ -295,9 +295,9 @@ authRsnFsmFree(tBtampContext *ctx)
     if ( VOS_TIMER_STATE_UNUSED != fsm->msg4Timer.state ) vos_timer_destroy( &fsm->msg4Timer );
 
     if (fsm->lastEapol)
-    {
+    {    
         aniAsfPacketFree(fsm->lastEapol);
-        fsm->lastEapol = NULL;
+        fsm->lastEapol = NULL; 
     }
 
     if( fsm->staCtx )
@@ -307,8 +307,8 @@ authRsnFsmFree(tBtampContext *ctx)
             aniAsfPacketFree( fsm->staCtx->pmk );
             fsm->staCtx->pmk = NULL;
         }
-        vos_mem_free(fsm->staCtx);
-        fsm->staCtx = NULL;
+       vos_mem_free(fsm->staCtx);
+       fsm->staCtx = NULL; 
     }
 
     vos_mem_zero( fsm, sizeof(tAuthRsnFsm) );
@@ -321,7 +321,7 @@ authRsnFsmFree(tBtampContext *ctx)
  *
  * FUNCTION
  * Passes an event to the RSN key FSM instance for immediate processing.
- *
+ * 
  * @param fsm the RSN Key FSM instance
  * @param eventId the AAG event to process
  * @param arg an optional argument for this event
@@ -352,8 +352,8 @@ authRsnFsmProcessEvent(tAuthRsnFsm *fsm, tRsnFsmEvent eventId, void *arg)
         fsm->integFailed = eANI_BOOLEAN_TRUE;
         break;
     default:
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "Unknown event for Auth RSN Key Fsm: %d\n", eventId);
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
+            "Unknown event for Auth RSN Key Fsm: %d\n", eventId);
         VOS_ASSERT( 0 );
         return ANI_E_ILLEGAL_ARG;
         break;
@@ -368,9 +368,8 @@ authRsnFsmProcessEvent(tAuthRsnFsm *fsm, tRsnFsmEvent eventId, void *arg)
 int
 authRsnAuthStartEventHandler(tAuthRsnFsm *fsm)
 {
-    static v_U8_t btampStaRSNIE[] = {0x30, 0x14, 0x01, 0x00, 0x00, 0x0f, 0xac, 0x04, 0x01, 0x00,
-                                     0x00, 0x0f, 0xac, 0x04, 0x01, 0x00, 0x00, 0x0f, 0xac, 0x02, 0x00, 0x00
-                                    };
+    static v_U8_t btampStaRSNIE[] = {0x30, 0x14, 0x01, 0x00, 0x00, 0x0f, 0xac, 0x04, 0x01, 0x00, 
+        0x00, 0x0f, 0xac, 0x04, 0x01, 0x00, 0x00, 0x0f, 0xac, 0x02, 0x00, 0x00 };
     // Copy required info
     vos_mem_copy( &fsm->staCtx->authMac, fsm->ctx->self_mac_addr, 6);
     vos_mem_copy( &fsm->staCtx->suppMac, fsm->ctx->peer_mac_addr, 6);
@@ -397,8 +396,8 @@ gotoStateInit(tAuthRsnFsm *fsm)
     fsm->currentState = INITIALIZE;
 
     // TODO: Move this to a global position which applies to WEP as
-    // well
-    //initGlobalKeys = eANI_BOOLEAN_FALSE;
+    // well 
+    //initGlobalKeys = eANI_BOOLEAN_FALSE; 
 
     fsm->authReq = eANI_BOOLEAN_FALSE;
     fsm->eapolAvail = eANI_BOOLEAN_FALSE;
@@ -409,9 +408,9 @@ gotoStateInit(tAuthRsnFsm *fsm)
 
     // Create two replay counter's..one for our requests, and another
     // for STA's requests. Initialize the first one randomly.
-    aniSsmReplayCtrCreate(fsm->cryptHandle, &fsm->staCtx->localReplayCtr,
+    aniSsmReplayCtrCreate(fsm->cryptHandle, &fsm->staCtx->localReplayCtr, 
                           ANI_EAPOL_KEY_RSN_RSC_SIZE, 0);
-    aniSsmReplayCtrCreate(fsm->cryptHandle, &fsm->staCtx->peerReplayCtr,
+    aniSsmReplayCtrCreate(fsm->cryptHandle, &fsm->staCtx->peerReplayCtr, 
                           ANI_EAPOL_KEY_RSN_RSC_SIZE, 0);
 
     return ANI_OK;
@@ -438,7 +437,7 @@ gotoStateAuthentication2(tAuthRsnFsm *fsm)
     if( !VOS_IS_STATUS_SUCCESS( vos_rand_get_bytes( fsm->cryptHandle, fsm->aNonce, ANI_EAPOL_KEY_RSN_NONCE_SIZE ) ) )
     {
         VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "gotoStateAuthentication2 fail to get random number. Disconnect\n" );
+            "gotoStateAuthentication2 fail to get random number. Disconnect\n" );
         bapAuthDisconnect( fsm->ctx );
         return ANI_ERROR;
     }
@@ -457,9 +456,9 @@ gotoStateGetPsk(tAuthRsnFsm *fsm)
     fsm->currentState = GET_PSK;
 
     fsm->numTries = 0;
-
+    
     checkTransition(fsm, NULL);
-
+    
     return ANI_OK;
 }
 
@@ -473,30 +472,30 @@ gotoStatePtkStart(tAuthRsnFsm *fsm)
     fsm->currentState = PTK_START;
 
     // Create a new packet if we don't have one to retransmit
-    //if (aniAsfPacketGetLen(fsm->lastEapol) == 0)
-#if 0
+    //if (aniAsfPacketGetLen(fsm->lastEapol) == 0) 
+#if 0    
     if( fsm->lastEapol )
     {
         aniAsfPacketFree( fsm->lastEapol );
         fsm->lastEapol = NULL;
 
-        retVal = aniAsfPacketAllocateExplicit(&fsm->lastEapol,
-                                              RSN_MAX_PACKET_SIZE,
-                                              EAPOL_TX_HEADER_SIZE );
-#endif
-        aniAsfPacketEmptyExplicit(fsm->lastEapol,
-                                  EAPOL_TX_HEADER_SIZE);
-        //}
-        // if (1)
-        //{
+    retVal = aniAsfPacketAllocateExplicit(&fsm->lastEapol,
+                                          RSN_MAX_PACKET_SIZE,
+                                          EAPOL_TX_HEADER_SIZE );
+#endif    
+    aniAsfPacketEmptyExplicit(fsm->lastEapol, 
+                              EAPOL_TX_HEADER_SIZE);
+    //}
+   // if (1) 
+    //{
 
         vos_mem_zero( &txDesc, sizeof(txDesc) );
 
         // The Key Information bits...
-        if (fsm->staCtx->pwCipherType == eCSR_ENCRYPT_TYPE_AES)
+        if (fsm->staCtx->pwCipherType == eCSR_ENCRYPT_TYPE_AES) 
         {
             txDesc.info.keyDescVers = ANI_EAPOL_KEY_DESC_VERS_AES;
-        }
+        } 
         else {
             return ANI_E_ILLEGAL_ARG;
         }
@@ -520,11 +519,11 @@ gotoStatePtkStart(tAuthRsnFsm *fsm)
             return retVal;
         }
 #if 0
-    }
+    } 
     else {
         retransmit = eANI_BOOLEAN_TRUE;
     }
-#endif
+#endif    
 
     if( VOS_IS_STATUS_SUCCESS( bapRsnSendEapolFrame( fsm->ctx->pvosGCtx, fsm->lastEapol ) ) )
     {
@@ -549,7 +548,7 @@ gotoStatePtkInitNego(tAuthRsnFsm *fsm, void *arg)
     // new packet
 
     fsm->numTries = 0;
-    aniAsfPacketEmptyExplicit(fsm->lastEapol,
+    aniAsfPacketEmptyExplicit(fsm->lastEapol, 
                               EAPOL_TX_HEADER_SIZE);
 
     checkTransition(fsm, arg);
@@ -564,7 +563,7 @@ getRsnIeFromAdvertizedIes(tAuthRsnFsm *fsm, v_U8_t **rsnIe)
     int retVal = ANI_E_ILLEGAL_ARG;
     v_U8_t *ptr = fsm->advertizedRsnIe;
 
-    if (*ptr == ANI_SSM_IE_RSN_ELEM_ID)
+    if (*ptr == ANI_SSM_IE_RSN_ELEM_ID) 
     {
         retVal = *(ptr + 1) + 2; // The L field from the TLV + 2B TL
         *rsnIe = ptr;
@@ -575,7 +574,7 @@ getRsnIeFromAdvertizedIes(tAuthRsnFsm *fsm, v_U8_t **rsnIe)
 
 // Use this only with trusted IE like the one we generated locally
 static void
-addPad(
+addPad( 
     v_U8_t *dataBytes,
     int dataLen,
     int padLen)
@@ -585,12 +584,12 @@ addPad(
     // The first byte of padding is 0xdd.  The rest are 0x00's
     // See 802.11i section 8.5.2 subsection "Key Data Encapsulation"
 
-    for ( i=dataLen ; i < dataLen+padLen; i++)
+    for ( i=dataLen ; i < dataLen+padLen; i++) 
     {
-        if ( i == dataLen )
+        if ( i == dataLen ) 
         {
             dataBytes[i] = 0xdd;
-        }
+        } 
         else {
             dataBytes[i] = 0x00;
         }
@@ -621,8 +620,7 @@ aagAppendGroupKeyForRsn(tAniPacket *packet)
     tAniPacket *groupKey = NULL;
 #else
     tANI_U8 groupKey[] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                          0x08, 0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15
-                         };
+                          0x08, 0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15};
 #endif
     tANI_U8 *groupKeyBytes = NULL;
     tANI_U8 *lenPtr = NULL;
@@ -663,7 +661,7 @@ aagAppendGroupKeyForRsn(tAniPacket *packet)
     // Obtain the position for the length
     aniAsfPacketGetBytesFromTail(packet, &lenPtr);
 
-    // Write out a dummy length - we'll fill this in later. It will be
+    // Write out a dummy length - we'll fill this in later. It will be 
     // 6 bytes more than the length of the GTK
     retVal = aniAsfPacketAppend8(packet, 0);
     //CHECK_NO_ERROR(retVal);
@@ -675,14 +673,14 @@ aagAppendGroupKeyForRsn(tAniPacket *packet)
     // Indicate that the key type is group key
     retVal = aniAsfPacketAppend8(packet, ANI_SSM_IE_RSN_GROUP_KEY_DATA_ENCAPS_ID);
     //CHECK_NO_ERROR(retVal);
-
+ 
     // Copy the key-id to the first two bits of the next byte
     // Copy the Tx bit the third bit of the same byte
     // (Here, I assume the Group Key is to be used for both STA Tx and Rx)
     retVal = aniAsfPacketAppend8(
-                 packet,
-                 GROUP_KEY_ID );
-    //AAG_GROUP_KEY_ID(radioId) );
+            packet,
+            GROUP_KEY_ID );
+            //AAG_GROUP_KEY_ID(radioId) );
     //CHECK_NO_ERROR(retVal);
 
     retVal = aniAsfPacketMoveRight(packet, 1); // Reserved bits (1 byte)
@@ -691,7 +689,7 @@ aagAppendGroupKeyForRsn(tAniPacket *packet)
     // Copy the real key bytes
     retVal = aniAsfPacketAppendBuffer(packet, groupKeyBytes, groupKeyLen);
     //CHECK_NO_ERROR(retVal);
-
+    
     // Calculate and enter the length of the entire encoding
     aniAsfPacketGetBytesFromTail(packet, &endPtr);
     *lenPtr = endPtr - (lenPtr + 1) ; // subtract one to avoid tail
@@ -723,7 +721,7 @@ gotoStatePtkInitNegoTx(tAuthRsnFsm *fsm)
     fsm->msg4TimeOut = VOS_FALSE;
     fsm->currentState = PTK_INIT_NEGO_TX ;
 
-    if (keyData == NULL)
+    if (keyData == NULL) 
     {
         // Allocate the packet the first time around that you enter
         retVal = aniAsfPacketAllocateExplicit(&keyData, 1024, 10);
@@ -731,7 +729,7 @@ gotoStatePtkInitNegoTx(tAuthRsnFsm *fsm)
         {
             return retVal;
         }
-    }
+    } 
     else {
         // Just empty out the packet
         aniAsfPacketEmptyExplicit(keyData, 10);
@@ -740,511 +738,466 @@ gotoStatePtkInitNegoTx(tAuthRsnFsm *fsm)
     do
     {
         // Create a new EAPOL frame if we don't have one to retransmit
-        //if (aniAsfPacketGetLen(fsm->lastEapol) == 0)
+        //if (aniAsfPacketGetLen(fsm->lastEapol) == 0) 
 #if 0
         if( fsm->lastEapol )
+         {
+             aniAsfPacketFree( fsm->lastEapol );
+             fsm->lastEapol = NULL;
+
+             retVal = aniAsfPacketAllocateExplicit(&fsm->lastEapol,
+                                          RSN_MAX_PACKET_SIZE,
+                                          EAPOL_TX_HEADER_SIZE );
+#endif     
+             aniAsfPacketEmptyExplicit(fsm->lastEapol, 
+                              EAPOL_TX_HEADER_SIZE);
+      //  }
+
+        if (1) 
         {
-            aniAsfPacketFree( fsm->lastEapol );
-            fsm->lastEapol = NULL;
 
-            retVal = aniAsfPacketAllocateExplicit(&fsm->lastEapol,
-                                                  RSN_MAX_PACKET_SIZE,
-                                                  EAPOL_TX_HEADER_SIZE );
-#endif
-            aniAsfPacketEmptyExplicit(fsm->lastEapol,
-                                      EAPOL_TX_HEADER_SIZE);
-            //  }
+            vos_mem_zero( &txDesc, sizeof(txDesc) );
 
-            if (1)
+            // The Key Information bits...
+            if (fsm->staCtx->pwCipherType == eCSR_ENCRYPT_TYPE_AES) 
             {
+                txDesc.info.keyDescVers = ANI_EAPOL_KEY_DESC_VERS_AES;
+            } 
+            else {
+                txDesc.info.keyDescVers = ANI_EAPOL_KEY_DESC_VERS_RC4;
+            }
+            txDesc.info.unicastFlag = eANI_BOOLEAN_TRUE;
+            txDesc.info.installFlag = eANI_BOOLEAN_TRUE;
+            txDesc.info.ackFlag = eANI_BOOLEAN_TRUE;
+            txDesc.info.micFlag = eANI_BOOLEAN_TRUE;
 
-                vos_mem_zero( &txDesc, sizeof(txDesc) );
+            txDesc.keyLen = aagGetKeyMaterialLen(fsm->staCtx->pwCipherType);
+            aniSsmReplayCtrNext(fsm->staCtx->localReplayCtr, txDesc.replayCounter);
+            vos_mem_copy(txDesc.keyNonce, fsm->aNonce, sizeof(txDesc.keyNonce));
 
-                // The Key Information bits...
-                if (fsm->staCtx->pwCipherType == eCSR_ENCRYPT_TYPE_AES)
-                {
-                    txDesc.info.keyDescVers = ANI_EAPOL_KEY_DESC_VERS_AES;
+            // Add the RSN IE (but not any WPA IE)
+            rsnWpaIeLen = getRsnIeFromAdvertizedIes(fsm, &rsnWpaIe);
+
+            if( !ANI_IS_STATUS_SUCCESS( rsnWpaIeLen) ) break;
+
+            retVal = aniAsfPacketAppendBuffer(keyData, rsnWpaIe, rsnWpaIeLen);
+            if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
+
+            // Add the RSN group key encapsulation
+            retVal = aagAppendGroupKeyForRsn ( keyData );
+
+            if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
+
+            groupKeyLen = aniAsfPacketGetBytes(keyData, &groupKeyBytes);
+            if( !ANI_IS_STATUS_SUCCESS( groupKeyLen ) ) 
+            {
+                retVal = ANI_E_FAILED;
+                break;
+            }
+
+            txDesc.info.secureFlag = eANI_BOOLEAN_TRUE;
+            txDesc.info.encKeyDataFlag = eANI_BOOLEAN_TRUE;
+
+            if ( fsm->staCtx->pwCipherType == eCSR_ENCRYPT_TYPE_AES ) 
+            {
+                /*
+                 * Use the AES key wrap algorithm if either one of the pairwise
+                 * key or the group key is an AES key.
+                 *
+                 * If the key being sent is not a multiple of
+                 * ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE, then pad it with
+                 * zeroes. e.g., if we are sending a WEP key of 5 or 13
+                 * bytes.
+                 */
+                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                           "AES Key Wrap invoked. groupKeyLen = %d", groupKeyLen);
+
+                padLen = groupKeyLen % ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE;
+                if (padLen != 0) {
+                    padLen = ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE - padLen;
+            
+                    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                               "Before AES Key Wrap: padLen = %d", padLen);
+
+                    if (groupKeyLen + padLen > sizeof(paddedGroupKeyEncaps)) {
+#if 0
+                        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                                   "Cannot encode group key encapsulation of len %d and cipher type %s "
+                                   "to send to %s %s (aid %d, radio %d, user %s)",
+                                   groupKeyLen,
+                                   aniSsmIntGetCipherStr(AAG_GROUP_CIPHER(fsm->ctx->radioId)),
+                                   (fsm->ctx->bpIndicator ? "BP" : "STA"),
+                                   aniAsfHexStr(fsm->ctx->suppMac, sizeof(tAniMacAddr)),
+                                   fsm->ctx->aid,
+                                   fsm->ctx->radioId,
+                                   aagGetStaUserId(fsm->ctx));
+#endif
+                         retVal = ANI_E_FAILED;
+                    }
+                    // OK, after you compute the pad length, you need to 
+                    // add the padding  - 0xdd followed by 0x00's
+                    addPad( groupKeyBytes , groupKeyLen , padLen );
+                    // add the padding length
+                    groupKeyLen += padLen;
+                    // IMMEDIATELY adjust the packet size to reflect the pad 
+                    aniAsfPacketMoveRight(keyData, padLen); 
+                    if( !ANI_IS_STATUS_SUCCESS( retVal) ) break;
                 }
-                else {
-                    txDesc.info.keyDescVers = ANI_EAPOL_KEY_DESC_VERS_RC4;
-                }
-                txDesc.info.unicastFlag = eANI_BOOLEAN_TRUE;
-                txDesc.info.installFlag = eANI_BOOLEAN_TRUE;
-                txDesc.info.ackFlag = eANI_BOOLEAN_TRUE;
-                txDesc.info.micFlag = eANI_BOOLEAN_TRUE;
+            
+                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                           "Before AES Key Wrap: padded groupKeyLen = %d", groupKeyLen);
 
-                txDesc.keyLen = aagGetKeyMaterialLen(fsm->staCtx->pwCipherType);
-                aniSsmReplayCtrNext(fsm->staCtx->localReplayCtr, txDesc.replayCounter);
-                vos_mem_copy(txDesc.keyNonce, fsm->aNonce, sizeof(txDesc.keyNonce));
-
-                // Add the RSN IE (but not any WPA IE)
-                rsnWpaIeLen = getRsnIeFromAdvertizedIes(fsm, &rsnWpaIe);
-
-                if( !ANI_IS_STATUS_SUCCESS( rsnWpaIeLen) ) break;
-
-                retVal = aniAsfPacketAppendBuffer(keyData, rsnWpaIe, rsnWpaIeLen);
-                if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
-
-                // Add the RSN group key encapsulation
-                retVal = aagAppendGroupKeyForRsn ( keyData );
-
-                if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
-
-                groupKeyLen = aniAsfPacketGetBytes(keyData, &groupKeyBytes);
-                if( !ANI_IS_STATUS_SUCCESS( groupKeyLen ) )
+                retVal = aniSsmAesKeyWrap(fsm->cryptHandle, groupKeyBytes, groupKeyLen,
+                                          fsm->staCtx->ptk + ANI_EAPOL_KEY_RSN_MIC_SIZE,
+                                          ANI_EAPOL_KEY_RSN_ENC_KEY_SIZE,
+                                          &wrappedKey);
+                if( !ANI_IS_STATUS_SUCCESS( retVal) ) break;
+                // This doesn't work...
+                //groupKeyBytes = wrappedKey;
+                //groupKeyLen += ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE;
+                // ...here is the right way to do it
+                // Add the length of the prepended IV A[0]
+                if (NULL == wrappedKey)
                 {
-                    retVal = ANI_E_FAILED;
                     break;
                 }
-
-                txDesc.info.secureFlag = eANI_BOOLEAN_TRUE;
-                txDesc.info.encKeyDataFlag = eANI_BOOLEAN_TRUE;
-
-                if ( fsm->staCtx->pwCipherType == eCSR_ENCRYPT_TYPE_AES )
-                {
-                    /*
-                     * Use the AES key wrap algorithm if either one of the pairwise
-                     * key or the group key is an AES key.
-                     *
-                     * If the key being sent is not a multiple of
-                     * ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE, then pad it with
-                     * zeroes. e.g., if we are sending a WEP key of 5 or 13
-                     * bytes.
-                     */
-                    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                               "AES Key Wrap invoked. groupKeyLen = %d", groupKeyLen);
-
-                    padLen = groupKeyLen % ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE;
-                    if (padLen != 0) {
-                        padLen = ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE - padLen;
-
-                        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                                   "Before AES Key Wrap: padLen = %d", padLen);
-
-                        if (groupKeyLen + padLen > sizeof(paddedGroupKeyEncaps)) {
-#if 0
-                            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                                       "Cannot encode group key encapsulation of len %d and cipher type %s "
-                                       "to send to %s %s (aid %d, radio %d, user %s)",
-                                       groupKeyLen,
-                                       aniSsmIntGetCipherStr(AAG_GROUP_CIPHER(fsm->ctx->radioId)),
-                                       (fsm->ctx->bpIndicator ? "BP" : "STA"),
-                                       aniAsfHexStr(fsm->ctx->suppMac, sizeof(tAniMacAddr)),
-                                       fsm->ctx->aid,
-                                       fsm->ctx->radioId,
-                                       aagGetStaUserId(fsm->ctx));
-#endif
-                            retVal = ANI_E_FAILED;
-                        }
-                        // OK, after you compute the pad length, you need to
-                        // add the padding  - 0xdd followed by 0x00's
-                        addPad( groupKeyBytes , groupKeyLen , padLen );
-                        // add the padding length
-                        groupKeyLen += padLen;
-                        // IMMEDIATELY adjust the packet size to reflect the pad
-                        aniAsfPacketMoveRight(keyData, padLen);
-                        if( !ANI_IS_STATUS_SUCCESS( retVal) ) break;
-                    }
-
-                    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                               "Before AES Key Wrap: padded groupKeyLen = %d", groupKeyLen);
-
-                    retVal = aniSsmAesKeyWrap(fsm->cryptHandle, groupKeyBytes, groupKeyLen,
-                                              fsm->staCtx->ptk + ANI_EAPOL_KEY_RSN_MIC_SIZE,
-                                              ANI_EAPOL_KEY_RSN_ENC_KEY_SIZE,
-                                              &wrappedKey);
-                    if( !ANI_IS_STATUS_SUCCESS( retVal) ) break;
-                    // This doesn't work...
-                    //groupKeyBytes = wrappedKey;
-                    //groupKeyLen += ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE;
-                    // ...here is the right way to do it
-                    // Add the length of the prepended IV A[0]
-                    if (NULL == wrappedKey)
-                    {
-                        break;
-                    }
-                    groupKeyLen += ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE;
-                    vos_mem_copy( groupKeyBytes, wrappedKey, groupKeyLen);
-                    // Free the array used to hold the wrapped key
-                    if (wrappedKey) vos_mem_free( wrappedKey);
-                    // IMMEDIATELY adjust the packet size to reflect the IV
-                    aniAsfPacketMoveRight(keyData, ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE);
-                }
-                else {
-
-                    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                               "Auth RC4 Key Wrap invoked. groupKeyLen = %d", groupKeyLen);
-                }
-                txDesc.keyDataLen = aniAsfPacketGetBytes(keyData, &txDesc.keyData);
-
-                retVal = aniEapolWriteKey(fsm->cryptHandle,
-                                          fsm->lastEapol,
-                                          fsm->staCtx->suppMac,
-                                          fsm->staCtx->authMac,
-                                          ANI_EAPOL_KEY_DESC_TYPE_RSN_NEW,
-                                          &txDesc,
-                                          fsm->staCtx->ptk,
-                                          CSR_AES_KEY_LEN);
-                if( !ANI_IS_STATUS_SUCCESS( retVal) ) break;
-            }
+                groupKeyLen += ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE;
+                vos_mem_copy( groupKeyBytes, wrappedKey, groupKeyLen);
+                // Free the array used to hold the wrapped key
+                if (wrappedKey) vos_mem_free( wrappedKey);
+                // IMMEDIATELY adjust the packet size to reflect the IV 
+                aniAsfPacketMoveRight(keyData, ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE);
+            } 
             else {
-                retransmit = eANI_BOOLEAN_TRUE;
+            
+                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                    "Auth RC4 Key Wrap invoked. groupKeyLen = %d", groupKeyLen);
             }
+            txDesc.keyDataLen = aniAsfPacketGetBytes(keyData, &txDesc.keyData);
 
-            if( VOS_IS_STATUS_SUCCESS( bapRsnSendEapolFrame( fsm->ctx->pvosGCtx, fsm->lastEapol ) ) )
-            {
-                retVal = ANI_OK;
-            }
-            else
-            {
-                //we fail to send the eapol frame disconnect
-                bapAuthDisconnect( fsm->ctx );
-                retVal = ANI_ERROR;
-            }
-
+            retVal = aniEapolWriteKey(fsm->cryptHandle,
+                                      fsm->lastEapol,
+                                      fsm->staCtx->suppMac,
+                                      fsm->staCtx->authMac,
+                                      ANI_EAPOL_KEY_DESC_TYPE_RSN_NEW,
+                                      &txDesc,
+                                      fsm->staCtx->ptk,
+                                      CSR_AES_KEY_LEN);
+            if( !ANI_IS_STATUS_SUCCESS( retVal) ) break;
+        } 
+        else {
+            retransmit = eANI_BOOLEAN_TRUE;
         }
-        while( 0 );
 
-        return retVal;
-    }
-
-    static int
-    gotoStatePtkInitDone(tAuthRsnFsm *fsm, tAniEapolKeyAvailEventData *data)
-    {
-        int retVal;
-        tAniEapolRsnKeyDesc *rxDesc;
-        tCsrRoamSetKey setKeyInfo;
-
-        fsm->currentState = PTK_INIT_DONE;
-
-        rxDesc = data->keyDesc;
-
-        vos_mem_zero( &setKeyInfo, sizeof( tCsrRoamSetKey ) );
-        setKeyInfo.encType = eCSR_ENCRYPT_TYPE_AES;
-        setKeyInfo.keyDirection = eSIR_TX_RX;
-        vos_mem_copy( setKeyInfo.peerMac, fsm->staCtx->suppMac, sizeof( tAniMacAddr ) );
-        setKeyInfo.paeRole = 0; //this is a supplicant
-        setKeyInfo.keyId = 0;   //always
-        setKeyInfo.keyLength = CSR_AES_KEY_LEN;
-        vos_mem_copy( setKeyInfo.Key, (v_U8_t *)fsm->staCtx->ptk + (2 * CSR_AES_KEY_LEN ), CSR_AES_KEY_LEN );
-        //fsm->suppCtx->ptk contains the 3 16-bytes keys. We need the last one.
-        if( VOS_IS_STATUS_SUCCESS( bapSetKey( fsm->ctx->pvosGCtx, &setKeyInfo ) ) )
+        if( VOS_IS_STATUS_SUCCESS( bapRsnSendEapolFrame( fsm->ctx->pvosGCtx, fsm->lastEapol ) ) )
         {
-            //Done
-            aniAsfPacketEmptyExplicit(fsm->lastEapol, EAPOL_TX_HEADER_SIZE);
             retVal = ANI_OK;
         }
         else
         {
-            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, "Auth: gotoStatePtkInitDone fail to set key\n" );
+            //we fail to send the eapol frame disconnect
+            bapAuthDisconnect( fsm->ctx );
             retVal = ANI_ERROR;
         }
 
-        return retVal;
+    }while( 0 );
+
+    return retVal;
+}
+
+static int
+gotoStatePtkInitDone(tAuthRsnFsm *fsm, tAniEapolKeyAvailEventData *data)
+{
+    int retVal;
+    tAniEapolRsnKeyDesc *rxDesc;
+    tCsrRoamSetKey setKeyInfo;
+
+    fsm->currentState = PTK_INIT_DONE;
+
+    rxDesc = data->keyDesc;
+
+    vos_mem_zero( &setKeyInfo, sizeof( tCsrRoamSetKey ) );
+    setKeyInfo.encType = eCSR_ENCRYPT_TYPE_AES;
+    setKeyInfo.keyDirection = eSIR_TX_RX;
+    vos_mem_copy( setKeyInfo.peerMac, fsm->staCtx->suppMac, sizeof( tAniMacAddr ) );
+    setKeyInfo.paeRole = 0; //this is a supplicant
+    setKeyInfo.keyId = 0;   //always
+    setKeyInfo.keyLength = CSR_AES_KEY_LEN; 
+    vos_mem_copy( setKeyInfo.Key, (v_U8_t *)fsm->staCtx->ptk + (2 * CSR_AES_KEY_LEN ), CSR_AES_KEY_LEN );
+    //fsm->suppCtx->ptk contains the 3 16-bytes keys. We need the last one.
+    if( VOS_IS_STATUS_SUCCESS( bapSetKey( fsm->ctx->pvosGCtx, &setKeyInfo ) ) )
+    {
+        //Done
+        aniAsfPacketEmptyExplicit(fsm->lastEapol, EAPOL_TX_HEADER_SIZE);
+        retVal = ANI_OK;
+    }
+    else
+    {
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, "Auth: gotoStatePtkInitDone fail to set key\n" );
+        retVal = ANI_ERROR;
     }
 
-    static int
-    gotoStateUpdateKeysReq(tAuthRsnFsm *fsm, tAniEapolKeyAvailEventData *data)
+    return retVal;
+}
+
+static int
+gotoStateUpdateKeysReq(tAuthRsnFsm *fsm, tAniEapolKeyAvailEventData *data)
+{
+    tAniEapolRsnKeyDesc *rxDesc;
+
+    fsm->currentState = UPDATE_KEYS_REQ;
+
+    rxDesc = data->keyDesc;
+
+    aniSsmReplayCtrUpdate(fsm->staCtx->peerReplayCtr, rxDesc->replayCounter);
+
+    checkTransition(fsm, data);
+
+    return ANI_OK;
+}
+
+static int
+gotoStateIntegFailure(tAuthRsnFsm *fsm, tSirMicFailureInfo *micFailureInfo)
+{
+    fsm->currentState = INTEG_FAILURE;
+
+    fsm->integFailed = eANI_BOOLEAN_FALSE;
+
+    checkTransition(fsm, NULL); // UCT
+
+    return ANI_OK;
+}
+
+static int
+gotoStateKeyUpdate(tAuthRsnFsm *fsm)
+{
+    fsm->currentState = KEY_UPDATE;
+
+    if( VOS_IS_STATUS_SUCCESS( vos_rand_get_bytes(fsm->cryptHandle, fsm->aNonce, ANI_EAPOL_KEY_RSN_NONCE_SIZE) ) )
     {
-        tAniEapolRsnKeyDesc *rxDesc;
 
-        fsm->currentState = UPDATE_KEYS_REQ;
-
-        rxDesc = data->keyDesc;
-
-        aniSsmReplayCtrUpdate(fsm->staCtx->peerReplayCtr, rxDesc->replayCounter);
-
-        checkTransition(fsm, data);
-
-        return ANI_OK;
-    }
-
-    static int
-    gotoStateIntegFailure(tAuthRsnFsm *fsm, tSirMicFailureInfo *micFailureInfo)
-    {
-        fsm->currentState = INTEG_FAILURE;
-
-        fsm->integFailed = eANI_BOOLEAN_FALSE;
-
+        // Replay counter will be automatically updated when we create a
+        // new packet
+        
         checkTransition(fsm, NULL); // UCT
 
         return ANI_OK;
     }
+    return ANI_ERROR;
+}
 
-    static int
-    gotoStateKeyUpdate(tAuthRsnFsm *fsm)
+static int
+gotoStateDisconnect(tAuthRsnFsm *fsm)
+{
+    fsm->currentState = DISCONNECT;
+
+    //What else do we need to clean up? Or BAP will call our vleanup function?
+
+    // FSM does not exist after this...
+    bapAuthDisconnect( fsm->ctx );
+
+    return ANI_OK;
+}
+
+static 
+int zeroOutPtk(tAuthRsnFsm *fsm)
+{
+    return ANI_OK;
+}
+
+static 
+int stopAllTimers(tAuthRsnFsm *fsm)
+{
+    vos_timer_stop( &fsm->msg2Timer );
+    vos_timer_stop( &fsm->msg4Timer );
+
+    return ANI_OK;
+}
+
+static
+int derivePtk(tAuthRsnFsm *fsm, tAniEapolKeyAvailEventData *data)
+{
+    v_U32_t prfLen;
+    tAniEapolRsnKeyDesc *rxDesc;
+
+    VOS_ASSERT(fsm->staCtx->pmk);
+
+    switch (fsm->staCtx->pwCipherType) 
     {
-        fsm->currentState = KEY_UPDATE;
+    case eCSR_ENCRYPT_TYPE_AES:
+        prfLen = AAG_RSN_PTK_PRF_LEN_CCMP;
+        break;
+    default:
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+            "Auth cannot generate PTK for invalid algorithm %d\n",
+                      fsm->staCtx->pwCipherType);
+        return ANI_E_ILLEGAL_ARG;
+        break;
+    };
 
-        if( VOS_IS_STATUS_SUCCESS( vos_rand_get_bytes(fsm->cryptHandle, fsm->aNonce, ANI_EAPOL_KEY_RSN_NONCE_SIZE) ) )
+    rxDesc = (tAniEapolRsnKeyDesc *) data->keyDesc;
+    return aagPtkPrf(fsm->cryptHandle,
+                     fsm->staCtx->ptk,
+                     prfLen,
+                     fsm->staCtx->pmk,
+                     fsm->staCtx->authMac,
+                     fsm->staCtx->suppMac,
+                     fsm->aNonce,
+                     rxDesc->keyNonce);
+}
+
+static int 
+checkMic(tAuthRsnFsm *fsm, 
+         tAniEapolKeyAvailEventData *data)
+{
+    int retVal;
+
+    retVal = aniEapolKeyCheckMic(fsm->cryptHandle,
+                                 data->eapolFrame,
+                                 ANI_EAPOL_KEY_DESC_TYPE_RSN_NEW,
+                                 data->keyDesc,
+                                 fsm->staCtx->ptk,
+                                 CSR_AES_KEY_LEN);
+
+    if (retVal == ANI_E_MIC_FAILED) 
+    {
+
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                     "Auth failed EAPOL-MIC check in pairwise key exchange!\n"); 
+    }
+
+    return retVal;
+}
+
+static int 
+checkLocalReplayCounter(tAuthRsnFsm *fsm, 
+                        tAniEapolKeyAvailEventData *data)
+{
+    int retVal = ANI_E_NULL_VALUE;
+    int cmp;
+    tAniEapolRsnKeyDesc *rxDesc;
+    
+    rxDesc = data->keyDesc;
+    if( rxDesc )
+    {
+        cmp = aniSsmReplayCtrCmp(fsm->staCtx->localReplayCtr, rxDesc->replayCounter);
+
+        // The STA should have sent back the same replay ctr as in our request
+        if (cmp != 0) 
         {
-
-            // Replay counter will be automatically updated when we create a
-            // new packet
-
-            checkTransition(fsm, NULL); // UCT
-
-            return ANI_OK;
-        }
-        return ANI_ERROR;
-    }
-
-    static int
-    gotoStateDisconnect(tAuthRsnFsm *fsm)
-    {
-        fsm->currentState = DISCONNECT;
-
-        //What else do we need to clean up? Or BAP will call our vleanup function?
-
-        // FSM does not exist after this...
-        bapAuthDisconnect( fsm->ctx );
-
-        return ANI_OK;
-    }
-
-    static
-    int zeroOutPtk(tAuthRsnFsm *fsm)
-    {
-        return ANI_OK;
-    }
-
-    static
-    int stopAllTimers(tAuthRsnFsm *fsm)
-    {
-        vos_timer_stop( &fsm->msg2Timer );
-        vos_timer_stop( &fsm->msg4Timer );
-
-        return ANI_OK;
-    }
-
-    static
-    int derivePtk(tAuthRsnFsm *fsm, tAniEapolKeyAvailEventData *data)
-    {
-        v_U32_t prfLen;
-        tAniEapolRsnKeyDesc *rxDesc;
-
-        VOS_ASSERT(fsm->staCtx->pmk);
-
-        switch (fsm->staCtx->pwCipherType)
-        {
-        case eCSR_ENCRYPT_TYPE_AES:
-            prfLen = AAG_RSN_PTK_PRF_LEN_CCMP;
-            break;
-        default:
-            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                       "Auth cannot generate PTK for invalid algorithm %d\n",
-                       fsm->staCtx->pwCipherType);
-            return ANI_E_ILLEGAL_ARG;
-            break;
-        };
-
-        rxDesc = (tAniEapolRsnKeyDesc *) data->keyDesc;
-        return aagPtkPrf(fsm->cryptHandle,
-                         fsm->staCtx->ptk,
-                         prfLen,
-                         fsm->staCtx->pmk,
-                         fsm->staCtx->authMac,
-                         fsm->staCtx->suppMac,
-                         fsm->aNonce,
-                         rxDesc->keyNonce);
-    }
-
-    static int
-    checkMic(tAuthRsnFsm *fsm,
-             tAniEapolKeyAvailEventData *data)
-    {
-        int retVal;
-
-        retVal = aniEapolKeyCheckMic(fsm->cryptHandle,
-                                     data->eapolFrame,
-                                     ANI_EAPOL_KEY_DESC_TYPE_RSN_NEW,
-                                     data->keyDesc,
-                                     fsm->staCtx->ptk,
-                                     CSR_AES_KEY_LEN);
-
-        if (retVal == ANI_E_MIC_FAILED)
-        {
-
-            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                       "Auth failed EAPOL-MIC check in pairwise key exchange!\n");
-        }
-
-        return retVal;
-    }
-
-    static int
-    checkLocalReplayCounter(tAuthRsnFsm *fsm,
-                            tAniEapolKeyAvailEventData *data)
-    {
-        int retVal = ANI_E_NULL_VALUE;
-        int cmp;
-        tAniEapolRsnKeyDesc *rxDesc;
-
-        rxDesc = data->keyDesc;
-        if( rxDesc )
-        {
-            cmp = aniSsmReplayCtrCmp(fsm->staCtx->localReplayCtr, rxDesc->replayCounter);
-
-            // The STA should have sent back the same replay ctr as in our request
-            if (cmp != 0)
-            {
-                retVal = ANI_E_REPLAY_CHECK_FAILED;
-            }
-            else
-            {
-                retVal = ANI_OK;
-            }
-        }
-
-        return retVal;
-    }
-
-    static
-    int checkPeerReplayCounter(tAuthRsnFsm *fsm,
-                               tAniEapolKeyAvailEventData *data)
-    {
-        int retVal = ANI_E_NULL_VALUE;
-        int cmp;
-        tAniEapolRsnKeyDesc *rxDesc;
-
-        rxDesc = data->keyDesc;
-        if( rxDesc )
-        {
-            cmp = aniSsmReplayCtrCmp(fsm->staCtx->peerReplayCtr, rxDesc->replayCounter);
-
-            // The STA should have sent a newer replay ctr than its old
-            // request. The first message is exempted from the check.
-            if (fsm->staCtx->pastFirstPeerRequest && cmp >= 0)
-            {
-                retVal = ANI_E_REPLAY_CHECK_FAILED;
-            }
-
-            fsm->staCtx->pastFirstPeerRequest = eANI_BOOLEAN_TRUE;
-        }
-
-        return retVal;
-    }
-
-    static int checkInfoElement(tAuthRsnFsm *fsm,
-                                tAniEapolKeyAvailEventData *data)
-    {
-        tAniEapolRsnKeyDesc *desc;
-        v_U8_t *ieStaBytes;
-        int ieStaLen;
-
-        desc = (tAniEapolRsnKeyDesc *) data->keyDesc;
-        if( desc )
-        {
-            ieStaLen = aniAsfPacketGetBytes(fsm->staCtx->ieSta, &ieStaBytes);
-            if( !ANI_IS_STATUS_SUCCESS( ieStaLen ) )
-            {
-                return ieStaLen;
-            }
-
-            if ((desc->keyDataLen != ieStaLen) ||
-                    ( !vos_mem_compare(desc->keyData, ieStaBytes, ieStaLen-2) ))
-            {
-                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                           "Auth STA sent inconsistent RSN IE!\n");
-                return ANI_E_FAILED;
-            }
-            // Copy RSN IE
-            //vos_mem_copy(fsm->advertizedRsnIe, desc->keyData, ieStaLen);
-            vos_mem_copy(fsm->advertizedRsnIe, ieStaBytes, ieStaLen);
-
-            return ANI_OK;
+            retVal = ANI_E_REPLAY_CHECK_FAILED;
         }
         else
         {
-            return ANI_E_NULL_VALUE;
+            retVal = ANI_OK;
         }
-
     }
 
-    static
-    int checkTransition(tAuthRsnFsm *fsm, void *arg)
+    return retVal;
+}
+
+static 
+int checkPeerReplayCounter(tAuthRsnFsm *fsm, 
+                           tAniEapolKeyAvailEventData *data)
+{
+    int retVal = ANI_E_NULL_VALUE;
+    int cmp;
+    tAniEapolRsnKeyDesc *rxDesc;
+    
+    rxDesc = data->keyDesc;
+    if( rxDesc )
     {
-        int retVal;
-        tAniEapolKeyAvailEventData *data;
-        tAniEapolRsnKeyDesc *rxDesc;
-        tSirMicFailureInfo *micFailureInfo;
+        cmp = aniSsmReplayCtrCmp(fsm->staCtx->peerReplayCtr, rxDesc->replayCounter);
 
-        if (fsm->disconnect)
+        // The STA should have sent a newer replay ctr than its old
+        // request. The first message is exempted from the check.
+        if (fsm->staCtx->pastFirstPeerRequest && cmp >= 0) 
         {
-            stopAllTimers(fsm);
-            gotoStateDisconnect(fsm);
-            return ANI_OK;
+            retVal = ANI_E_REPLAY_CHECK_FAILED;
         }
 
-        if (fsm->authReq)
+        fsm->staCtx->pastFirstPeerRequest = eANI_BOOLEAN_TRUE;
+    }
+
+    return retVal;
+}
+
+static int checkInfoElement(tAuthRsnFsm *fsm,
+                            tAniEapolKeyAvailEventData *data)
+{
+    tAniEapolRsnKeyDesc *desc;
+    v_U8_t *ieStaBytes;
+    int ieStaLen;
+
+    desc = (tAniEapolRsnKeyDesc *) data->keyDesc;
+    if( desc )
+    {
+        ieStaLen = aniAsfPacketGetBytes(fsm->staCtx->ieSta, &ieStaBytes);
+        if( !ANI_IS_STATUS_SUCCESS( ieStaLen ) )
         {
-            stopAllTimers(fsm);
-            gotoStateAuthentication(fsm);
-            return ANI_OK;
+            return ieStaLen;
         }
 
-        switch (fsm->currentState)
+        if ((desc->keyDataLen != ieStaLen) ||
+            ( !vos_mem_compare(desc->keyData, ieStaBytes, ieStaLen-2) )) 
         {
-        case INITIALIZE:
-            break;
-        case AUTHENTICATION:
-            gotoStateAuthentication2(fsm);
-            break;
-        case AUTHENTICATION_2:
-            gotoStateGetPsk( fsm );
-            break;
-        case GET_PSK:
-            //We always have PMK otherwise BAP won't let us here
-            gotoStatePtkStart(fsm);
-            break;
-        case PTK_START:
-            if ( fsm->eapolAvail )
-            {
-                fsm->eapolAvail = eANI_BOOLEAN_FALSE;
-                if (NULL == arg)
-                {
-                    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                               "arg is NULL, exiting checkTransition()");
-                    return ANI_E_FAILED;
-                }
-                data = (tAniEapolKeyAvailEventData *) arg;
-                retVal = checkLocalReplayCounter(fsm, data);
-                if (retVal != ANI_OK)
-                    return ANI_OK; // Caller should not fail
-                retVal = derivePtk(fsm, data);
-                if( !ANI_IS_STATUS_SUCCESS( retVal ) )
-                {
-                    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                               "Auth derivePtk failed with code %d!\n", retVal);
-                    return retVal;
-                }
-                retVal = checkMic(fsm, data);
-                if (retVal != ANI_OK)
-                {
-                    bapAuthDisconnect( fsm->ctx );
-                    return retVal;
-                }
-                retVal = gotoStatePtkInitNego(fsm, arg);
-            }
-            else if ( fsm->msg2TimeOut )
-            {
-                if (fsm->numTries <= authConsts.maxTries)
-                {
-                    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                               "Auth Retransmitting EAPOL-Key Msg1\n");
-                    // Stay in the same state but repeat actions
-                    gotoStatePtkStart(fsm);
-                }
-                else {
-                    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                               "Auth failed to recv EAPOL-Key Msg2 "
-                               "Disconnecting...\n");
+            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                         "Auth STA sent inconsistent RSN IE!\n");
+            return ANI_E_FAILED;
+        }
+        // Copy RSN IE
+        //vos_mem_copy(fsm->advertizedRsnIe, desc->keyData, ieStaLen);
+        vos_mem_copy(fsm->advertizedRsnIe, ieStaBytes, ieStaLen);
 
-                    gotoStateDisconnect(fsm);
-                }
-            }
-            break;
-        case PTK_INIT_NEGO:
+        return ANI_OK;
+    }
+    else
+    {
+        return ANI_E_NULL_VALUE;
+    }
+
+}
+
+static 
+int checkTransition(tAuthRsnFsm *fsm, void *arg)
+{
+    int retVal;
+    tAniEapolKeyAvailEventData *data;
+    tAniEapolRsnKeyDesc *rxDesc;
+    tSirMicFailureInfo *micFailureInfo;
+
+    if (fsm->disconnect) 
+    {
+        stopAllTimers(fsm);
+        gotoStateDisconnect(fsm);
+        return ANI_OK;
+    }
+
+    if (fsm->authReq) 
+    {
+        stopAllTimers(fsm);
+        gotoStateAuthentication(fsm);
+        return ANI_OK;
+    }
+
+    switch (fsm->currentState) 
+    {
+    case INITIALIZE:
+        break;
+    case AUTHENTICATION:
+        gotoStateAuthentication2(fsm);
+        break;
+    case AUTHENTICATION_2:
+        gotoStateGetPsk( fsm );
+        break;
+    case GET_PSK:
+        //We always have PMK otherwise BAP won't let us here
+        gotoStatePtkStart(fsm);
+        break;
+    case PTK_START:
+        if ( fsm->eapolAvail ) 
+        {
+            fsm->eapolAvail = eANI_BOOLEAN_FALSE;
             if (NULL == arg)
             {
                 VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
@@ -1252,93 +1205,102 @@ gotoStatePtkInitNegoTx(tAuthRsnFsm *fsm)
                 return ANI_E_FAILED;
             }
             data = (tAniEapolKeyAvailEventData *) arg;
-            retVal = checkInfoElement(fsm, data);
+            retVal = checkLocalReplayCounter(fsm, data);
             if (retVal != ANI_OK)
+                return ANI_OK; // Caller should not fail
+            retVal = derivePtk(fsm, data);
+            if( !ANI_IS_STATUS_SUCCESS( retVal ) )
             {
+                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                         "Auth derivePtk failed with code %d!\n", retVal);
+                return retVal;
+            }
+            retVal = checkMic(fsm, data);
+            if (retVal != ANI_OK) 
+            {
+                bapAuthDisconnect( fsm->ctx );
+                return retVal;
+            }
+            retVal = gotoStatePtkInitNego(fsm, arg);
+        } 
+        else if ( fsm->msg2TimeOut ) 
+        {
+            if (fsm->numTries <= authConsts.maxTries) 
+            {
+                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                             "Auth Retransmitting EAPOL-Key Msg1\n");
+                // Stay in the same state but repeat actions
+                gotoStatePtkStart(fsm);
+            } 
+            else {
+                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                             "Auth failed to recv EAPOL-Key Msg2 "
+                             "Disconnecting...\n");
+
                 gotoStateDisconnect(fsm);
             }
-            else {
+        }
+        break;
+    case PTK_INIT_NEGO:
+        if (NULL == arg)
+        {
+            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                       "arg is NULL, exiting checkTransition()");
+            return ANI_E_FAILED;
+        }
+        data = (tAniEapolKeyAvailEventData *) arg;
+        retVal = checkInfoElement(fsm, data);
+        if (retVal != ANI_OK) 
+        {
+            gotoStateDisconnect(fsm);
+        } 
+        else {
+            gotoStatePtkInitNegoTx(fsm);
+        }
+        break;
+    case PTK_INIT_NEGO_TX:
+        if (fsm->eapolAvail) 
+        {
+            fsm->eapolAvail = eANI_BOOLEAN_FALSE;
+            if (NULL == arg)
+            {
+                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                           "arg is NULL, exiting checkTransition()");
+                return ANI_E_FAILED;
+            }
+            data = (tAniEapolKeyAvailEventData *) arg;
+            retVal = checkLocalReplayCounter(fsm, data);
+            if (retVal != ANI_OK)
+                return ANI_OK; // Caller should not fail
+            retVal = checkMic(fsm, data);
+            if (retVal != ANI_OK) 
+            {
+                bapAuthDisconnect( fsm->ctx );
+                return retVal;
+            }
+            retVal = gotoStatePtkInitDone(fsm, data);
+        } else if ( fsm->msg4TimeOut ) 
+        {
+            if (fsm->numTries <= authConsts.maxTries) 
+            {
+                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                             "Auth retransmitting EAPOL-Key Msg3 \n");
+                // Stay in the same state but repeat actions
                 gotoStatePtkInitNegoTx(fsm);
+            } 
+            else {
+                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                             "Auth failed to recv EAPOL-Key Msg4 "
+                             "Disconnecting...\n" );
+
+                gotoStateDisconnect(fsm);
             }
-            break;
-        case PTK_INIT_NEGO_TX:
-            if (fsm->eapolAvail)
-            {
-                fsm->eapolAvail = eANI_BOOLEAN_FALSE;
-                if (NULL == arg)
-                {
-                    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                               "arg is NULL, exiting checkTransition()");
-                    return ANI_E_FAILED;
-                }
-                data = (tAniEapolKeyAvailEventData *) arg;
-                retVal = checkLocalReplayCounter(fsm, data);
-                if (retVal != ANI_OK)
-                    return ANI_OK; // Caller should not fail
-                retVal = checkMic(fsm, data);
-                if (retVal != ANI_OK)
-                {
-                    bapAuthDisconnect( fsm->ctx );
-                    return retVal;
-                }
-                retVal = gotoStatePtkInitDone(fsm, data);
-            } else if ( fsm->msg4TimeOut )
-            {
-                if (fsm->numTries <= authConsts.maxTries)
-                {
-                    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                               "Auth retransmitting EAPOL-Key Msg3 \n");
-                    // Stay in the same state but repeat actions
-                    gotoStatePtkInitNegoTx(fsm);
-                }
-                else {
-                    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                               "Auth failed to recv EAPOL-Key Msg4 "
-                               "Disconnecting...\n" );
+        }
+        break;
+    case PTK_INIT_DONE:
+        if (fsm->eapolAvail) {
 
-                    gotoStateDisconnect(fsm);
-                }
-            }
-            break;
-        case PTK_INIT_DONE:
-            if (fsm->eapolAvail) {
-
-                fsm->eapolAvail = eANI_BOOLEAN_FALSE;
-                if (NULL == arg)
-                {
-                    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                               "arg is NULL, exiting checkTransition()");
-                    return ANI_E_FAILED;
-                }
-                data = (tAniEapolKeyAvailEventData *) arg;
-                rxDesc = (tAniEapolRsnKeyDesc *) data->keyDesc;
-
-                if (rxDesc->info.requestFlag)
-                {
-
-                    retVal = checkPeerReplayCounter(fsm, data);
-                    if (retVal != ANI_OK)
-                        return ANI_OK; // Caller should not fail
-
-                    retVal = checkMic(fsm, data);
-                    if (retVal != ANI_OK)
-                    {
-                        bapAuthDisconnect( fsm->ctx->pvosGCtx );
-                        return retVal;
-                    }
-
-                    retVal = gotoStateUpdateKeysReq(fsm, arg);
-                }
-            }
-            else if (fsm->integFailed) {
-
-                micFailureInfo = (tSirMicFailureInfo *) arg;
-                gotoStateIntegFailure(fsm, arg);
-
-            }
-            break;
-        case UPDATE_KEYS_REQ:
-
+            fsm->eapolAvail = eANI_BOOLEAN_FALSE;
             if (NULL == arg)
             {
                 VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
@@ -1348,275 +1310,310 @@ gotoStatePtkInitNegoTx(tAuthRsnFsm *fsm)
             data = (tAniEapolKeyAvailEventData *) arg;
             rxDesc = (tAniEapolRsnKeyDesc *) data->keyDesc;
 
-            if (rxDesc->info.errorFlag)
+            if (rxDesc->info.requestFlag) 
             {
 
-                /*
-                 * This was generated by a unicast packet sent from the AP to the STA/BP.
-                 * The TX address is the AP's address. The src address is lost.
-                 * If the STA is a BP, then the true dst is lost. We will treat
-                 * the dst field as the address of the reporter of the MIC failure.
-                 */
+                retVal = checkPeerReplayCounter(fsm, data);
+                if (retVal != ANI_OK)
+                    return ANI_OK; // Caller should not fail
 
-                micFailureInfo = (tSirMicFailureInfo *) vos_mem_malloc( sizeof(tSirMicFailureInfo) );
-                if( NULL == micFailureInfo )
+                retVal = checkMic(fsm, data);
+                if (retVal != ANI_OK) 
                 {
-                    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                               "Fail to allocate memory for AuthRsnFsm: %d\n",
-                               fsm->currentState);
-                    return ANI_E_MALLOC_FAILED;
+                    bapAuthDisconnect( fsm->ctx->pvosGCtx );
+                    return retVal;
                 }
 
-                vos_mem_copy(micFailureInfo->taMacAddr, fsm->staCtx->authMac, sizeof(tAniMacAddr));
-                vos_mem_copy(micFailureInfo->dstMacAddr, fsm->staCtx->suppMac, sizeof(tAniMacAddr));
-                micFailureInfo->multicast = eANI_BOOLEAN_FALSE;
-                // Copy whatever sequence number came in the EAPOL-key message
-                vos_mem_copy(micFailureInfo->TSC, rxDesc->keyRecvSeqCounter, SIR_CIPHER_SEQ_CTR_SIZE);
-                gotoStateIntegFailure(fsm, micFailureInfo);
-                vos_mem_free(micFailureInfo);
+                retVal = gotoStateUpdateKeysReq(fsm, arg);
             }
-            else {
-                // TBD: Untested. Why are local aNonce and local replyCtr not incremented in spec?
-                gotoStatePtkStart(fsm);
-            }
-            break;
-        case INTEG_FAILURE:
-            gotoStateKeyUpdate(fsm);
-            break;
-        case KEY_UPDATE:
-            gotoStatePtkStart(fsm);
-            break;
-        default:
+        } 
+        else if (fsm->integFailed) {
+
+            micFailureInfo = (tSirMicFailureInfo *) arg;
+            gotoStateIntegFailure(fsm, arg);
+
+        }
+        break;
+    case UPDATE_KEYS_REQ:
+
+        if (NULL == arg)
+        {
             VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                       "Nothing to do in this state for AuthRsnFsm: %d\n",
-                       fsm->currentState);
-            // Catch all for states that need no change:
-            //        assert(eANI_BOOLEAN_FALSE && "Illegal AuthRsnFsm state!");
+                       "arg is NULL, exiting checkTransition()");
             return ANI_E_FAILED;
         }
+        data = (tAniEapolKeyAvailEventData *) arg;
+        rxDesc = (tAniEapolRsnKeyDesc *) data->keyDesc;
 
-        return ANI_OK;
+        if (rxDesc->info.errorFlag) 
+        {
+
+            /*
+             * This was generated by a unicast packet sent from the AP to the STA/BP.
+             * The TX address is the AP's address. The src address is lost.
+             * If the STA is a BP, then the true dst is lost. We will treat
+             * the dst field as the address of the reporter of the MIC failure.
+             */
+
+            micFailureInfo = (tSirMicFailureInfo *) vos_mem_malloc( sizeof(tSirMicFailureInfo) );
+            if( NULL == micFailureInfo )
+            {
+                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                    "Fail to allocate memory for AuthRsnFsm: %d\n",
+                      fsm->currentState);
+                return ANI_E_MALLOC_FAILED;
+            }
+
+            vos_mem_copy(micFailureInfo->taMacAddr, fsm->staCtx->authMac, sizeof(tAniMacAddr));
+            vos_mem_copy(micFailureInfo->dstMacAddr, fsm->staCtx->suppMac, sizeof(tAniMacAddr));
+            micFailureInfo->multicast = eANI_BOOLEAN_FALSE;
+            // Copy whatever sequence number came in the EAPOL-key message
+            vos_mem_copy(micFailureInfo->TSC, rxDesc->keyRecvSeqCounter, SIR_CIPHER_SEQ_CTR_SIZE);
+            gotoStateIntegFailure(fsm, micFailureInfo);
+            vos_mem_free(micFailureInfo);
+        } 
+        else {
+            // TBD: Untested. Why are local aNonce and local replyCtr not incremented in spec?
+            gotoStatePtkStart(fsm);
+        }
+        break;
+    case INTEG_FAILURE:
+        gotoStateKeyUpdate(fsm);
+        break;
+    case KEY_UPDATE:
+        gotoStatePtkStart(fsm);
+        break;
+    default:
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+            "Nothing to do in this state for AuthRsnFsm: %d\n",
+                      fsm->currentState);
+        // Catch all for states that need no change:
+        //        assert(eANI_BOOLEAN_FALSE && "Illegal AuthRsnFsm state!");
+        return ANI_E_FAILED;
     }
 
+    return ANI_OK;
+}
 
-    static void msg2TimerCallback( void *pv )
+
+static void msg2TimerCallback( void *pv )
+{
+    tAuthRsnFsm *fsm = (tAuthRsnFsm *)pv;
+    if (NULL == fsm) 
     {
-        tAuthRsnFsm *fsm = (tAuthRsnFsm *)pv;
-        if (NULL == fsm)
-        {
-            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                       "fsm is NULL in %s", __func__);
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                     "fsm is NULL in %s", __func__);
 
-            return;
-        }
-
-        //Only when waiting for msg2
-        if( PTK_START == fsm->currentState )
-        {
-            fsm->msg2TimeOut = eANI_BOOLEAN_TRUE;
-        }
-        //We may need to synchronize this call
-        authRsnFsmProcessEvent( fsm, RSN_FSM_TIMER_EXPIRED, NULL );
+        return;
     }
 
-    static void msg4TimerCallback( void *pv )
+    //Only when waiting for msg2
+    if( PTK_START == fsm->currentState )
     {
-        tAuthRsnFsm *fsm = (tAuthRsnFsm *)pv;
-        if (NULL == fsm)
-        {
-            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                       "fsm is NULL in %s", __func__);
-
-            return;
-        }
-
-        //Only when we are waiting for msg4
-        if( PTK_INIT_NEGO_TX == fsm->currentState )
-        {
-            fsm->msg4TimeOut = eANI_BOOLEAN_TRUE;
-        }
-        //We may need to synchronize this call
-        authRsnFsmProcessEvent( fsm, RSN_FSM_TIMER_EXPIRED, NULL );
+        fsm->msg2TimeOut = eANI_BOOLEAN_TRUE;
     }
+    //We may need to synchronize this call
+    authRsnFsmProcessEvent( fsm, RSN_FSM_TIMER_EXPIRED, NULL );
+}
+
+static void msg4TimerCallback( void *pv )
+{
+    tAuthRsnFsm *fsm = (tAuthRsnFsm *)pv;
+    if (NULL == fsm) 
+    {
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                     "fsm is NULL in %s", __func__);
+
+        return;
+    }
+
+    //Only when we are waiting for msg4
+    if( PTK_INIT_NEGO_TX == fsm->currentState )
+    {
+        fsm->msg4TimeOut = eANI_BOOLEAN_TRUE;
+    }
+    //We may need to synchronize this call
+    authRsnFsmProcessEvent( fsm, RSN_FSM_TIMER_EXPIRED, NULL );
+}
 
 
 //
 //This function alwasy assume the incoming vos_packet is 802_3 frame.
-    static int authRsnRxFrameHandler( v_PVOID_t pvosGCtx, vos_pkt_t *pPacket )
+static int authRsnRxFrameHandler( v_PVOID_t pvosGCtx, vos_pkt_t *pPacket )
+{
+    int retVal = ANI_ERROR;
+    tAniPacket *pAniPacket;
+    tBtampContext *ctx;
+    tAuthRsnFsm *fsm;
+
+    /* Validate params */ 
+    if ((pvosGCtx == NULL) || (NULL == pPacket))
     {
-        int retVal = ANI_ERROR;
-        tAniPacket *pAniPacket;
-        tBtampContext *ctx;
-        tAuthRsnFsm *fsm;
-
-        /* Validate params */
-        if ((pvosGCtx == NULL) || (NULL == pPacket))
-        {
-            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                       "param is NULL in %s", __func__);
-
-            return retVal;
-        }
-
-        ctx = (tBtampContext *)VOS_GET_BAP_CB( pvosGCtx );
-        if (NULL == ctx)
-        {
-            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                       "ctx is NULL in %s", __func__);
-
-            return retVal;
-        }
-
-        fsm = &ctx->uFsm.authFsm;
-        if (NULL == fsm)
-        {
-            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                       "fsm is NULL in %s", __func__);
-
-            return retVal;
-        }
-
-        do
-        {
-            //ToDO: We need to synchronize this. For now, use the simplest form, drop the packet comes later.
-            if( fsm->fReceiving )
-            {
-                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                           " ******authRsnRxFrameHandler receive eapol packet while processing. Drop the new comer\n" );
-                break;
-            }
-            fsm->fReceiving = VOS_TRUE;
-            retVal = bapRsnFormPktFromVosPkt( &pAniPacket, pPacket );
-            if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
-            //Now we can process the eapol frame
-            //handler will free the pAniPacket
-            bapRsnEapolHandler( fsm, pAniPacket, VOS_TRUE );
-        } while( 0 );
-
-        fsm->fReceiving = VOS_FALSE;
-        vos_pkt_return_packet( pPacket );
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                     "param is NULL in %s", __func__);
 
         return retVal;
     }
 
-
-    static int authRsnTxCompleteHandler( v_PVOID_t pvosGCtx, vos_pkt_t *pPacket, VOS_STATUS retStatus )
+    ctx = (tBtampContext *)VOS_GET_BAP_CB( pvosGCtx );
+    if (NULL == ctx) 
     {
-        tBtampContext *ctx = (tBtampContext *)VOS_GET_BAP_CB( pvosGCtx );
-        tAuthRsnFsm *fsm;
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                     "ctx is NULL in %s", __func__);
 
-        vos_pkt_return_packet( pPacket );
-        if (NULL == ctx)
-        {
-            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                       "ctx is NULL in %s", __func__);
-
-            return ANI_ERROR;
-        }
-
-        fsm = &ctx->uFsm.authFsm;
-        if (NULL == fsm)
-        {
-            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                       "fsm is NULL in %s", __func__);
-
-            return ANI_ERROR;
-        }
-
-        if(!VOS_IS_STATUS_SUCCESS( retStatus ) )
-        {
-            //No need to do anything. Retransmit is handled by timeout
-            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                       "Auth: TL Tx complete with error %d current state is %d \n", retStatus, fsm->currentState );
-        }
-        if( PTK_START == fsm->currentState )
-        {
-            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO,
-                       " Auth: start msg2 timer\n" );
-            //Start msg2Timer
-            fsm->numTries++;
-            vos_timer_stop( &fsm->msg2Timer );
-            vos_timer_start(&fsm->msg2Timer, authConsts.timeoutPeriod);
-        }
-        else if( ( PTK_INIT_NEGO == fsm->currentState ) ||
-                 ( PTK_INIT_NEGO_TX == fsm->currentState ) )
-        {
-            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO,
-                       " Auth: start msg4 timer\n" );
-            fsm->numTries++;
-            vos_timer_stop( &fsm->msg4Timer );
-            vos_timer_start(&fsm->msg4Timer, authConsts.timeoutPeriod);
-        }
-
-        return ANI_OK;
+        return retVal;
     }
 
-
-    static int
-    authEapolKeyHandler( tAuthRsnFsm *fsm, tAniPacket *eapolFrame, tAniMacAddr staMac )
+    fsm = &ctx->uFsm.authFsm;
+    if (NULL == fsm) 
     {
-        int retVal;
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                     "fsm is NULL in %s", __func__);
 
-        int descType;
-        void *keyDesc;
-        tAniEapolRsnKeyDesc *rsnDesc;
-        tAniEapolKeyAvailEventData data;
+        return retVal;
+    }
 
-        do
+    do
+    {
+        //ToDO: We need to synchronize this. For now, use the simplest form, drop the packet comes later.
+        if( fsm->fReceiving )
         {
-            retVal = aniEapolParseKey(eapolFrame, &descType, &keyDesc);
-            if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
+            VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                " ******authRsnRxFrameHandler receive eapol packet while processing. Drop the new comer\n" );
+            break;
+        }
+        fsm->fReceiving = VOS_TRUE;
+        retVal = bapRsnFormPktFromVosPkt( &pAniPacket, pPacket );
+        if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
+        //Now we can process the eapol frame
+        //handler will free the pAniPacket
+        bapRsnEapolHandler( fsm, pAniPacket, VOS_TRUE );
+    }while( 0 );
 
-            if ((descType == ANI_EAPOL_KEY_DESC_TYPE_RSN_NEW)
-                    || (descType == ANI_EAPOL_KEY_DESC_TYPE_RSN))
+    fsm->fReceiving = VOS_FALSE;
+    vos_pkt_return_packet( pPacket );
+
+    return retVal;
+}
+
+
+static int authRsnTxCompleteHandler( v_PVOID_t pvosGCtx, vos_pkt_t *pPacket, VOS_STATUS retStatus )
+{
+    tBtampContext *ctx = (tBtampContext *)VOS_GET_BAP_CB( pvosGCtx );
+    tAuthRsnFsm *fsm;
+
+    vos_pkt_return_packet( pPacket );
+    if (NULL == ctx) 
+    {
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                     "ctx is NULL in %s", __func__);
+
+        return ANI_ERROR;
+    }
+
+    fsm = &ctx->uFsm.authFsm;
+    if (NULL == fsm) 
+    {
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                     "fsm is NULL in %s", __func__);
+
+        return ANI_ERROR;
+    }
+
+    if(!VOS_IS_STATUS_SUCCESS( retStatus ) )
+    {
+        //No need to do anything. Retransmit is handled by timeout
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+            "Auth: TL Tx complete with error %d current state is %d \n", retStatus, fsm->currentState );
+    }
+    if( PTK_START == fsm->currentState )
+    {
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO,
+            " Auth: start msg2 timer\n" );
+        //Start msg2Timer
+        fsm->numTries++;
+        vos_timer_stop( &fsm->msg2Timer );
+        vos_timer_start(&fsm->msg2Timer, authConsts.timeoutPeriod);
+    }
+    else if( ( PTK_INIT_NEGO == fsm->currentState ) || 
+        ( PTK_INIT_NEGO_TX == fsm->currentState ) )
+    {
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO,
+            " Auth: start msg4 timer\n" );
+        fsm->numTries++;
+        vos_timer_stop( &fsm->msg4Timer );
+        vos_timer_start(&fsm->msg4Timer, authConsts.timeoutPeriod);
+    }
+
+    return ANI_OK;
+}
+
+
+static int
+authEapolKeyHandler( tAuthRsnFsm *fsm, tAniPacket *eapolFrame, tAniMacAddr staMac )
+{
+    int retVal;
+
+    int descType;
+    void *keyDesc;
+    tAniEapolRsnKeyDesc *rsnDesc;
+    tAniEapolKeyAvailEventData data;
+
+    do
+    {
+        retVal = aniEapolParseKey(eapolFrame, &descType, &keyDesc);
+        if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
+
+        if ((descType == ANI_EAPOL_KEY_DESC_TYPE_RSN_NEW) 
+                || (descType == ANI_EAPOL_KEY_DESC_TYPE_RSN)) 
+        {
+            rsnDesc = (tAniEapolRsnKeyDesc *) keyDesc;
+            data.keyDesc = keyDesc;
+            data.eapolFrame = eapolFrame;
+            // Pass on the event to the RSN FSM only if it is for a pairwise key
+            if (rsnDesc->info.unicastFlag) 
             {
-                rsnDesc = (tAniEapolRsnKeyDesc *) keyDesc;
-                data.keyDesc = keyDesc;
-                data.eapolFrame = eapolFrame;
-                // Pass on the event to the RSN FSM only if it is for a pairwise key
-                if (rsnDesc->info.unicastFlag)
-                {
-                    retVal = authRsnFsmProcessEvent(fsm,
-                                                    RSN_FSM_EAPOL_FRAME_AVAILABLE,
-                                                    &data);
-                }
-                else {
-                    //Not worry about GTK stuff
-                }
-            }
+                retVal = authRsnFsmProcessEvent(fsm, 
+                                                RSN_FSM_EAPOL_FRAME_AVAILABLE,
+                                                &data);
+            } 
             else {
-
-                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                           "Got unexpected legacy 802.1x RC4 Key message \n" );
-                retVal = ANI_E_FAILED;
-                break;
+                //Not worry about GTK stuff
             }
-        } while( 0 );
+        } 
+        else {
 
-        aniEapolKeyFreeDesc(descType, keyDesc);
-        return retVal;
-    }
-
-
-    void authEapolHandler( tAuthRsnFsm *fsm, tAniPacket *eapolFrame,
-                           tAniMacAddr dstMac,
-                           tAniMacAddr srcMac,
-                           v_U8_t *type)
-    {
-        switch (*type)
-        {
-        case ANI_EAPOL_TYPE_START:
-            //No doing anything because we only support WPA2-PSK
-            break;
-        case ANI_EAPOL_TYPE_LOGOFF:
-            //ignore
-            break;
-        case ANI_EAPOL_TYPE_KEY:
-            authEapolKeyHandler(fsm, eapolFrame, srcMac);
-            break;
-        default:
             VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                       "Auth: EAPOL type not implemented: 0x%.2x\n", *type);
+                    "Got unexpected legacy 802.1x RC4 Key message \n" );
+            retVal = ANI_E_FAILED;
             break;
         }
+    }while( 0 );
+
+    aniEapolKeyFreeDesc(descType, keyDesc);
+    return retVal;
+}
+
+
+void authEapolHandler( tAuthRsnFsm *fsm, tAniPacket *eapolFrame,
+                 tAniMacAddr dstMac, 
+                 tAniMacAddr srcMac,
+                 v_U8_t *type)
+{
+    switch (*type) 
+    {
+    case ANI_EAPOL_TYPE_START:
+        //No doing anything because we only support WPA2-PSK
+        break;
+    case ANI_EAPOL_TYPE_LOGOFF:
+        //ignore
+        break;
+    case ANI_EAPOL_TYPE_KEY:
+        authEapolKeyHandler(fsm, eapolFrame, srcMac);
+        break;
+    default:
+        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+            "Auth: EAPOL type not implemented: 0x%.2x\n", *type);
+        break;
     }
+}

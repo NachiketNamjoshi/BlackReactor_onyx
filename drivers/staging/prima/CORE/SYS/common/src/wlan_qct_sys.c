@@ -94,8 +94,8 @@ VOS_STATUS sys_SendSmeStartReq( v_CONTEXT_t pVosContext );
 // add this to the sys Context data... ?
 typedef struct
 {
-    sysResponseCback mcStartCB;
-    v_VOID_t *       mcStartUserData;
+   sysResponseCback mcStartCB;
+   v_VOID_t *       mcStartUserData;
 
 } sysContextData;
 
@@ -105,77 +105,77 @@ static vos_event_t gStopEvt;
 
 VOS_STATUS sysBuildMessageHeader( SYS_MSG_ID sysMsgId, vos_msg_t *pMsg )
 {
-    pMsg->type     = sysMsgId;
-    pMsg->reserved = SYS_MSG_COOKIE;
+   pMsg->type     = sysMsgId;
+   pMsg->reserved = SYS_MSG_COOKIE;
 
-    return( VOS_STATUS_SUCCESS );
+   return( VOS_STATUS_SUCCESS );
 }
 
 
 VOS_STATUS sysOpen( v_CONTEXT_t pVosContext )
 {
-    return( VOS_STATUS_SUCCESS );
+   return( VOS_STATUS_SUCCESS );
 }
 
 
 
 v_VOID_t sysStopCompleteCb
 (
-    v_VOID_t *pUserData
+  v_VOID_t *pUserData
 )
 {
-    vos_event_t* pStopEvt = (vos_event_t *) pUserData;
-    VOS_STATUS vosStatus;
-    /*-------------------------------------------------------------------------*/
+  vos_event_t* pStopEvt = (vos_event_t *) pUserData;
+  VOS_STATUS vosStatus;
+/*-------------------------------------------------------------------------*/
 
-    vosStatus = vos_event_set( pStopEvt );
-    VOS_ASSERT( VOS_IS_STATUS_SUCCESS ( vosStatus ) );
+  vosStatus = vos_event_set( pStopEvt );
+  VOS_ASSERT( VOS_IS_STATUS_SUCCESS ( vosStatus ) );
 
 } /* vos_sys_stop_complete_cback() */
 
 VOS_STATUS sysStop( v_CONTEXT_t pVosContext )
 {
-    VOS_STATUS vosStatus = VOS_STATUS_SUCCESS;
-    vos_msg_t sysMsg;
-    v_U8_t evtIndex;
+   VOS_STATUS vosStatus = VOS_STATUS_SUCCESS;
+   vos_msg_t sysMsg;
+   v_U8_t evtIndex;
 
-    /* Initialize the stop event */
-    vosStatus = vos_event_init( &gStopEvt );
+   /* Initialize the stop event */
+   vosStatus = vos_event_init( &gStopEvt );
 
-    if(! VOS_IS_STATUS_SUCCESS( vosStatus ))
-    {
-        return vosStatus;
-    }
+   if(! VOS_IS_STATUS_SUCCESS( vosStatus ))
+   {
+      return vosStatus;
+   }
 
-    /* post a message to SYS module in MC to stop SME and MAC */
-    sysBuildMessageHeader( SYS_MSG_ID_MC_STOP, &sysMsg );
+   /* post a message to SYS module in MC to stop SME and MAC */
+   sysBuildMessageHeader( SYS_MSG_ID_MC_STOP, &sysMsg );
 
-    // Save the user callback and user data
+   // Save the user callback and user data
 
-    // finished.
-    sysMsg.callback = sysStopCompleteCb;
-    sysMsg.bodyptr  = (void *) &gStopEvt;
+   // finished.
+   sysMsg.callback = sysStopCompleteCb;
+   sysMsg.bodyptr  = (void *) &gStopEvt;
 
-    // post the message..
-    vosStatus = vos_mq_post_message( VOS_MQ_ID_SYS, &sysMsg );
-    if ( !VOS_IS_STATUS_SUCCESS(vosStatus) )
-    {
-        vosStatus = VOS_STATUS_E_BADMSG;
-    }
+   // post the message..
+   vosStatus = vos_mq_post_message( VOS_MQ_ID_SYS, &sysMsg );
+   if ( !VOS_IS_STATUS_SUCCESS(vosStatus) )
+   {
+      vosStatus = VOS_STATUS_E_BADMSG;
+   }
 
-    vosStatus = vos_wait_events( &gStopEvt, 1, SYS_STOP_TIMEOUT, &evtIndex );
-    VOS_ASSERT( VOS_IS_STATUS_SUCCESS ( vosStatus ) );
+   vosStatus = vos_wait_events( &gStopEvt, 1, SYS_STOP_TIMEOUT, &evtIndex );
+   VOS_ASSERT( VOS_IS_STATUS_SUCCESS ( vosStatus ) );
 
-    vosStatus = vos_event_destroy( &gStopEvt );
-    VOS_ASSERT( VOS_IS_STATUS_SUCCESS ( vosStatus ) );
+   vosStatus = vos_event_destroy( &gStopEvt );
+   VOS_ASSERT( VOS_IS_STATUS_SUCCESS ( vosStatus ) );
 
-    return( vosStatus );
+   return( vosStatus );
 }
 
 
 VOS_STATUS sysClose( v_CONTEXT_t pVosContext )
 {
-    return( VOS_STATUS_SUCCESS );
+   return( VOS_STATUS_SUCCESS );
 }
 
 
@@ -192,41 +192,41 @@ VOS_STATUS sysClose( v_CONTEXT_t pVosContext )
 
 typedef struct sPolFileVersion
 {
-    unsigned char  MajorVersion;
-    unsigned char  MinorVersion;
-    unsigned char  Suffix;
-    unsigned char  Build;
+  unsigned char  MajorVersion;
+  unsigned char  MinorVersion;
+  unsigned char  Suffix;
+  unsigned char  Build;
 
 } tPolFileVersion;
 
 
 typedef struct sPolFileHeader
 {
-    tPolFileVersion FileVersion;
-    tPolFileVersion HWCapabilities;
-    unsigned int   FileLength;
-    unsigned int   NumDirectoryEntries;
+  tPolFileVersion FileVersion;
+  tPolFileVersion HWCapabilities;
+  unsigned int   FileLength;
+  unsigned int   NumDirectoryEntries;
 
 } tPolFileHeader;
 
 
 typedef enum ePolFileDirTypes
 {
-    ePOL_DIR_TYPE_BOOTLOADER = 0,
-    ePOL_DIR_TYPE_STA_FIRMWARE,
-    ePOL_DIR_TYPE_AP_FIRMWARE,
-    ePOL_DIR_TYPE_DIAG_FIRMWARE,
-    ePOL_DIR_TYPE_STA_CONFIG,
-    ePOL_DIR_TYPE_AP_CONFIG
+  ePOL_DIR_TYPE_BOOTLOADER = 0,
+  ePOL_DIR_TYPE_STA_FIRMWARE,
+  ePOL_DIR_TYPE_AP_FIRMWARE,
+  ePOL_DIR_TYPE_DIAG_FIRMWARE,
+  ePOL_DIR_TYPE_STA_CONFIG,
+  ePOL_DIR_TYPE_AP_CONFIG
 
 } tPolFileDirTypes;
 
 
 typedef struct sPolFileDirEntry
 {
-    unsigned int DirEntryType;
-    unsigned int DirEntryFileOffset;
-    unsigned int DirEntryLength;
+  unsigned int DirEntryType;
+  unsigned int DirEntryFileOffset;
+  unsigned int DirEntryLength;
 
 } tPolFileDirEntry;
 
@@ -237,75 +237,75 @@ typedef struct sPolFileDirEntry
 
 static unsigned short polFileChkSum( unsigned short *FileData, unsigned long NumWords )
 {
-    unsigned long Sum;
+  unsigned long Sum;
 
-    for ( Sum = 0; NumWords > 0; NumWords-- )
-    {
-        Sum += *FileData++;
-    }
+  for ( Sum = 0; NumWords > 0; NumWords-- )
+  {
+    Sum += *FileData++;
+  }
 
-    Sum  = (Sum >> 16) + (Sum & 0xffff); // add carry
-    Sum += (Sum >> 16);                  // maybe last unsigned short
+  Sum  = (Sum >> 16) + (Sum & 0xffff); // add carry
+  Sum += (Sum >> 16);                  // maybe last unsigned short
 
-    return( (unsigned short)( ~Sum ) );
+  return( (unsigned short)( ~Sum ) );
 }
 
 v_BOOL_t sys_validateStaConfig( void *pImage, unsigned long cbFile,
-                                void **ppStaConfig, v_SIZE_t *pcbStaConfig )
+   void **ppStaConfig, v_SIZE_t *pcbStaConfig )
 {
-    v_BOOL_t fFound = VOS_FALSE;
-    tPolFileHeader   *pFileHeader = NULL;
-    tPolFileDirEntry *pDirEntry = NULL;
-    v_U32_t idx;
+   v_BOOL_t fFound = VOS_FALSE;
+   tPolFileHeader   *pFileHeader = NULL;
+   tPolFileDirEntry *pDirEntry = NULL;
+   v_U32_t idx;
 
-    do
-    {
-        // Compute the checksum before bothering to copy...
-        if ( polFileChkSum( ( v_U16_t *)pImage, cbFile / sizeof( v_U16_t ) ) )
-        {
-            VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
-                       "Failed to validate the checksum for CFG binary"  );
+   do
+   {
+      // Compute the checksum before bothering to copy...
+      if ( polFileChkSum( ( v_U16_t *)pImage, cbFile / sizeof( v_U16_t ) ) )
+      {
+         VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
+                    "Failed to validate the checksum for CFG binary"  );
+         break;
+      }
+
+      pFileHeader = (tPolFileHeader *)pImage;
+
+      *ppStaConfig = NULL;
+      *pcbStaConfig = 0;
+
+      pDirEntry = ( tPolFileDirEntry* ) ( pFileHeader + 1 );
+
+      for ( idx = 0; idx < pFileHeader->NumDirectoryEntries; ++idx )
+      {
+         if ( ePOL_DIR_TYPE_STA_CONFIG == pDirEntry[ idx ].DirEntryType )
+         {
+            *ppStaConfig = pDirEntry[ idx ].DirEntryFileOffset + ( v_U8_t * )pFileHeader;
+
+            *pcbStaConfig = pDirEntry[ idx ].DirEntryLength;
+
             break;
-        }
+         }
 
-        pFileHeader = (tPolFileHeader *)pImage;
+      } // End iteration over the header's entries
 
-        *ppStaConfig = NULL;
-        *pcbStaConfig = 0;
+      if ( NULL != *ppStaConfig  )
+      {
+         VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_INFO_LOW,
+                    "Found the Station CFG in the CFG binary!!" );
 
-        pDirEntry = ( tPolFileDirEntry* ) ( pFileHeader + 1 );
+         fFound = VOS_TRUE;
+      }
+      else
+      {
+         VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
+                    "Failed to find Station CFG in the CFG binary" );
+      }
 
-        for ( idx = 0; idx < pFileHeader->NumDirectoryEntries; ++idx )
-        {
-            if ( ePOL_DIR_TYPE_STA_CONFIG == pDirEntry[ idx ].DirEntryType )
-            {
-                *ppStaConfig = pDirEntry[ idx ].DirEntryFileOffset + ( v_U8_t * )pFileHeader;
+   } while( 0 );
 
-                *pcbStaConfig = pDirEntry[ idx ].DirEntryLength;
+   VOS_ASSERT( VOS_TRUE == fFound );
 
-                break;
-            }
-
-        } // End iteration over the header's entries
-
-        if ( NULL != *ppStaConfig  )
-        {
-            VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_INFO_LOW,
-                       "Found the Station CFG in the CFG binary!!" );
-
-            fFound = VOS_TRUE;
-        }
-        else
-        {
-            VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
-                       "Failed to find Station CFG in the CFG binary" );
-        }
-
-    } while( 0 );
-
-    VOS_ASSERT( VOS_TRUE == fFound );
-
-    return( fFound );
+   return( fFound );
 }
 
 
@@ -319,40 +319,40 @@ v_BOOL_t sys_validateStaConfig( void *pImage, unsigned long cbFile,
 
 VOS_STATUS sysMcProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
 {
-    VOS_STATUS vosStatus = VOS_STATUS_SUCCESS;
-    v_VOID_t *hHal;
+   VOS_STATUS vosStatus = VOS_STATUS_SUCCESS;
+   v_VOID_t *hHal;
 
-    if (NULL == pMsg)
-    {
-        VOS_ASSERT(0);
-        VOS_TRACE(VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
-                  "%s: NULL pointer to vos_msg_t", __func__);
-        return VOS_STATUS_E_INVAL;
-    }
+   if (NULL == pMsg)
+   {
+      VOS_ASSERT(0);
+      VOS_TRACE(VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
+            "%s: NULL pointer to vos_msg_t", __func__);
+      return VOS_STATUS_E_INVAL;
+   }
 
-    // All 'new' SYS messages are identified by a cookie in the reserved
-    // field of the message as well as the message type.  This prevents
-    // the possibility of overlap in the message types defined for new
-    // SYS messages with the 'legacy' message types.  The legacy messages
-    // will not have this cookie in the reserved field
-    if ( SYS_MSG_COOKIE == pMsg->reserved )
-    {
-        // Process all the new SYS messages..
-        switch( pMsg->type )
-        {
-        case SYS_MSG_ID_MC_START:
-        {
-            /* Handling for this message is not needed now so adding
+   // All 'new' SYS messages are identified by a cookie in the reserved
+   // field of the message as well as the message type.  This prevents
+   // the possibility of overlap in the message types defined for new
+   // SYS messages with the 'legacy' message types.  The legacy messages
+   // will not have this cookie in the reserved field
+   if ( SYS_MSG_COOKIE == pMsg->reserved )
+   {
+      // Process all the new SYS messages..
+      switch( pMsg->type )
+      {
+         case SYS_MSG_ID_MC_START:
+         {
+            /* Handling for this message is not needed now so adding 
              *debug print and VOS_ASSERT*/
             VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
                        " Received SYS_MSG_ID_MC_START message msgType= %d [0x%08x]",
                        pMsg->type, pMsg->type );
             VOS_ASSERT(0);
             break;
-        }
+         }
 
-        case SYS_MSG_ID_MC_STOP:
-        {
+         case SYS_MSG_ID_MC_STOP:
+         {
             VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_INFO,
                        "Processing SYS MC STOP" );
 
@@ -360,71 +360,71 @@ VOS_STATUS sysMcProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
             hHal = vos_get_context( VOS_MODULE_ID_PE, pVosContext );
             if (NULL == hHal)
             {
-                VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
-                           "%s: Invalid hHal", __func__ );
+               VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
+                          "%s: Invalid hHal", __func__ );
             }
             else
             {
-                vosStatus = sme_Stop( hHal, HAL_STOP_TYPE_SYS_DEEP_SLEEP);
-                VOS_ASSERT( VOS_IS_STATUS_SUCCESS( vosStatus ) );
+               vosStatus = sme_Stop( hHal, HAL_STOP_TYPE_SYS_DEEP_SLEEP);
+               VOS_ASSERT( VOS_IS_STATUS_SUCCESS( vosStatus ) );
 
-                vosStatus = macStop( hHal, HAL_STOP_TYPE_SYS_DEEP_SLEEP );
-                VOS_ASSERT( VOS_IS_STATUS_SUCCESS( vosStatus ) );
+               vosStatus = macStop( hHal, HAL_STOP_TYPE_SYS_DEEP_SLEEP );
+               VOS_ASSERT( VOS_IS_STATUS_SUCCESS( vosStatus ) );
 
-                ((sysResponseCback)pMsg->callback)((v_VOID_t *)pMsg->bodyptr);
+               ((sysResponseCback)pMsg->callback)((v_VOID_t *)pMsg->bodyptr);
 
-                vosStatus = VOS_STATUS_SUCCESS;
+               vosStatus = VOS_STATUS_SUCCESS;
             }
             break;
-        }
+         }
 
-        // Process MC thread probe.  Just callback to the
-        // function that is in the message.
-        case SYS_MSG_ID_MC_THR_PROBE:
-        {
+         // Process MC thread probe.  Just callback to the
+         // function that is in the message.
+         case SYS_MSG_ID_MC_THR_PROBE:
+         {
 #ifdef WLAN_LOGGING_SOCK_SVC_ENABLE
-            if(pMsg->callback)
+             if(pMsg->callback)
                 ((sysThreadProbeCback)pMsg->callback)(current->pid);
 #endif
             break;
-        }
+         }
 
-        case SYS_MSG_ID_MC_TIMER:
-        {
+         case SYS_MSG_ID_MC_TIMER:
+         {
             vos_timer_callback_t timerCB = pMsg->callback;
 
             if (NULL != timerCB)
             {
-                vos_ssr_protect(__func__);
-                timerCB(pMsg->bodyptr);
-                vos_ssr_unprotect(__func__);
+               vos_ssr_protect(__func__);
+               timerCB(pMsg->bodyptr);
+               vos_ssr_unprotect(__func__);
             }
             break;
-        }
-        case SYS_MSG_ID_FTM_RSP:
-        {
-            WLANFTM_McProcessMsg((v_VOID_t *)pMsg->bodyptr);
-            break;
-        }
-        default:
-        {
+         }
+         case SYS_MSG_ID_FTM_RSP:
+         {
+             WLANFTM_McProcessMsg((v_VOID_t *)pMsg->bodyptr);
+             break;
+         }
+         default:
+         {
             VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
                        "Unknown message type in sysMcProcessMsg() msgType= %d [0x%08x]",
                        pMsg->type, pMsg->type );
             break;
         }
 
-        }   // end switch on message type
+      }   // end switch on message type
 
-    }   // end if cookie set
-    else
-    {
-        // Process all 'legacy' messages
-        switch( pMsg->type )
-        {
+   }   // end if cookie set
+   else
+   {
+      // Process all 'legacy' messages
+      switch( pMsg->type )
+      {
 
-        default:
-        {
+         default:
+         {
             VOS_ASSERT( 0 );
 
             VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
@@ -432,14 +432,14 @@ VOS_STATUS sysMcProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
                        "MC message type= %d [0x%08X]", pMsg->type, pMsg->type );
 
             vosStatus = VOS_STATUS_E_BADMSG;
-            if (pMsg->bodyptr)
-                vos_mem_free(pMsg->bodyptr);
+            if (pMsg->bodyptr) 
+               vos_mem_free(pMsg->bodyptr);
             break;
-        }
-        }   // end switch on pMsg->type
-    }   // end else
+         }
+      }   // end switch on pMsg->type
+   }   // end else
 
-    return( vosStatus );
+   return( vosStatus );
 }
 
 
@@ -447,179 +447,179 @@ VOS_STATUS sysMcProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
 
 VOS_STATUS sysTxProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
 {
-    VOS_STATUS vosStatus = VOS_STATUS_SUCCESS;
+   VOS_STATUS vosStatus = VOS_STATUS_SUCCESS;
 
-    if (NULL == pMsg)
-    {
-        VOS_ASSERT(0);
-        VOS_TRACE(VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
-                  "%s: NULL pointer to vos_msg_t", __func__);
-        return VOS_STATUS_E_INVAL;
-    }
+   if (NULL == pMsg)
+   {
+      VOS_ASSERT(0);
+      VOS_TRACE(VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
+            "%s: NULL pointer to vos_msg_t", __func__);
+      return VOS_STATUS_E_INVAL;
+   }
 
-    // All 'new' SYS messages are identified by a cookie in the reserved
-    // field of the message as well as the message type.  This prevents
-    // the possibility of overlap in the message types defined for new
-    // SYS messages with the 'legacy' message types.  The legacy messages
-    // will not have this cookie in the reserved field
-    if ( SYS_MSG_COOKIE == pMsg->reserved )
-    {
-        // Process all the new SYS messages..
-        switch( pMsg->type )
-        {
-        // Process TX thread probe.  Just callback to the
-        // function that is in the message.
-        case SYS_MSG_ID_TX_THR_PROBE:
-        {
+   // All 'new' SYS messages are identified by a cookie in the reserved
+   // field of the message as well as the message type.  This prevents
+   // the possibility of overlap in the message types defined for new
+   // SYS messages with the 'legacy' message types.  The legacy messages
+   // will not have this cookie in the reserved field
+   if ( SYS_MSG_COOKIE == pMsg->reserved )
+   {
+      // Process all the new SYS messages..
+      switch( pMsg->type )
+      {
+         // Process TX thread probe.  Just callback to the
+         // function that is in the message.
+         case SYS_MSG_ID_TX_THR_PROBE:
+         {
 #ifdef WLAN_LOGGING_SOCK_SVC_ENABLE
             if(pMsg->callback)
-                ((sysThreadProbeCback)pMsg->callback)(current->pid);
+               ((sysThreadProbeCback)pMsg->callback)(current->pid);
 #endif
             break;
-        }
+         }
 
-        case SYS_MSG_ID_TX_TIMER:
-        {
+         case SYS_MSG_ID_TX_TIMER:
+         {
             vos_timer_callback_t timerCB = pMsg->callback;
 
             if (NULL != timerCB)
             {
-                timerCB(pMsg->bodyptr);
+               timerCB(pMsg->bodyptr);
             }
             break;
-        }
+         }
 
-        default:
-        {
+         default:
+         {
             VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
                        "Unknown message type in sysTxProcessMsg() msgType= %d [0x%08x]",
                        pMsg->type, pMsg->type );
             break;
         }
 
-        }   // end switch on message type
-    }   // end if cookie set
-    else
-    {
-        VOS_ASSERT( 0 );
+      }   // end switch on message type
+   }   // end if cookie set
+   else
+   {
+      VOS_ASSERT( 0 );
 
-        VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
-                   "Received SYS message cookie with unidentified TX message "
-                   " type= %d [0x%08X]", pMsg->type, pMsg->type );
+      VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
+                 "Received SYS message cookie with unidentified TX message "
+                 " type= %d [0x%08X]", pMsg->type, pMsg->type );
 
-        vosStatus = VOS_STATUS_E_BADMSG;
-    }   // end else
+      vosStatus = VOS_STATUS_E_BADMSG;
+   }   // end else
 
-    return( vosStatus );
+   return( vosStatus );
 }
 
 
 VOS_STATUS sysRxProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
 {
-    VOS_STATUS vosStatus = VOS_STATUS_SUCCESS;
+   VOS_STATUS vosStatus = VOS_STATUS_SUCCESS;
 
-    if (NULL == pMsg)
-    {
-        VOS_ASSERT(0);
-        VOS_TRACE(VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
-                  "%s: NULL pointer to vos_msg_t", __func__);
-        return VOS_STATUS_E_INVAL;
-    }
+   if (NULL == pMsg)
+   {
+      VOS_ASSERT(0);
+      VOS_TRACE(VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
+            "%s: NULL pointer to vos_msg_t", __func__);
+      return VOS_STATUS_E_INVAL;
+   }
 
-    // All 'new' SYS messages are identified by a cookie in the reserved
-    // field of the message as well as the message type.  This prevents
-    // the possibility of overlap in the message types defined for new
-    // SYS messages with the 'legacy' message types.  The legacy messages
-    // will not have this cookie in the reserved field
-    if ( SYS_MSG_COOKIE == pMsg->reserved )
-    {
-        // Process all the new SYS messages..
-        switch( pMsg->type )
-        {
-        case SYS_MSG_ID_RX_TIMER:
-        {
+   // All 'new' SYS messages are identified by a cookie in the reserved
+   // field of the message as well as the message type.  This prevents
+   // the possibility of overlap in the message types defined for new
+   // SYS messages with the 'legacy' message types.  The legacy messages
+   // will not have this cookie in the reserved field
+   if ( SYS_MSG_COOKIE == pMsg->reserved )
+   {
+      // Process all the new SYS messages..
+      switch( pMsg->type )
+      {
+         case SYS_MSG_ID_RX_TIMER:
+         {
             vos_timer_callback_t timerCB = pMsg->callback;
 
             if (NULL != timerCB)
             {
-                timerCB(pMsg->bodyptr);
+               timerCB(pMsg->bodyptr);
             }
             break;
-        }
+         }
 
-        case SYS_MSG_ID_RX_THR_PROBE:
-        {
+         case SYS_MSG_ID_RX_THR_PROBE:
+         {
 #ifdef WLAN_LOGGING_SOCK_SVC_ENABLE
             if(pMsg->callback)
                 ((sysThreadProbeCback)pMsg->callback)(current->pid);
 #endif
             break;
-        }
+         }
 
-        default:
-        {
+         default:
+         {
             VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
                        "Unknown message type in sysRxProcessMsg() msgType= %d [0x%08x]",
                        pMsg->type, pMsg->type );
             break;
         }
 
-        }   // end switch on message type
-    }   // end if cookie set
-    else
-    {
-        VOS_ASSERT( 0 );
+      }   // end switch on message type
+   }   // end if cookie set
+   else
+   {
+      VOS_ASSERT( 0 );
 
-        VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
-                   "Received SYS message cookie with unidentified RX message "
-                   " type= %d [0x%08X]", pMsg->type, pMsg->type );
+      VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
+                 "Received SYS message cookie with unidentified RX message "
+                 " type= %d [0x%08X]", pMsg->type, pMsg->type );
 
-        vosStatus = VOS_STATUS_E_BADMSG;
-    }   // end else
+      vosStatus = VOS_STATUS_E_BADMSG;
+   }   // end else
 
-    return( vosStatus );
+   return( vosStatus );
 }
 
 
 v_VOID_t sysMcFreeMsg( v_CONTEXT_t pVContext, vos_msg_t* pMsg )
 {
-    return;
+   return;
 }
 
 
 v_VOID_t sysTxFreeMsg( v_CONTEXT_t pVContext, vos_msg_t* pMsg )
 {
-    return;
+   return;
 }
 
 
 void
 SysProcessMmhMsg
 (
-    tpAniSirGlobal pMac,
-    tSirMsgQ* pMsg
+  tpAniSirGlobal pMac,
+  tSirMsgQ* pMsg
 )
 {
-    VOS_MQ_ID   targetMQ = VOS_MQ_ID_SYS;
-    /*-------------------------------------------------------------------------*/
-    /*
-    ** The body of this pMsg is a tSirMbMsg
-    ** Contrary to Gen4, we cannot free it here!
-    ** It is up to the callee to free it
-    */
+  VOS_MQ_ID   targetMQ = VOS_MQ_ID_SYS;
+/*-------------------------------------------------------------------------*/
+  /*
+  ** The body of this pMsg is a tSirMbMsg
+  ** Contrary to Gen4, we cannot free it here!
+  ** It is up to the callee to free it
+  */
 
 
-    if (NULL == pMsg)
-    {
-        VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
-                   "NULL Message Pointer");
-        VOS_ASSERT(0);
-        return;
-    }
+  if (NULL == pMsg)
+  {
+      VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
+                 "NULL Message Pointer");
+      VOS_ASSERT(0);
+      return;
+  }
 
 
-    switch (pMsg->type)
-    {
+  switch (pMsg->type)
+  {
     /*
     ** Following messages are routed to SYS
     */
@@ -630,15 +630,15 @@ SysProcessMmhMsg
     case WDA_RESET_REQ:
     case eWNI_SME_START_RSP:
     {
-        /* Forward this message to the SYS module */
-        targetMQ = VOS_MQ_ID_SYS;
+      /* Forward this message to the SYS module */
+      targetMQ = VOS_MQ_ID_SYS;
 
-        VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
-                   "Handling for the Message ID %d is removed in SYS\r\n",
-                   pMsg->type);
+      VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
+                 "Handling for the Message ID %d is removed in SYS\r\n",
+                 pMsg->type);
 
-        VOS_ASSERT(0);
-        break;
+      VOS_ASSERT(0);
+      break;
     }
 
 
@@ -648,15 +648,15 @@ SysProcessMmhMsg
     case WNI_CFG_DNLD_RSP:
     case WDA_INIT_START_REQ:
     {
-        /* Forward this message to the HAL module */
-        targetMQ = VOS_MQ_ID_WDA;
+      /* Forward this message to the HAL module */
+      targetMQ = VOS_MQ_ID_WDA;
 
-        VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
-                   "Handling for the Message ID %d is removed as there is no HAL \r\n",
-                   pMsg->type);
+      VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
+                 "Handling for the Message ID %d is removed as there is no HAL \r\n",
+                 pMsg->type);
 
-        VOS_ASSERT(0);
-        break;
+      VOS_ASSERT(0);
+      break;
     }
 
     case eWNI_SME_START_REQ:
@@ -665,66 +665,66 @@ SysProcessMmhMsg
     case WNI_CFG_SET_REQ_NO_RSP:
     case eWNI_SME_SYS_READY_IND:
     {
-        /* Forward this message to the PE module */
-        targetMQ = VOS_MQ_ID_PE;
-        break;
+       /* Forward this message to the PE module */
+      targetMQ = VOS_MQ_ID_PE;
+      break;
     }
 
 
     case WNI_CFG_GET_RSP:
     case WNI_CFG_SET_CNF:
-        /*   case eWNI_SME_DISASSOC_RSP:
-            case eWNI_SME_STA_STAT_RSP:
-            case eWNI_SME_AGGR_STAT_RSP:
-            case eWNI_SME_GLOBAL_STAT_RSP:
-            case eWNI_SME_STAT_SUMM_RSP:
-            case eWNI_PMC_ENTER_BMPS_RSP:
-            case eWNI_PMC_EXIT_BMPS_RSP:
-            case eWNI_PMC_EXIT_BMPS_IND:
-            case eWNI_PMC_ENTER_IMPS_RSP:
-            case eWNI_PMC_EXIT_IMPS_RSP:
-            case eWNI_PMC_ENTER_UAPSD_RSP:
-            case eWNI_PMC_EXIT_UAPSD_RSP:
-            case eWNI_PMC_ENTER_WOWL_RSP:
-            case eWNI_PMC_EXIT_WOWL_RSP:
-            case eWNI_SME_SWITCH_CHL_REQ: */ //Taken care by the check in default case
+/*   case eWNI_SME_DISASSOC_RSP:
+    case eWNI_SME_STA_STAT_RSP:
+    case eWNI_SME_AGGR_STAT_RSP:
+    case eWNI_SME_GLOBAL_STAT_RSP:
+    case eWNI_SME_STAT_SUMM_RSP:
+    case eWNI_PMC_ENTER_BMPS_RSP:
+    case eWNI_PMC_EXIT_BMPS_RSP:
+    case eWNI_PMC_EXIT_BMPS_IND:
+    case eWNI_PMC_ENTER_IMPS_RSP:
+    case eWNI_PMC_EXIT_IMPS_RSP:
+    case eWNI_PMC_ENTER_UAPSD_RSP:
+    case eWNI_PMC_EXIT_UAPSD_RSP:
+    case eWNI_PMC_ENTER_WOWL_RSP:
+    case eWNI_PMC_EXIT_WOWL_RSP:
+    case eWNI_SME_SWITCH_CHL_REQ: */ //Taken care by the check in default case
     {
-        /* Forward this message to the SME module */
-        targetMQ = VOS_MQ_ID_SME;
-        break;
+       /* Forward this message to the SME module */
+      targetMQ = VOS_MQ_ID_SME;
+      break;
     }
 
     default:
     {
 
-        if ( ( pMsg->type >= eWNI_SME_MSG_TYPES_BEGIN )  &&  ( pMsg->type <= eWNI_SME_MSG_TYPES_END ) )
-        {
-            targetMQ = VOS_MQ_ID_SME;
-            break;
-        }
+      if ( ( pMsg->type >= eWNI_SME_MSG_TYPES_BEGIN )  &&  ( pMsg->type <= eWNI_SME_MSG_TYPES_END ) )
+      {
+         targetMQ = VOS_MQ_ID_SME;
+         break;
+      }
 
-        VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
-                   "Message of ID %d is not yet handled by SYS\r\n",
-                   pMsg->type);
+      VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
+                 "Message of ID %d is not yet handled by SYS\r\n",
+                 pMsg->type);
 
-        VOS_ASSERT(0);
+      VOS_ASSERT(0);
     }
 
-    }
+  }
 
 
-    /*
-    ** Post now the message to the appropriate module for handling
-    */
-    if(VOS_STATUS_SUCCESS != vos_mq_post_message(targetMQ, (vos_msg_t*)pMsg))
+  /*
+  ** Post now the message to the appropriate module for handling
+  */
+  if(VOS_STATUS_SUCCESS != vos_mq_post_message(targetMQ, (vos_msg_t*)pMsg))
+  {
+    //Caller doesn't allocate memory for the pMsg. It allocate memory for bodyptr
+    /* free the mem and return */
+    if(pMsg->bodyptr)
     {
-        //Caller doesn't allocate memory for the pMsg. It allocate memory for bodyptr
-        /* free the mem and return */
-        if(pMsg->bodyptr)
-        {
-            vos_mem_free( pMsg->bodyptr);
-        }
+      vos_mem_free( pMsg->bodyptr);
     }
+  }
 
 } /* SysProcessMmhMsg() */
 

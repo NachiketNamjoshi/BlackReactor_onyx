@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 The Linux Foundation. All rights reserved.
+ * Copyright (c) 2012-2016 The Linux Foundation. All rights reserved.
  *
  * Previously licensed under the ISC license by Qualcomm Atheros, Inc.
  *
@@ -44,7 +44,7 @@
 #include "limDebug.h"
 
 
-#include "halMsgApi.h"
+#include "halMsgApi.h" 
 
 // ---------------------------------------------------------------------
 /**
@@ -65,20 +65,20 @@
 
 void dphHashTableClassInit(tpAniSirGlobal pMac, dphHashTableClass* pDphHashTable)
 {
-    tANI_U16 i;
+  tANI_U16 i;
 
-    for (i=0; i<pDphHashTable->size; i++)
+  for (i=0; i<pDphHashTable->size; i++)
     {
-        pDphHashTable->pHashTable[i] = 0;
+      pDphHashTable->pHashTable[i] = 0;
     }
 
-    for (i=0; i<pDphHashTable->size; i++)
+  for (i=0; i<pDphHashTable->size; i++)
     {
-        pDphHashTable->pDphNodeArray[i].valid = 0;
-        pDphHashTable->pDphNodeArray[i].added = 0;
-        pDphHashTable->pDphNodeArray[i].assocId = i;
+      pDphHashTable->pDphNodeArray[i].valid = 0;
+      pDphHashTable->pDphNodeArray[i].added = 0;
+      pDphHashTable->pDphNodeArray[i].assocId = i;
     }
-
+    
 }
 
 // ---------------------------------------------------------------------
@@ -100,13 +100,13 @@ void dphHashTableClassInit(tpAniSirGlobal pMac, dphHashTableClass* pDphHashTable
 
 tANI_U16 hashFunction(tpAniSirGlobal pMac, tANI_U8 staAddr[], tANI_U16 numSta)
 {
-    int i;
-    tANI_U16 sum = 0;
-
-    for (i=0; i<6; i++)
-        sum += staAddr[i];
-
-    return (sum % numSta);
+  int i;
+  tANI_U16 sum = 0;
+  
+  for (i=0; i<6; i++)
+    sum += staAddr[i];
+   
+  return (sum % numSta);
 }
 
 // ---------------------------------------------------------------------
@@ -128,7 +128,7 @@ tANI_U16 hashFunction(tpAniSirGlobal pMac, tANI_U8 staAddr[], tANI_U16 numSta)
  *         NULL if lookup was a failure
  */
 
-tpDphHashNode dphLookupHashEntry(tpAniSirGlobal pMac, tANI_U8 staAddr[], tANI_U16 *pAssocId,
+tpDphHashNode dphLookupHashEntry(tpAniSirGlobal pMac, tANI_U8 staAddr[], tANI_U16 *pAssocId, 
                                  dphHashTableClass* pDphHashTable)
 {
     tpDphHashNode ptr = NULL;
@@ -141,13 +141,13 @@ tpDphHashNode dphLookupHashEntry(tpAniSirGlobal pMac, tANI_U8 staAddr[], tANI_U1
     }
 
     for (ptr = pDphHashTable->pHashTable[index]; ptr; ptr = ptr->next)
-    {
-        if (dphCompareMacAddr(staAddr, ptr->staAddr))
         {
-            *pAssocId = ptr->assocId;
-            break;
+            if (dphCompareMacAddr(staAddr, ptr->staAddr))
+                {
+                    *pAssocId = ptr->assocId;
+                    break;
+                }
         }
-    }
     return ptr;
 }
 
@@ -174,7 +174,7 @@ tpDphHashNode dphGetHashEntry(tpAniSirGlobal pMac, tANI_U16 peerIdx, dphHashTabl
     if (peerIdx < pDphHashTable->size)
     {
         if (pDphHashTable->pDphNodeArray[peerIdx].added)
-            return &pDphHashTable->pDphNodeArray[peerIdx];
+          return &pDphHashTable->pDphNodeArray[peerIdx];
         else
             return NULL;
     }
@@ -214,15 +214,15 @@ tpDphHashNode dphLookupAssocId(tpAniSirGlobal pMac,  tANI_U16 staIdx, tANI_U16* 
     tANI_U8 i;
 
     for(i=0; i<pDphHashTable->size; i++)
-    {
-        if( (pDphHashTable->pDphNodeArray[i].added) &&
-                (pDphHashTable->pDphNodeArray[i].staIndex == staIdx))
         {
-            *assocId = i;
-            break;
-        }
+            if( (pDphHashTable->pDphNodeArray[i].added) &&
+                (pDphHashTable->pDphNodeArray[i].staIndex == staIdx))
+                {
+                    *assocId = i;
+                    break;
+                }
 
-    }
+        }
     if(i==pDphHashTable->size)
         return NULL;
     return &pDphHashTable->pDphNodeArray[i];
@@ -245,7 +245,7 @@ tpDphHashNode dphLookupAssocId(tpAniSirGlobal pMac,  tANI_U16 staIdx, tANI_U16* 
   -------------------------------------------------------------*/
 
 tpDphHashNode dphInitStaState(tpAniSirGlobal pMac, tSirMacAddr staAddr,
-                              tANI_U16 assocId, tANI_U8 validStaIdx, dphHashTableClass* pDphHashTable)
+      tANI_U16 assocId, tANI_U8 validStaIdx, dphHashTableClass* pDphHashTable)
 {
     tANI_U32 val;
 
@@ -269,9 +269,9 @@ tpDphHashNode dphInitStaState(tpAniSirGlobal pMac, tSirMacAddr staAddr,
     // Initialize the assocId
     pStaDs->assocId = assocId;
     if(true == validStaIdx)
-        pStaDs->staIndex = staIdx;
+      pStaDs->staIndex = staIdx;
     else
-        pStaDs->staIndex = HAL_STA_INVALID_IDX;
+      pStaDs->staIndex = HAL_STA_INVALID_IDX;
 
     // Initialize STA mac address
     vos_mem_copy( pStaDs->staAddr, staAddr, sizeof(tSirMacAddr));
@@ -295,6 +295,7 @@ tpDphHashNode dphInitStaState(tpAniSirGlobal pMac, tSirMacAddr staAddr,
 #ifdef WLAN_FEATURE_11W
     pStaDs->last_assoc_received_time = 0;
 #endif
+    pStaDs->sta_deletion_in_progress = false;
     pStaDs->valid = 1;
     return pStaDs;
 }
@@ -354,7 +355,7 @@ tpDphHashNode dphAddHashEntry(tpAniSirGlobal pMac, tSirMacAddr staAddr, tANI_U16
     {
         // Duplicate entry
         limLog(pMac, LOGE, FL("assocId %d hashIndex %d entry exists"),
-               assocId, index);
+                     assocId, index);
         return NULL;
     }
     else
@@ -362,7 +363,7 @@ tpDphHashNode dphAddHashEntry(tpAniSirGlobal pMac, tSirMacAddr staAddr, tANI_U16
         if (dphInitStaState(pMac, staAddr, assocId, false, pDphHashTable) == NULL)
         {
             PELOGE(limLog(pMac, LOGE, FL("could not Init STAid=%d"), assocId);)
-            return NULL;
+                    return NULL;
         }
 
         // Add the node to the link list
@@ -395,65 +396,66 @@ tpDphHashNode dphAddHashEntry(tpAniSirGlobal pMac, tSirMacAddr staAddr, tANI_U16
 
 tSirRetStatus dphDeleteHashEntry(tpAniSirGlobal pMac, tSirMacAddr staAddr, tANI_U16 assocId, dphHashTableClass* pDphHashTable)
 {
-    tpDphHashNode ptr, prev;
-    tANI_U16 index = hashFunction(pMac, staAddr, pDphHashTable->size);
+  tpDphHashNode ptr, prev;
+  tANI_U16 index = hashFunction(pMac, staAddr, pDphHashTable->size);
 
 
-    limLog(pMac, LOG1, FL("assocId %d index %d STA addr"),
-           assocId, index);
-    dphPrintMacAddr(pMac, staAddr, LOG1);
+  limLog(pMac, LOG1, FL("assocId %d index %d STA addr"),
+                  assocId, index);
+  dphPrintMacAddr(pMac, staAddr, LOG1);
 
-    if (assocId >= pDphHashTable->size)
+  if (assocId >= pDphHashTable->size)
+  {
+      PELOGE(limLog(pMac, LOGE, FL("invalid STA id %d"), assocId);)
+      return eSIR_FAILURE;
+  }
+
+  if (pDphHashTable->pDphNodeArray[assocId].added == 0)
+  {
+      PELOGE(limLog(pMac, LOGE, FL("STA %d never added"), assocId);)
+      return eSIR_FAILURE;
+  }
+
+
+  for (prev = 0, ptr = pDphHashTable->pHashTable[index];
+       ptr;
+       prev = ptr, ptr = ptr->next)
+  {
+    if (dphCompareMacAddr(staAddr, ptr->staAddr))
+      break;
+    if (prev == ptr)
     {
-        PELOGE(limLog(pMac, LOGE, FL("invalid STA id %d"), assocId);)
+        PELOGE(limLog(pMac, LOGE, FL("Infinite Loop"));)
         return eSIR_FAILURE;
     }
+  }
 
-    if (pDphHashTable->pDphNodeArray[assocId].added == 0)
+  if (ptr)
     {
-        PELOGE(limLog(pMac, LOGE, FL("STA %d never added"), assocId);)
-        return eSIR_FAILURE;
-    }
-
-
-    for (prev = 0, ptr = pDphHashTable->pHashTable[index];
-            ptr;
-            prev = ptr, ptr = ptr->next)
-    {
-        if (dphCompareMacAddr(staAddr, ptr->staAddr))
-            break;
-        if (prev == ptr)
-        {
-            PELOGE(limLog(pMac, LOGE, FL("Infinite Loop"));)
-            return eSIR_FAILURE;
-        }
-    }
-
-    if (ptr)
-    {
-        /// Delete the entry after invalidating it
-        ptr->valid = 0;
-        memset(ptr->staAddr, 0, sizeof(ptr->staAddr));
-        if (prev == 0)
-            pDphHashTable->pHashTable[index] = ptr->next;
-        else
-            prev->next = ptr->next;
-        ptr->added = 0;
-        ptr->isDisassocDeauthInProgress = 0;
+      /// Delete the entry after invalidating it
+      ptr->valid = 0;
+      memset(ptr->staAddr, 0, sizeof(ptr->staAddr));
+      if (prev == 0)
+         pDphHashTable->pHashTable[index] = ptr->next;
+      else
+         prev->next = ptr->next;
+      ptr->added = 0;
+      ptr->isDisassocDeauthInProgress = 0;
 #ifdef WLAN_FEATURE_11W
-        ptr->last_assoc_received_time = 0;
+      ptr->last_assoc_received_time = 0;
 #endif
-        ptr->next = 0;
+      ptr->sta_deletion_in_progress = false;
+      ptr->next = 0;
     }
-    else
+  else
     {
-        /// Entry not present
-        PELOGE(limLog(pMac, LOGE, FL("Entry not present STA addr"));
-               dphPrintMacAddr(pMac, staAddr, LOGE);)
-        return eSIR_FAILURE;
+      /// Entry not present
+      PELOGE(limLog(pMac, LOGE, FL("Entry not present STA addr"));
+      dphPrintMacAddr(pMac, staAddr, LOGE);)
+      return eSIR_FAILURE;
     }
 
-    return eSIR_SUCCESS;
+  return eSIR_SUCCESS;
 }
 
 // ---------------------------------------------------------------------

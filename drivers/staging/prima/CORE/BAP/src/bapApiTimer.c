@@ -28,20 +28,20 @@
 /*===========================================================================
 
                       b a p A p i T i m e r . C
-
+                                               
   OVERVIEW:
-
+  
   This software unit holds the implementation of the timer routines
-  required by the WLAN BAP module.
-
-  The functions provide by this module are called by the rest of
+  required by the WLAN BAP module.  
+  
+  The functions provide by this module are called by the rest of 
   the BT-AMP PAL module.
 
-  DEPENDENCIES:
+  DEPENDENCIES: 
 
-  Are listed for each API below.
-
-
+  Are listed for each API below. 
+  
+  
 ===========================================================================*/
 
 /*===========================================================================
@@ -85,13 +85,13 @@
  * -------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------
- *  External declarations for global context
+ *  External declarations for global context 
  * -------------------------------------------------------------------------*/
-/* #if 1
- * BT-AMP packet LLC OUI value
- static const v_U8_t WLANBAP_BT_AMP_OUI[] =  {0x00, 0x19, 0x58 };
+#if 1
+//*BT-AMP packet LLC OUI value*/
+static const v_U8_t WLANBAP_BT_AMP_OUI[] =  {0x00, 0x19, 0x58 };
 
-#endif*/
+#endif
 
 /*----------------------------------------------------------------------------
  * Static Variable Definitions
@@ -110,218 +110,218 @@
  * -------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------
- * Utility Function implementations
+ * Utility Function implementations 
  * -------------------------------------------------------------------------*/
 
 /*==========================================================================
 
   FUNCTION    WLANBAP_InitConnectionAcceptTimer
 
-  DESCRIPTION
+  DESCRIPTION 
     Initialize the Connection Accept Timer.
-
-  DEPENDENCIES
-
-  PARAMETERS
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
     pBtampCtx:   pointer to the BAP control block
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  access would cause a page fault
-    VOS_STATUS_SUCCESS:  Everything is good :)
+    VOS_STATUS_E_FAULT:  access would cause a page fault  
+    VOS_STATUS_SUCCESS:  Everything is good :) 
 
-  SIDE EFFECTS
-
+  SIDE EFFECTS 
+  
 ============================================================================*/
-VOS_STATUS
+VOS_STATUS 
 WLANBAP_InitConnectionAcceptTimer
-(
-    ptBtampContext  pBtampCtx
+( 
+  ptBtampContext  pBtampCtx
 )
 {
-    VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
+  VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
 
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+  /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 
-    /*------------------------------------------------------------------------
-      Sanity check BAP control block
-     ------------------------------------------------------------------------*/
+  /*------------------------------------------------------------------------
+    Sanity check BAP control block 
+   ------------------------------------------------------------------------*/
 
-    if ( NULL == pBtampCtx )
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "Invalid BAP pointer in %s", __func__);
-        return VOS_STATUS_E_FAULT;
-    }
+  if ( NULL == pBtampCtx ) 
+  {
+    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                 "Invalid BAP pointer in %s", __func__);
+    return VOS_STATUS_E_FAULT;
+  }
 
-    /*Initialize the timer */
-    vosStatus = vos_timer_init(
-                    &pBtampCtx->bapConnectionAcceptTimer,
-                    VOS_TIMER_TYPE_SW, /* use this type */
-                    WLANBAP_ConnectionAcceptTimerHandler,
-                    pBtampCtx);
-
-    return VOS_STATUS_SUCCESS;
+  /*Initialize the timer */
+  vosStatus = vos_timer_init( 
+          &pBtampCtx->bapConnectionAcceptTimer,
+          VOS_TIMER_TYPE_SW, /* use this type */
+          WLANBAP_ConnectionAcceptTimerHandler,
+          pBtampCtx);
+   
+  return VOS_STATUS_SUCCESS;
 }/* WLANBAP_InitConnectionAcceptTimer */
 
 /*==========================================================================
 
   FUNCTION    WLANBAP_DeinitConnectionAcceptTimer
 
-  DESCRIPTION
+  DESCRIPTION 
     Destroy the Connection Accept Timer.
-
-  DEPENDENCIES
-
-  PARAMETERS
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
     pBtampCtx:   pointer to the BAP control block
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  access would cause a page fault
-    VOS_STATUS_SUCCESS:  Everything is good :)
+    VOS_STATUS_E_FAULT:  access would cause a page fault  
+    VOS_STATUS_SUCCESS:  Everything is good :) 
 
-  SIDE EFFECTS
-
+  SIDE EFFECTS 
+  
 ============================================================================*/
-VOS_STATUS
+VOS_STATUS 
 WLANBAP_DeinitConnectionAcceptTimer
-(
-    ptBtampContext  pBtampCtx
+( 
+  ptBtampContext  pBtampCtx
 )
 {
-    VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
+  VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
 
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+  /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 
-    /*------------------------------------------------------------------------
-      Sanity check BAP control block
-     ------------------------------------------------------------------------*/
+  /*------------------------------------------------------------------------
+    Sanity check BAP control block 
+   ------------------------------------------------------------------------*/
 
-    if ( NULL == pBtampCtx )
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "Invalid BAP pointer in %s", __func__);
-        return VOS_STATUS_E_FAULT;
-    }
+  if ( NULL == pBtampCtx ) 
+  {
+    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                 "Invalid BAP pointer in %s", __func__);
+    return VOS_STATUS_E_FAULT;
+  }
 
-    /*Initialize and then Start the timer */
-    vosStatus = vos_timer_destroy (
-                    &pBtampCtx->bapConnectionAcceptTimer );
-
-    return VOS_STATUS_SUCCESS;
+  /*Initialize and then Start the timer */
+  vosStatus = vos_timer_destroy ( 
+          &pBtampCtx->bapConnectionAcceptTimer );
+   
+  return VOS_STATUS_SUCCESS;
 }/* WLANBAP_DeinitConnectionAcceptTimer */
 
 /*==========================================================================
 
   FUNCTION    WLANBAP_StartConnectionAcceptTimer
 
-  DESCRIPTION
+  DESCRIPTION 
     Start the Connection Accept Timer.
-
-  DEPENDENCIES
-
-  PARAMETERS
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
     pBtampCtx:   pointer to the BAP control block
     interval:    time interval.
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  access would cause a page fault
-    VOS_STATUS_SUCCESS:  Everything is good :)
+    VOS_STATUS_E_FAULT:  access would cause a page fault  
+    VOS_STATUS_SUCCESS:  Everything is good :) 
 
-  SIDE EFFECTS
-
+  SIDE EFFECTS 
+  
 ============================================================================*/
-VOS_STATUS
+VOS_STATUS 
 WLANBAP_StartConnectionAcceptTimer
-(
-    ptBtampContext  pBtampCtx,
-    v_U32_t interval
+( 
+  ptBtampContext  pBtampCtx,
+  v_U32_t interval
 )
 {
-    /*------------------------------------------------------------------------
-      Sanity check BAP control block
-     ------------------------------------------------------------------------*/
+  /*------------------------------------------------------------------------
+    Sanity check BAP control block 
+   ------------------------------------------------------------------------*/
 
-    if ( NULL == pBtampCtx )
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "Invalid BAP pointer in %s", __func__);
-        return VOS_STATUS_E_FAULT;
-    }
+  if ( NULL == pBtampCtx ) 
+  {
+    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                 "Invalid BAP pointer in %s", __func__);
+    return VOS_STATUS_E_FAULT;
+  }
 
-    /*Start the connection accept timer*/
-    vos_timer_start(
-        &pBtampCtx->bapConnectionAcceptTimer,
-        interval);
+  /*Start the connection accept timer*/
+  vos_timer_start( 
+          &pBtampCtx->bapConnectionAcceptTimer,
+          interval);
 
-    return VOS_STATUS_SUCCESS;
+  return VOS_STATUS_SUCCESS;
 }/* WLANBAP_StartConnectionAcceptTimer */
 
 
 /*==========================================================================
 
-  FUNCTION    WLANBAP_StopConnectionAcceptTimer
+  FUNCTION    WLANBAP_StopConnectionAcceptTimer 
 
-  DESCRIPTION
+  DESCRIPTION 
     Stop the Connection Accept Timer.
-
-  DEPENDENCIES
-
-  PARAMETERS
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
     pBtampCtx:   pointer to the BAP control block
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  access would cause a page fault
-    VOS_STATUS_SUCCESS:  Everything is good :)
+    VOS_STATUS_E_FAULT:  access would cause a page fault  
+    VOS_STATUS_SUCCESS:  Everything is good :) 
 
-  SIDE EFFECTS
-
+  SIDE EFFECTS 
+  
 ============================================================================*/
-VOS_STATUS
-WLANBAP_StopConnectionAcceptTimer
-(
-    ptBtampContext  pBtampCtx
+VOS_STATUS 
+WLANBAP_StopConnectionAcceptTimer 
+( 
+  ptBtampContext  pBtampCtx
 )
 {
-    VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+  VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
+  /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 
-    /*------------------------------------------------------------------------
-      Sanity check BAP control block
-     ------------------------------------------------------------------------*/
+  /*------------------------------------------------------------------------
+    Sanity check BAP control block 
+   ------------------------------------------------------------------------*/
 
-    if ( NULL == pBtampCtx )
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "Invalid BAP pointer in %s", __func__);
-        return VOS_STATUS_E_FAULT;
-    }
+  if ( NULL == pBtampCtx ) 
+  {
+    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                 "Invalid BAP pointer in %s", __func__);
+    return VOS_STATUS_E_FAULT;
+  }
 
-    /*Stop the timer */
-    vosStatus =  vos_timer_stop(
-                     &pBtampCtx->bapConnectionAcceptTimer);
-
-
-    return VOS_STATUS_SUCCESS;
-}/* WLANBAP_StopConnectionAcceptTimer */
+  /*Stop the timer */
+  vosStatus =  vos_timer_stop( 
+           &pBtampCtx->bapConnectionAcceptTimer);
+ 
+   
+  return VOS_STATUS_SUCCESS;
+}/* WLANBAP_StopConnectionAcceptTimer */ 
 
 
 
@@ -329,62 +329,62 @@ WLANBAP_StopConnectionAcceptTimer
 
   FUNCTION    WLANBAP_ConnectionAcceptTimerHandler
 
-  DESCRIPTION
+  DESCRIPTION 
     Callback function registered with vos timer for the Connection
-    Accept timer
-
-  DEPENDENCIES
-
-  PARAMETERS
+    Accept timer 
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
-    userData:      pointer can be used to retrive the BT-AMP context
-
+    userData:      pointer can be used to retrive the BT-AMP context 
+   
   RETURN VALUE
     None
-
-  SIDE EFFECTS
-
+         
+  SIDE EFFECTS 
+  
 ============================================================================*/
-v_VOID_t
+v_VOID_t 
 WLANBAP_ConnectionAcceptTimerHandler
-(
-    v_PVOID_t userData
+( 
+  v_PVOID_t userData 
 )
 {
-    ptBtampContext  pBtampCtx = (ptBtampContext)userData;
-    tWLAN_BAPEvent bapEvent; /* State machine event */
-    VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
-    v_U8_t status;    /* return the BT-AMP status here */
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+  ptBtampContext  pBtampCtx = (ptBtampContext)userData;
+  tWLAN_BAPEvent bapEvent; /* State machine event */
+  VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
+  v_U8_t status;    /* return the BT-AMP status here */
+  /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-    /*-----------------------------------------------------------------------
-      Sanity check
-     -----------------------------------------------------------------------*/
-    if ( NULL == pBtampCtx )
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "WLAN BAP: Fatal error in %s", __func__ );
-        VOS_ASSERT(0);
-        return;
-    }
+  /*-----------------------------------------------------------------------
+    Sanity check 
+   -----------------------------------------------------------------------*/
+  if ( NULL == pBtampCtx )
+  {
+     VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                "WLAN BAP: Fatal error in %s", __func__ );
+     VOS_ASSERT(0);
+     return; 
+  }
 
-    /*---------------------------------------------------------------------
-       Feed this timeout to the BTAMP FSM
-      ---------------------------------------------------------------------*/
-    /* Fill in the event structure */
-    bapEvent.event = eWLAN_BAP_TIMER_CONNECT_ACCEPT_TIMEOUT;
-    bapEvent.params = NULL;
+ /*---------------------------------------------------------------------
+    Feed this timeout to the BTAMP FSM 
+   ---------------------------------------------------------------------*/
+  /* Fill in the event structure */ 
+  bapEvent.event = eWLAN_BAP_TIMER_CONNECT_ACCEPT_TIMEOUT;
+  bapEvent.params = NULL;
 
-    /* Handle event */
-    vosStatus = btampFsm(pBtampCtx, &bapEvent, &status);
+  /* Handle event */ 
+  vosStatus = btampFsm(pBtampCtx, &bapEvent, &status);
 
-    /* Now transition to fully disconnected and notify phy link disconnect*/
-    bapEvent.event =  eWLAN_BAP_MAC_READY_FOR_CONNECTIONS;
-    bapEvent.params = NULL;
+  /* Now transition to fully disconnected and notify phy link disconnect*/ 
+  bapEvent.event =  eWLAN_BAP_MAC_READY_FOR_CONNECTIONS;
+  bapEvent.params = NULL;
 
-    /* Handle event */
-    vosStatus = btampFsm(pBtampCtx, &bapEvent, &status);
+  /* Handle event */ 
+  vosStatus = btampFsm(pBtampCtx, &bapEvent, &status);
 
 
 }/*WLANBAP_ConnectionAcceptTimerHandler*/
@@ -393,235 +393,235 @@ WLANBAP_ConnectionAcceptTimerHandler
 
   FUNCTION    WLANBAP_InitLinkSupervisionTimer
 
-  DESCRIPTION
+  DESCRIPTION 
     Initialize the Link Supervision Timer.
-
-  DEPENDENCIES
-
-  PARAMETERS
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
     pBtampCtx:   pointer to the BAP control block
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  access would cause a page fault
-    VOS_STATUS_SUCCESS:  Everything is good :)
+    VOS_STATUS_E_FAULT:  access would cause a page fault  
+    VOS_STATUS_SUCCESS:  Everything is good :) 
 
-  SIDE EFFECTS
-
+  SIDE EFFECTS 
+  
 ============================================================================*/
-VOS_STATUS
+VOS_STATUS 
 WLANBAP_InitLinkSupervisionTimer
-(
-    ptBtampContext  pBtampCtx
+( 
+  ptBtampContext  pBtampCtx
 )
 {
-    VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
+  VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
 
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+  /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 
-    /*------------------------------------------------------------------------
-      Sanity check BAP control block
-     ------------------------------------------------------------------------*/
+  /*------------------------------------------------------------------------
+    Sanity check BAP control block 
+   ------------------------------------------------------------------------*/
 
-    if ( NULL == pBtampCtx )
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "Invalid BAP pointer in %s", __func__);
-        return VOS_STATUS_E_FAULT;
-    }
+  if ( NULL == pBtampCtx ) 
+  {
+    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                 "Invalid BAP pointer in %s", __func__);
+    return VOS_STATUS_E_FAULT;
+  }
 
-    /*Initialize the timer */
-    vosStatus = vos_timer_init(
-                    &pBtampCtx->bapLinkSupervisionTimer,
-                    VOS_TIMER_TYPE_SW, /* use this type */
-                    WLANBAP_LinkSupervisionTimerHandler,
-                    pBtampCtx);
-
-    return VOS_STATUS_SUCCESS;
+  /*Initialize the timer */
+  vosStatus = vos_timer_init( 
+          &pBtampCtx->bapLinkSupervisionTimer,
+          VOS_TIMER_TYPE_SW, /* use this type */
+          WLANBAP_LinkSupervisionTimerHandler,
+          pBtampCtx);
+   
+  return VOS_STATUS_SUCCESS;
 }/* WLANBAP_InitLinkSupervisionTimer */
 
 /*==========================================================================
 
   FUNCTION    WLANBAP_DeinitLinkSupervisionTimer
 
-  DESCRIPTION
+  DESCRIPTION 
     Destroy the Link Supervision Timer.
-
-  DEPENDENCIES
-
-  PARAMETERS
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
     pBtampCtx:   pointer to the BAP control block
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  access would cause a page fault
-    VOS_STATUS_SUCCESS:  Everything is good :)
+    VOS_STATUS_E_FAULT:  access would cause a page fault  
+    VOS_STATUS_SUCCESS:  Everything is good :) 
 
-  SIDE EFFECTS
-
+  SIDE EFFECTS 
+  
 ============================================================================*/
-VOS_STATUS
+VOS_STATUS 
 WLANBAP_DeinitLinkSupervisionTimer
-(
-    ptBtampContext  pBtampCtx
+( 
+  ptBtampContext  pBtampCtx
 )
 {
-    VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
+  VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
 
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+  /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 
-    /*------------------------------------------------------------------------
-      Sanity check BAP control block
-     ------------------------------------------------------------------------*/
+  /*------------------------------------------------------------------------
+    Sanity check BAP control block 
+   ------------------------------------------------------------------------*/
 
-    if ( NULL == pBtampCtx )
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "Invalid BAP pointer in %s", __func__);
-        return VOS_STATUS_E_FAULT;
-    }
+  if ( NULL == pBtampCtx ) 
+  {
+    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                 "Invalid BAP pointer in %s", __func__);
+    return VOS_STATUS_E_FAULT;
+  }
 
-    /*Initialize and then Start the timer */
-    vosStatus = vos_timer_destroy (
-                    &pBtampCtx->bapLinkSupervisionTimer );
-
-    return VOS_STATUS_SUCCESS;
+  /*Initialize and then Start the timer */
+  vosStatus = vos_timer_destroy ( 
+          &pBtampCtx->bapLinkSupervisionTimer );
+   
+  return VOS_STATUS_SUCCESS;
 }/* WLANBAP_DeinitLinkSupervisionTimer */
 
 /*==========================================================================
 
   FUNCTION    WLANBAP_StartLinkSupervisionTimer
 
-  DESCRIPTION
+  DESCRIPTION 
     Start the LinkSupervisionTimer Timer.
-
-  DEPENDENCIES
-
-  PARAMETERS
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
     pBtampCtx:   pointer to the BAP control block
     interval:    time interval.
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  access would cause a page fault
-    VOS_STATUS_SUCCESS:  Everything is good :)
+    VOS_STATUS_E_FAULT:  access would cause a page fault  
+    VOS_STATUS_SUCCESS:  Everything is good :) 
 
-  SIDE EFFECTS
-
+  SIDE EFFECTS 
+  
 ============================================================================*/
-VOS_STATUS
+VOS_STATUS 
 WLANBAP_StartLinkSupervisionTimer
-(
-    ptBtampContext  pBtampCtx,
-    v_U32_t interval
+( 
+  ptBtampContext  pBtampCtx,
+  v_U32_t interval
 )
 {
-    /*------------------------------------------------------------------------
-      Sanity check BAP control block
-     ------------------------------------------------------------------------*/
+  /*------------------------------------------------------------------------
+    Sanity check BAP control block 
+   ------------------------------------------------------------------------*/
 
-    if ( NULL == pBtampCtx )
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "Invalid BAP pointer in %s", __func__);
-        return VOS_STATUS_E_FAULT;
-    }
+  if ( NULL == pBtampCtx ) 
+  {
+    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                 "Invalid BAP pointer in %s", __func__);
+    return VOS_STATUS_E_FAULT;
+  }
 
-    vos_timer_start(
-        &pBtampCtx->bapLinkSupervisionTimer,
-        interval);
+  vos_timer_start( 
+          &pBtampCtx->bapLinkSupervisionTimer,
+          interval);
 
-    return VOS_STATUS_SUCCESS;
+  return VOS_STATUS_SUCCESS;
 }/* WLANBAP_StartLinkSupervisionTimer */
 
 /*==========================================================================
 
-  FUNCTION    WLANBAP_StopLinkSupervisionTimer
+  FUNCTION    WLANBAP_StopLinkSupervisionTimer 
 
-  DESCRIPTION
+  DESCRIPTION 
     Stop the LinkSupervision Timer.
-
-  DEPENDENCIES
-
-  PARAMETERS
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
     pBtampCtx:   pointer to the BAP control block
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  access would cause a page fault
-    VOS_STATUS_SUCCESS:  Everything is good :)
+    VOS_STATUS_E_FAULT:  access would cause a page fault  
+    VOS_STATUS_SUCCESS:  Everything is good :) 
 
-  SIDE EFFECTS
-
+  SIDE EFFECTS 
+  
 ============================================================================*/
-VOS_STATUS
-WLANBAP_StopLinkSupervisionTimer
-(
-    ptBtampContext  pBtampCtx
+VOS_STATUS 
+WLANBAP_StopLinkSupervisionTimer 
+( 
+  ptBtampContext  pBtampCtx
 )
 {
-    VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+  VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
+  /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 
-    /*------------------------------------------------------------------------
-      Sanity check BAP control block
-     ------------------------------------------------------------------------*/
+  /*------------------------------------------------------------------------
+    Sanity check BAP control block 
+   ------------------------------------------------------------------------*/
 
-    if ( NULL == pBtampCtx )
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "Invalid BAP pointer in %s", __func__);
-        return VOS_STATUS_E_FAULT;
-    }
+  if ( NULL == pBtampCtx ) 
+  {
+    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                 "Invalid BAP pointer in %s", __func__);
+    return VOS_STATUS_E_FAULT;
+  }
 
-    /*Stop the timer */
-    vosStatus =  vos_timer_stop(
-                     &pBtampCtx->bapLinkSupervisionTimer);
-
-
-    return VOS_STATUS_SUCCESS;
-}/* WLANBAP_StopLinkSupervisionTimer */
+  /*Stop the timer */
+  vosStatus =  vos_timer_stop( 
+           &pBtampCtx->bapLinkSupervisionTimer);
+ 
+   
+  return VOS_STATUS_SUCCESS;
+}/* WLANBAP_StopLinkSupervisionTimer */ 
 
 
 /*==========================================================================
 
   FUNCTION    WLANBAP_LinkSupervisionTimerHandler
 
-  DESCRIPTION
-    Callback function registered with vos timer for the LinkSupervision timer
-
-  DEPENDENCIES
-
-  PARAMETERS
+  DESCRIPTION 
+    Callback function registered with vos timer for the LinkSupervision timer 
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
-    userData:      pointer can be used to retrive the BT-AMP context
-
+    userData:      pointer can be used to retrive the BT-AMP context 
+   
   RETURN VALUE
     None
-
-  SIDE EFFECTS
-
+         
+  SIDE EFFECTS 
+  
 ============================================================================*/
-v_VOID_t
+v_VOID_t 
 WLANBAP_LinkSupervisionTimerHandler
-(
-    v_PVOID_t userData
+( 
+  v_PVOID_t userData 
 )
 {
     ptBtampContext           pBtampCtx =      (ptBtampContext)userData;
@@ -630,27 +630,27 @@ WLANBAP_LinkSupervisionTimerHandler
     tWLAN_BAPEvent           bapEvent; /* State machine event */
     v_U8_t                   phy_link_handle;
 
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+  /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-    /*-----------------------------------------------------------------------
-      Sanity check
-     -----------------------------------------------------------------------*/
+  /*-----------------------------------------------------------------------
+    Sanity check 
+   -----------------------------------------------------------------------*/
     if ( NULL == pBtampCtx )
     {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "WLAN BAP: Fatal error in %s", __func__ );
-        VOS_ASSERT(0);
-        return;
+       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                "WLAN BAP: Fatal error in %s", __func__ );
+       VOS_ASSERT(0);
+       return; 
     }
 
     phy_link_handle = pBtampCtx->phy_link_handle;
-    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-               "WLAN BAP:In LinkSupervision Timer handler %s", __func__ );
+     VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                "WLAN BAP:In LinkSupervision Timer handler %s", __func__ );
 
     if(pBtampCtx->dataPktPending == VOS_TRUE)
     {
         VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "%s: Data seen. Do nothing", __func__ );
+                    "%s: Data seen. Do nothing", __func__ );
 
         pBtampCtx->dataPktPending = VOS_FALSE;
         pBtampCtx->lsReqPktPending = VOS_FALSE;
@@ -662,223 +662,223 @@ WLANBAP_LinkSupervisionTimerHandler
         //Data is seen. or our previous packet is not yet fetched by TL.Don't do any thing.Just return;
         return;
     }
-    else if((pBtampCtx->lsReqPktPending == VOS_TRUE )
+    else if((pBtampCtx->lsReqPktPending == VOS_TRUE ) 
             && (pBtampCtx->retries == WLANBAP_LINK_SUPERVISION_RETRIES))
     {
         VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "#########WLAN BAP: LinkSupervision Timed OUT######## %s", __func__ );
+                    "#########WLAN BAP: LinkSupervision Timed OUT######## %s", __func__ );
 
-        /*---------------------------------------------------------------------
-        Feed this timeout to the BTAMP FSM
-        ---------------------------------------------------------------------*/
-        /* Fill in the event structure */
-        /* JEZ110307: Which should this be? */
+     /*---------------------------------------------------------------------
+    Feed this timeout to the BTAMP FSM 
+   ---------------------------------------------------------------------*/
+        /* Fill in the event structure */ 
+        /* JEZ110307: Which should this be? */ 
         //bapEvent.event =eWLAN_BAP_HCI_PHYSICAL_LINK_DISCONNECT;
         bapEvent.event =eWLAN_BAP_MAC_INDICATES_MEDIA_DISCONNECTION;
         bapEvent.params = NULL;
 
-        /* Handle event */
+        /* Handle event */ 
         vosStatus = btampFsm(pBtampCtx, &bapEvent, (v_U8_t *)&vosStatus);
     }
     else
-    {
+    {    
         VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "%s: Resend the LS packet", __func__ );
+                    "%s: Resend the LS packet", __func__ );
 
         /* If we have transmit pkt pending and the time out occurred,resend the ls packet */
         WLANBAP_StopLinkSupervisionTimer(pBtampCtx);
         pBtampCtx->pPacket = pBtampCtx->lsReqPacket;
-        vosStatus = WLANBAP_TxLinkSupervision( btampHandle,
-                                               phy_link_handle,
+        vosStatus = WLANBAP_TxLinkSupervision( btampHandle, 
+                                               phy_link_handle, 
                                                pBtampCtx->pPacket ,
                                                WLANTL_BT_AMP_TYPE_LS_REQ);
     }
-
+    
 }/*WLANBAP_LinkSupervisionTimerHandler*/
 
 /*==========================================================================
 
   FUNCTION    WLANBAP_StartTxPacketMonitorTimer
 
-  DESCRIPTION
+  DESCRIPTION 
     Start the Tx Packet Monitor Timer.
-
-  DEPENDENCIES
-
-  PARAMETERS
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
     pBtampCtx:   pointer to the BAP control block
     interval:    time interval.
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  access would cause a page fault
-    VOS_STATUS_SUCCESS:  Everything is good :)
+    VOS_STATUS_E_FAULT:  access would cause a page fault  
+    VOS_STATUS_SUCCESS:  Everything is good :) 
 
-  SIDE EFFECTS
-
+  SIDE EFFECTS 
+  
 ============================================================================*/
-VOS_STATUS
+VOS_STATUS 
 WLANBAP_StartTxPacketMonitorTimer
-(
-    ptBtampContext  pBtampCtx
+( 
+  ptBtampContext  pBtampCtx
 )
 {
-    VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
-    v_U32_t     uInterval = WLAN_BAP_TX_PKT_MONITOR_TIME;
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+  VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
+  v_U32_t     uInterval = WLAN_BAP_TX_PKT_MONITOR_TIME; 
+  /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 
-    /*------------------------------------------------------------------------
-      Sanity check BAP control block
-     ------------------------------------------------------------------------*/
-    if ( NULL == pBtampCtx )
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "Invalid BAP pointer in %s", __func__);
-        return VOS_STATUS_E_FAULT;
-    }
+  /*------------------------------------------------------------------------
+    Sanity check BAP control block 
+   ------------------------------------------------------------------------*/
+  if ( NULL == pBtampCtx ) 
+  {
+    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                 "Invalid BAP pointer in %s", __func__);
+    return VOS_STATUS_E_FAULT;
+  }
 
-    /*Start the timer */
-    vosStatus = vos_timer_start( &pBtampCtx->bapTxPktMonitorTimer,
-                                 uInterval);
+  /*Start the timer */
+  vosStatus = vos_timer_start( &pBtampCtx->bapTxPktMonitorTimer,
+                                uInterval);
 
-    return vosStatus;
+  return vosStatus;
 }/* WLANBAP_StartTxPacketMonitorTimer */
 
 
 /*==========================================================================
 
-  FUNCTION    WLANBAP_StopTxPacketMonitorTimer
+  FUNCTION    WLANBAP_StopTxPacketMonitorTimer 
 
-  DESCRIPTION
+  DESCRIPTION 
     Stop the Tx Packet Monitor Timer.
-
-  DEPENDENCIES
-
-  PARAMETERS
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
     pBtampCtx:   pointer to the BAP control block
-
+   
   RETURN VALUE
-    The result code associated with performing the operation
+    The result code associated with performing the operation  
 
-    VOS_STATUS_E_FAULT:  access would cause a page fault
-    VOS_STATUS_SUCCESS:  Everything is good :)
+    VOS_STATUS_E_FAULT:  access would cause a page fault  
+    VOS_STATUS_SUCCESS:  Everything is good :) 
 
-  SIDE EFFECTS
-
+  SIDE EFFECTS 
+  
 ============================================================================*/
-VOS_STATUS
-WLANBAP_StopTxPacketMonitorTimer
-(
-    ptBtampContext  pBtampCtx
+VOS_STATUS 
+WLANBAP_StopTxPacketMonitorTimer 
+( 
+  ptBtampContext  pBtampCtx
 )
 {
-    VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+  VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
+  /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 
-    /*------------------------------------------------------------------------
-      Sanity check BAP control block
-     ------------------------------------------------------------------------*/
-    if ( NULL == pBtampCtx )
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "Invalid BAP pointer in %s", __func__);
-        return VOS_STATUS_E_FAULT;
-    }
+  /*------------------------------------------------------------------------
+    Sanity check BAP control block 
+   ------------------------------------------------------------------------*/
+  if ( NULL == pBtampCtx ) 
+  {
+    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                 "Invalid BAP pointer in %s", __func__);
+    return VOS_STATUS_E_FAULT;
+  }
 
-    /*Stop the timer */
-    vosStatus =  vos_timer_stop( &pBtampCtx->bapTxPktMonitorTimer);
-
-
-    return vosStatus;
-}/* WLANBAP_StopTxPacketMonitorTimer */
+  /*Stop the timer */
+  vosStatus =  vos_timer_stop( &pBtampCtx->bapTxPktMonitorTimer);
+ 
+   
+  return vosStatus;
+}/* WLANBAP_StopTxPacketMonitorTimer */ 
 
 
 /*==========================================================================
 
   FUNCTION    WLANBAP_SendCompletedPktsEvent
 
-  DESCRIPTION
-    Utility function for sending the NUM_OF_COMPLETED_PKTS_EVENT to HCI
-
-  DEPENDENCIES
-
-  PARAMETERS
+  DESCRIPTION 
+    Utility function for sending the NUM_OF_COMPLETED_PKTS_EVENT to HCI 
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
-    pBtampCtx:   pointer to the BAP control block
-
+    pBtampCtx:   pointer to the BAP control block 
+   
   RETURN VALUE
     None
-
-  SIDE EFFECTS
-
+         
+  SIDE EFFECTS 
+  
 ============================================================================*/
-v_VOID_t
+v_VOID_t 
 WLANBAP_SendCompletedPktsEvent
-(
-    ptBtampContext     pBtampCtx
+( 
+  ptBtampContext     pBtampCtx 
 )
 {
-    v_U8_t             i, j;
-    tBtampHCI_Event    bapHCIEvent; /* This now encodes ALL event types */
-    v_U32_t            uTxCompleted    = 0;
-    tpBtampLogLinkCtx  pLogLinkContext = NULL;
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-    /* Format the Number of completed packets event */
-    bapHCIEvent.bapHCIEventCode = BTAMP_TLV_HCI_NUM_OF_COMPLETED_PKTS_EVENT;
-    bapHCIEvent.u.btampNumOfCompletedPktsEvent.num_handles = 0;
+  v_U8_t             i, j;
+  tBtampHCI_Event    bapHCIEvent; /* This now encodes ALL event types */
+  v_U32_t            uTxCompleted    = 0; 
+  tpBtampLogLinkCtx  pLogLinkContext = NULL;
+  /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+    /* Format the Number of completed packets event */ 
+  bapHCIEvent.bapHCIEventCode = BTAMP_TLV_HCI_NUM_OF_COMPLETED_PKTS_EVENT;
+  bapHCIEvent.u.btampNumOfCompletedPktsEvent.num_handles = 0;
 
-    /*---------------------------------------------------------------------
-       Check if LL still exists, if TRUE generate num_pkt_event and
-       restart the timer
-      ---------------------------------------------------------------------*/
-    for (i = 0, j = 0; i < WLANBAP_MAX_LOG_LINKS ; i++)
-    {
-        pLogLinkContext = &pBtampCtx->btampLogLinkCtx[i];
-        if ( pLogLinkContext->present )
-        {
-            uTxCompleted = pLogLinkContext->uTxPktCompleted;
-            bapHCIEvent.u.btampNumOfCompletedPktsEvent.conn_handles[j] =
-                pLogLinkContext->log_link_handle;
-            bapHCIEvent.u.btampNumOfCompletedPktsEvent.num_completed_pkts[j] =
-                uTxCompleted;
+ /*---------------------------------------------------------------------
+    Check if LL still exists, if TRUE generate num_pkt_event and
+    restart the timer 
+   ---------------------------------------------------------------------*/
+  for (i = 0, j = 0; i < WLANBAP_MAX_LOG_LINKS ; i++) 
+  {
+     pLogLinkContext = &pBtampCtx->btampLogLinkCtx[i];
+     if ( pLogLinkContext->present ) 
+     {
+       uTxCompleted = pLogLinkContext->uTxPktCompleted;
+       bapHCIEvent.u.btampNumOfCompletedPktsEvent.conn_handles[j] =
+           pLogLinkContext->log_link_handle;
+       bapHCIEvent.u.btampNumOfCompletedPktsEvent.num_completed_pkts[j] =
+           uTxCompleted;
 
-            j++;
+       j++;
 
-            vos_atomic_decrement_U32_by_value((v_U32_t *) &pLogLinkContext->uTxPktCompleted,
-                                              (v_U32_t) uTxCompleted);
+       vos_atomic_decrement_U32_by_value((v_U32_t *) &pLogLinkContext->uTxPktCompleted,
+                                         (v_U32_t) uTxCompleted);
 
-            if (uTxCompleted) {
-                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                           "wlan bap: %s Log Link handle - %d No Of Pkts - %d", __func__,
-                           pLogLinkContext->log_link_handle, uTxCompleted);
-            }
-        }
-    }
+       if (uTxCompleted) { 
+          VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
+                  "wlan bap: %s Log Link handle - %d No Of Pkts - %d", __func__, 
+                  pLogLinkContext->log_link_handle, uTxCompleted);  
+       }
+     }
+  }
 
-    /* Indicate only if at least one logical link is present and number of
-       completed packets is non zero */
-    if (j && uTxCompleted)
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "WLAN BAP: Indicating Num Completed packets Event");
+  /* Indicate only if at least one logical link is present and number of
+     completed packets is non zero */
+  if (j && uTxCompleted)
+  {
+      VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                "WLAN BAP: Indicating Num Completed packets Event");
 
-        /*issue num_pkt_event for uTxCompleted*/
-        bapHCIEvent.u.btampNumOfCompletedPktsEvent.num_handles = j;
-        (*pBtampCtx->pBapHCIEventCB)
-        (
-            pBtampCtx->pHddHdl,   /* this refers the BSL per application context */
-            &bapHCIEvent, /* This now encodes ALL event types */
-            VOS_TRUE /* Flag to indicate assoc-specific event */
-        );
-    }
+      /*issue num_pkt_event for uTxCompleted*/
+      bapHCIEvent.u.btampNumOfCompletedPktsEvent.num_handles = j;
+      (*pBtampCtx->pBapHCIEventCB)
+      (
+           pBtampCtx->pHddHdl,   /* this refers the BSL per application context */
+           &bapHCIEvent, /* This now encodes ALL event types */
+           VOS_TRUE /* Flag to indicate assoc-specific event */ 
+      );
+  }
 
 }
 
@@ -886,84 +886,84 @@ WLANBAP_SendCompletedPktsEvent
 
   FUNCTION    WLANBAP_SendCompletedDataBlksEvent
 
-  DESCRIPTION
-    Utility function for sending the NUM_OF_COMPLETED_DATA_BLOCKS_EVENT to HCI
-
-  DEPENDENCIES
-
-  PARAMETERS
+  DESCRIPTION 
+    Utility function for sending the NUM_OF_COMPLETED_DATA_BLOCKS_EVENT to HCI 
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
-    pBtampCtx:   pointer to the BAP control block
-
+    pBtampCtx:   pointer to the BAP control block 
+   
   RETURN VALUE
     None
-
-  SIDE EFFECTS
-
+         
+  SIDE EFFECTS 
+  
 ============================================================================*/
-v_VOID_t
+v_VOID_t 
 WLANBAP_SendCompletedDataBlksEvent
-(
-    ptBtampContext     pBtampCtx
+( 
+  ptBtampContext     pBtampCtx 
 )
 {
-    v_U8_t             i, j;
-    tBtampHCI_Event    bapHCIEvent; /* This now encodes ALL event types */
-    v_U32_t            uTxCompleted    = 0;
-    tpBtampLogLinkCtx  pLogLinkContext = NULL;
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-    /* Format the Number of completed data blocks event */
-    bapHCIEvent.bapHCIEventCode = BTAMP_TLV_HCI_NUM_OF_COMPLETED_DATA_BLOCKS_EVENT;
-    bapHCIEvent.u.btampNumOfCompletedDataBlocksEvent.num_handles = 0;
+  v_U8_t             i, j;
+  tBtampHCI_Event    bapHCIEvent; /* This now encodes ALL event types */
+  v_U32_t            uTxCompleted    = 0; 
+  tpBtampLogLinkCtx  pLogLinkContext = NULL;
+  /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+    /* Format the Number of completed data blocks event */ 
+  bapHCIEvent.bapHCIEventCode = BTAMP_TLV_HCI_NUM_OF_COMPLETED_DATA_BLOCKS_EVENT;
+  bapHCIEvent.u.btampNumOfCompletedDataBlocksEvent.num_handles = 0;
 
-    /*---------------------------------------------------------------------
-       Check if LL still exists, if TRUE generate num_data_blocks_event and
-       restart the timer
-      ---------------------------------------------------------------------*/
-    for (i = 0, j = 0; i < WLANBAP_MAX_LOG_LINKS ; i++)
-    {
-        pLogLinkContext = &pBtampCtx->btampLogLinkCtx[i];
-        if ( pLogLinkContext->present )
-        {
-            uTxCompleted = pLogLinkContext->uTxPktCompleted;
-            bapHCIEvent.u.btampNumOfCompletedDataBlocksEvent.conn_handles[j] =
-                pLogLinkContext->log_link_handle;
-            bapHCIEvent.u.btampNumOfCompletedDataBlocksEvent.num_completed_pkts[j] =
-                uTxCompleted;
-            bapHCIEvent.u.btampNumOfCompletedDataBlocksEvent.num_completed_blocks[j] =
-                uTxCompleted;
-            bapHCIEvent.u.btampNumOfCompletedDataBlocksEvent.total_num_data_blocks = 16;
+ /*---------------------------------------------------------------------
+    Check if LL still exists, if TRUE generate num_data_blocks_event and
+    restart the timer 
+   ---------------------------------------------------------------------*/
+  for (i = 0, j = 0; i < WLANBAP_MAX_LOG_LINKS ; i++) 
+  {
+     pLogLinkContext = &pBtampCtx->btampLogLinkCtx[i];
+     if ( pLogLinkContext->present ) 
+     {
+       uTxCompleted = pLogLinkContext->uTxPktCompleted;
+       bapHCIEvent.u.btampNumOfCompletedDataBlocksEvent.conn_handles[j] =
+           pLogLinkContext->log_link_handle;
+       bapHCIEvent.u.btampNumOfCompletedDataBlocksEvent.num_completed_pkts[j] =
+           uTxCompleted;
+       bapHCIEvent.u.btampNumOfCompletedDataBlocksEvent.num_completed_blocks[j] =
+           uTxCompleted;
+       bapHCIEvent.u.btampNumOfCompletedDataBlocksEvent.total_num_data_blocks = 16;
 
-            j++;
+       j++;
 
-            vos_atomic_decrement_U32_by_value((v_U32_t *) &pLogLinkContext->uTxPktCompleted,
-                                              (v_U32_t) uTxCompleted);
+       vos_atomic_decrement_U32_by_value((v_U32_t *) &pLogLinkContext->uTxPktCompleted,
+                                         (v_U32_t) uTxCompleted);
 
-            if (uTxCompleted) {
-                VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                           "wlan bap: %s Log Link handle - %d No Of Pkts - %d", __func__,
-                           pLogLinkContext->log_link_handle, uTxCompleted);
-            }
-        }
-    }
+       if (uTxCompleted) { 
+          VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
+                  "wlan bap: %s Log Link handle - %d No Of Pkts - %d", __func__, 
+                  pLogLinkContext->log_link_handle, uTxCompleted);  
+       }
+     }
+  }
 
-    /* Indicate only if at least one logical link is present and number of
-       completed data blocks is non zero */
-    if (j && uTxCompleted)
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "WLAN BAP: Indicating Num Completed Data Blocks Event");
+  /* Indicate only if at least one logical link is present and number of
+     completed data blocks is non zero */
+  if (j && uTxCompleted)
+  {
+      VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                "WLAN BAP: Indicating Num Completed Data Blocks Event");
 
-        /*issue num_data_blocks_event for uTxCompleted*/
-        bapHCIEvent.u.btampNumOfCompletedDataBlocksEvent.num_handles = j;
-        (*pBtampCtx->pBapHCIEventCB)
-        (
-            pBtampCtx->pHddHdl,   /* this refers the BSL per application context */
-            &bapHCIEvent, /* This now encodes ALL event types */
-            VOS_TRUE /* Flag to indicate assoc-specific event */
-        );
-    }
+      /*issue num_data_blocks_event for uTxCompleted*/
+      bapHCIEvent.u.btampNumOfCompletedDataBlocksEvent.num_handles = j;
+      (*pBtampCtx->pBapHCIEventCB)
+      (
+           pBtampCtx->pHddHdl,   /* this refers the BSL per application context */
+           &bapHCIEvent, /* This now encodes ALL event types */
+           VOS_TRUE /* Flag to indicate assoc-specific event */ 
+      );
+  }
 
 }
 
@@ -971,67 +971,67 @@ WLANBAP_SendCompletedDataBlksEvent
 
   FUNCTION    WLANBAP_TxPacketMonitorHandler
 
-  DESCRIPTION
-    Callback function registered with vos timer for the Tx Packet Monitor
+  DESCRIPTION 
+    Callback function registered with vos timer for the Tx Packet Monitor 
     Timer.
-
-  DEPENDENCIES
-
-  PARAMETERS
+    
+  DEPENDENCIES 
+    
+  PARAMETERS 
 
     IN
-    userData:      pointer can be used to retrive the BT-AMP context
-
+    userData:      pointer can be used to retrive the BT-AMP context 
+   
   RETURN VALUE
     None
-
-  SIDE EFFECTS
-
+         
+  SIDE EFFECTS 
+  
 ============================================================================*/
-v_VOID_t
+v_VOID_t 
 WLANBAP_TxPacketMonitorHandler
-(
-    v_PVOID_t userData
+( 
+  v_PVOID_t userData 
 )
 {
-    ptBtampContext     pBtampCtx       = (ptBtampContext)userData;
-    BTAMPFSM_INSTANCEDATA_T *instanceVar = &pBtampCtx->bapPhysLinkMachine;
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+  ptBtampContext     pBtampCtx       = (ptBtampContext)userData;
+  BTAMPFSM_INSTANCEDATA_T *instanceVar = &pBtampCtx->bapPhysLinkMachine;
+  /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-    /*-----------------------------------------------------------------------
-      Sanity check
-     -----------------------------------------------------------------------*/
-    if ( NULL == pBtampCtx )
-    {
-        VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
-                   "WLAN BAP: Fatal error in %s", __func__ );
-        VOS_ASSERT(0);
-        return;
-    }
+  /*-----------------------------------------------------------------------
+    Sanity check 
+   -----------------------------------------------------------------------*/
+  if ( NULL == pBtampCtx )
+  {
+     VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
+                "WLAN BAP: Fatal error in %s", __func__ );
+     VOS_ASSERT(0);
+     return; 
+  }
 
 #if 0 //BAP_DEBUG
-    /* Trace the tBtampCtx being passed in. */
-    VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO_HIGH,
-               "WLAN BAP Context Monitor: pBtampCtx value = %x in %s:%d", pBtampCtx, __func__, __LINE__ );
+  /* Trace the tBtampCtx being passed in. */
+  VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO_HIGH,
+            "WLAN BAP Context Monitor: pBtampCtx value = %x in %s:%d", pBtampCtx, __func__, __LINE__ );
 #endif //BAP_DEBUG
 
-    if(WLANBAP_FLOW_CONTROL_MODE_BLOCK_BASED == pBtampCtx->ucDataTrafficMode)
-    {
-        WLANBAP_SendCompletedDataBlksEvent(pBtampCtx);
-    }
-    else
-    {
-        WLANBAP_SendCompletedPktsEvent(pBtampCtx);
-    }
+  if(WLANBAP_FLOW_CONTROL_MODE_BLOCK_BASED == pBtampCtx->ucDataTrafficMode)
+     {
+    WLANBAP_SendCompletedDataBlksEvent(pBtampCtx);
+       }
+  else
+  {
+    WLANBAP_SendCompletedPktsEvent(pBtampCtx);
+  }
 
-    /* Restart the Packet monitoring timer if still Physical link
-     * is present.
-     * It is possible that when the physical link is tear down,
-     * timer start request is in Q and could start again.
-     */
-    if (CONNECTED == instanceVar->stateVar)
-    {
-        WLANBAP_StartTxPacketMonitorTimer(pBtampCtx);
-    }
+  /* Restart the Packet monitoring timer if still Physical link
+   * is present. 
+   * It is possible that when the physical link is tear down, 
+   * timer start request is in Q and could start again. 
+   */
+  if (CONNECTED == instanceVar->stateVar)
+  {
+    WLANBAP_StartTxPacketMonitorTimer(pBtampCtx);
+  }
 }/*WLANBAP_TxPacketMonitorHandler*/
 

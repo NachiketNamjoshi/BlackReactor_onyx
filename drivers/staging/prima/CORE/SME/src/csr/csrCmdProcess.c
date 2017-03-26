@@ -25,7 +25,7 @@
  * to the Linux Foundation.
  */
 
-/** ------------------------------------------------------------------------- *
+/** ------------------------------------------------------------------------- * 
     -------------------------------------------------------------------------
 
    ---------------------------------------------------------------------------*
@@ -47,38 +47,38 @@ eHalStatus csrMsgProcessor( tpAniSirGlobal pMac,  void *pMsgBuf )
     tSirSmeRsp *pSmeRsp = (tSirSmeRsp *)pMsgBuf;
 
     smsLog(pMac, LOG2, FL("Message %d[0x%04X] received in curState %s"
-                          "and substate %s"),
+           "and substate %s"),
            pSmeRsp->messageType, pSmeRsp->messageType,
            macTraceGetcsrRoamState(pMac->roam.curState[pSmeRsp->sessionId]),
            macTraceGetcsrRoamSubState(
-               pMac->roam.curSubState[pSmeRsp->sessionId]));
+           pMac->roam.curSubState[pSmeRsp->sessionId]));
 
     // Process the message based on the state of the roaming states...
-
+    
 #if defined( ANI_RTT_DEBUG )
     if(!pAdapter->fRttModeEnabled)
     {
 #endif//RTT    
         switch (pMac->roam.curState[pSmeRsp->sessionId])
         {
-        case eCSR_ROAMING_STATE_SCANNING:
+        case eCSR_ROAMING_STATE_SCANNING: 
         {
             //Are we in scan state
 #if defined( ANI_EMUL_ASSOC )
             emulScanningStateMsgProcessor( pAdapter, pMBBufHdr );
 #else
             status = csrScanningStateMsgProcessor(pMac, pMsgBuf);
-#endif
+#endif    
             break;
         }
-
-        case eCSR_ROAMING_STATE_JOINED:
+        
+        case eCSR_ROAMING_STATE_JOINED: 
         {
             //are we in joined state
             csrRoamJoinedStateMsgProcessor( pMac, pMsgBuf );
             break;
         }
-
+        
         case eCSR_ROAMING_STATE_JOINING:
         {
             //are we in roaming states
@@ -89,14 +89,14 @@ eHalStatus csrMsgProcessor( tpAniSirGlobal pMac,  void *pMsgBuf )
             break;
         }
 
-        //For all other messages, we ignore it
+        //For all other messages, we ignore it        
         default:
         {
-            /*To work-around an issue where checking for set/remove key base on connection state is no longer
+            /*To work-around an issue where checking for set/remove key base on connection state is no longer 
             * workable due to failure or finding the condition meets both SAP and infra/IBSS requirement.
             */
             if( (eWNI_SME_SETCONTEXT_RSP == pSmeRsp->messageType) ||
-                    (eWNI_SME_REMOVEKEY_RSP == pSmeRsp->messageType) )
+                (eWNI_SME_REMOVEKEY_RSP == pSmeRsp->messageType) )
             {
                 smsLog(pMac, LOGW, FL(" handling msg 0x%X CSR state is %d"), pSmeRsp->messageType, pMac->roam.curState[pSmeRsp->sessionId]);
                 csrRoamCheckForLinkStatusChange(pMac, pSmeRsp);
@@ -107,9 +107,9 @@ eHalStatus csrMsgProcessor( tpAniSirGlobal pMac,  void *pMsgBuf )
             }
             break;
         }
-
+        
         }//switch
-
+        
 #if defined( ANI_RTT_DEBUG )
     }
 #endif//RTT
@@ -135,7 +135,7 @@ void csrFullPowerCallback(void *pv, eHalStatus status)
     tSmeCmd *pCommand;
 
     (void)status;
-
+    
     while( NULL != ( pEntry = csrLLRemoveHead( &pMac->roam.roamCmdPendingList, eANI_BOOLEAN_TRUE ) ) )
     {
         pCommand = GET_BASE_ADDR( pEntry, tSmeCmd, Link );
