@@ -36,3 +36,4 @@ shit
 .tmp_versions/
 compile.log
 product_info
+*.reactor.*
