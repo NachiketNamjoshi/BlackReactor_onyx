@@ -4066,6 +4066,24 @@ static int init_synaptics_proc(void)
 		printk(KERN_ERR"init_synaptic_proc: Couldn't create keypad_enable proc entry\n");
 	}
 
+	prEntry_tmp = proc_create("camera_enable", 0666, prEntry_tp, &tp_letter_o_proc_fops);
+    if(prEntry_tmp == NULL) {
+        ret = -ENOMEM;
+        printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+    }
+
+    prEntry_tmp = proc_create("music_enable", 0666, prEntry_tp, &tp_double_swipe_proc_fops);
+    if(prEntry_tmp == NULL) {
+        ret = -ENOMEM;
+        printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+    }
+
+    prEntry_tmp = proc_create("flashlight_enable", 0666, prEntry_tp, &tp_down_arrow_proc_fops);
+    if(prEntry_tmp == NULL) {
+        ret = -ENOMEM;
+        printk(KERN_INFO"init_synaptics_proc: Couldn't create proc entry\n");
+    }
+
 #endif
 
 #ifdef SUPPORT_GLOVES_MODE
