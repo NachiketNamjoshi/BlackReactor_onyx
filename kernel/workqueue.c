@@ -42,7 +42,6 @@
 #include <linux/lockdep.h>
 #include <linux/idr.h>
 #include <linux/bug.h>
-#include <linux/module.h>
 
 #include "workqueue_sched.h"
 
@@ -135,7 +134,6 @@ struct worker {
 	};
 
 	struct work_struct	*current_work;	/* L: work being processed */
-	work_func_t		current_func;	/* L: current_work's fn */
 	struct cpu_workqueue_struct *current_cwq; /* L: current_work's cwq */
 	struct list_head	scheduled;	/* L: scheduled works */
 	struct task_struct	*task;		/* I: worker task */
@@ -263,31 +261,18 @@ struct workqueue_struct {
 	char			name[];		/* I: workqueue name */
 };
 
-/* see the comment above the definition of WQ_POWER_EFFICIENT */
-#ifdef CONFIG_WQ_POWER_EFFICIENT_DEFAULT
-static bool wq_power_efficient = true;
-#else
-static bool wq_power_efficient;
-#endif
-
-module_param_named(power_efficient, wq_power_efficient, bool, 0444);
-
 struct workqueue_struct *system_wq __read_mostly;
 struct workqueue_struct *system_long_wq __read_mostly;
 struct workqueue_struct *system_nrt_wq __read_mostly;
 struct workqueue_struct *system_unbound_wq __read_mostly;
 struct workqueue_struct *system_freezable_wq __read_mostly;
 struct workqueue_struct *system_nrt_freezable_wq __read_mostly;
-struct workqueue_struct *system_power_efficient_wq __read_mostly;
-struct workqueue_struct *system_freezable_power_efficient_wq __read_mostly;
 EXPORT_SYMBOL_GPL(system_wq);
 EXPORT_SYMBOL_GPL(system_long_wq);
 EXPORT_SYMBOL_GPL(system_nrt_wq);
 EXPORT_SYMBOL_GPL(system_unbound_wq);
 EXPORT_SYMBOL_GPL(system_freezable_wq);
 EXPORT_SYMBOL_GPL(system_nrt_freezable_wq);
-EXPORT_SYMBOL_GPL(system_power_efficient_wq);
-EXPORT_SYMBOL_GPL(system_freezable_power_efficient_wq);
 
 #define CREATE_TRACE_POINTS
 #include <trace/events/workqueue.h>
@@ -882,8 +867,7 @@ static struct worker *__find_worker_executing_work(struct global_cwq *gcwq,
 	struct hlist_node *tmp;
 
 	hlist_for_each_entry(worker, tmp, bwh, hentry)
-		if (worker->current_work == work &&
-		    worker->current_func == work->func)
+		if (worker->current_work == work)
 			return worker;
 	return NULL;
 }
@@ -893,27 +877,9 @@ static struct worker *__find_worker_executing_work(struct global_cwq *gcwq,
  * @gcwq: gcwq of interest
  * @work: work to find worker for
  *
- * Find a worker which is executing @work on @gcwq by searching
- * @gcwq->busy_hash which is keyed by the address of @work.  For a worker
- * to match, its current execution should match the address of @work and
- * its work function.  This is to avoid unwanted dependency between
- * unrelated work executions through a work item being recycled while still
- * being executed.
- *
- * This is a bit tricky.  A work item may be freed once its execution
- * starts and nothing prevents the freed area from being recycled for
- * another work item.  If the same work item address ends up being reused
- * before the original execution finishes, workqueue will identify the
- * recycled work item as currently executing and make it wait until the
- * current execution finishes, introducing an unwanted dependency.
- *
- * This function checks the work item address, work function and workqueue
- * to avoid false positives.  Note that this isn't complete as one may
- * construct a work function which can introduce dependency onto itself
- * through a recycled work item.  Well, if somebody wants to shoot oneself
- * in the foot that badly, there's only so much we can do, and if such
- * deadlock actually occurs, it should be easy to locate the culprit work
- * function.
+ * Find a worker which is executing @work on @gcwq.  This function is
+ * identical to __find_worker_executing_work() except that this
+ * function calculates @bwh itself.
  *
  * CONTEXT:
  * spin_lock_irq(gcwq->lock).
@@ -1167,8 +1133,8 @@ int queue_delayed_work_on(int cpu, struct workqueue_struct *wq,
 	if (!test_and_set_bit(WORK_STRUCT_PENDING_BIT, work_data_bits(work))) {
 		unsigned int lcpu;
 
-		WARN_ON_ONCE(timer_pending(timer));
-		WARN_ON_ONCE(!list_empty(&work->entry));
+		BUG_ON(timer_pending(timer));
+		BUG_ON(!list_empty(&work->entry));
 
 		timer_stats_timer_set_start_info(&dwork->timer);
 
@@ -1481,19 +1447,12 @@ static void destroy_worker(struct worker *worker)
 	if (worker->flags & WORKER_IDLE)
 		pool->nr_idle--;
 
-	/*
-	 * Once WORKER_DIE is set, the kworker may destroy itself at any
-	 * point.  Pin to ensure the task stays until we're done with it.
-	 */
-	get_task_struct(worker->task);
-
 	list_del_init(&worker->entry);
 	worker->flags |= WORKER_DIE;
 
 	spin_unlock_irq(&gcwq->lock);
 
 	kthread_stop(worker->task);
-	put_task_struct(worker->task);
 	kfree(worker);
 
 	spin_lock_irq(&gcwq->lock);
@@ -1848,6 +1807,7 @@ __acquires(&gcwq->lock)
 	struct global_cwq *gcwq = pool->gcwq;
 	struct hlist_head *bwh = busy_worker_head(gcwq, work);
 	bool cpu_intensive = cwq->wq->flags & WQ_CPU_INTENSIVE;
+	work_func_t f = work->func;
 	int work_color;
 	struct worker *collision;
 #ifdef CONFIG_LOCKDEP
@@ -1876,7 +1836,6 @@ __acquires(&gcwq->lock)
 	debug_work_deactivate(work);
 	hlist_add_head(&worker->hentry, bwh);
 	worker->current_work = work;
-	worker->current_func = work->func;
 	worker->current_cwq = cwq;
 	work_color = get_work_color(work);
 
@@ -1900,13 +1859,11 @@ __acquires(&gcwq->lock)
 
 	spin_unlock_irq(&gcwq->lock);
 
-	smp_wmb();	/* paired with test_and_set_bit(PENDING) */
 	work_clear_pending(work);
-
 	lock_map_acquire_read(&cwq->wq->lockdep_map);
 	lock_map_acquire(&lockdep_map);
 	trace_workqueue_execute_start(work);
-	worker->current_func(work);
+	f(work);
 	/*
 	 * While we must be careful to not use "work" after this, the trace
 	 * point will only record its address.
@@ -1916,23 +1873,15 @@ __acquires(&gcwq->lock)
 	lock_map_release(&cwq->wq->lockdep_map);
 
 	if (unlikely(in_atomic() || lockdep_depth(current) > 0)) {
-		pr_err("BUG: workqueue leaked lock or atomic: %s/0x%08x/%d\n"
-		       "     last function: %pf\n",
-		       current->comm, preempt_count(), task_pid_nr(current),
-		       worker->current_func);
+		printk(KERN_ERR "BUG: workqueue leaked lock or atomic: "
+		       "%s/0x%08x/%d\n",
+		       current->comm, preempt_count(), task_pid_nr(current));
+		printk(KERN_ERR "    last function: ");
+		print_symbol("%s\n", (unsigned long)f);
 		debug_show_held_locks(current);
 		BUG_ON(PANIC_CORRUPTION);
 		dump_stack();
 	}
-
-	/*
-	 * The following prevents a kworker from hogging CPU on !PREEMPT
-	 * kernels, where a requeueing work item waiting for something to
-	 * happen could deadlock with stop_machine as such work item could
-	 * indefinitely requeue itself while all other CPUs are trapped in
-	 * stop_machine.
-	 */
-	cond_resched();
 
 	spin_lock_irq(&gcwq->lock);
 
@@ -1943,7 +1892,6 @@ __acquires(&gcwq->lock)
 	/* we're done with it, release */
 	hlist_del_init(&worker->hentry);
 	worker->current_work = NULL;
-	worker->current_func = NULL;
 	worker->current_cwq = NULL;
 	cwq_dec_nr_in_flight(cwq, work_color, false);
 }
@@ -2087,10 +2035,8 @@ static int rescuer_thread(void *__wq)
 repeat:
 	set_current_state(TASK_INTERRUPTIBLE);
 
-	if (kthread_should_stop()) {
-		__set_current_state(TASK_RUNNING);
+	if (kthread_should_stop())
 		return 0;
-	}
 
 	/*
 	 * See whether any cpu is asking for help.  Unbounded
@@ -3021,10 +2967,6 @@ struct workqueue_struct *__alloc_workqueue_key(const char *fmt,
 	va_end(args);
 	va_end(args1);
 
-	/* see the comment above the definition of WQ_POWER_EFFICIENT */
-	if ((flags & WQ_POWER_EFFICIENT) && wq_power_efficient)
-		flags |= WQ_UNBOUND;
-
 	/*
 	 * Workqueues which may be used during memory reclaim should
 	 * have a rescuer to guarantee forward progress.
@@ -3525,17 +3467,14 @@ static int __cpuinit trustee_thread(void *__gcwq)
 
 	for_each_busy_worker(worker, i, pos, gcwq) {
 		struct work_struct *rebind_work = &worker->rebind_work;
-		unsigned long worker_flags = worker->flags;
 
 		/*
 		 * Rebind_work may race with future cpu hotplug
 		 * operations.  Use a separate flag to mark that
-		 * rebinding is scheduled.  The morphing should
-		 * be atomic.
+		 * rebinding is scheduled.
 		 */
-		worker_flags |= WORKER_REBIND;
-		worker_flags &= ~WORKER_ROGUE;
-		ACCESS_ONCE(worker->flags) = worker_flags;
+		worker->flags |= WORKER_REBIND;
+		worker->flags &= ~WORKER_ROGUE;
 
 		/* queue rebind_work, wq doesn't matter, use the default one */
 		if (test_and_set_bit(WORK_STRUCT_PENDING_BIT,
@@ -3699,55 +3638,21 @@ err_destroy:
 	return NOTIFY_BAD;
 }
 
-/*
- * Workqueues should be brought up before normal priority CPU notifiers.
- * This will be registered high priority CPU notifier.
- */
-static int __devinit workqueue_cpu_up_callback(struct notifier_block *nfb,
-					       unsigned long action,
-					       void *hcpu)
-{
-	switch (action & ~CPU_TASKS_FROZEN) {
-	case CPU_UP_PREPARE:
-	case CPU_UP_CANCELED:
-	case CPU_DOWN_FAILED:
-	case CPU_ONLINE:
-		return workqueue_cpu_callback(nfb, action, hcpu);
-	}
-	return NOTIFY_OK;
-}
-
-/*
- * Workqueues should be brought down after normal priority CPU notifiers.
- * This will be registered as low priority CPU notifier.
- */
-static int __devinit workqueue_cpu_down_callback(struct notifier_block *nfb,
-						 unsigned long action,
-						 void *hcpu)
-{
-	switch (action & ~CPU_TASKS_FROZEN) {
-	case CPU_DOWN_PREPARE:
-	case CPU_DYING:
-	case CPU_POST_DEAD:
-		return workqueue_cpu_callback(nfb, action, hcpu);
-	}
-	return NOTIFY_OK;
-}
-
 #ifdef CONFIG_SMP
 
 struct work_for_cpu {
-	struct work_struct work;
+	struct completion completion;
 	long (*fn)(void *);
 	void *arg;
 	long ret;
 };
 
-static void work_for_cpu_fn(struct work_struct *work)
+static int do_work_for_cpu(void *_wfc)
 {
-	struct work_for_cpu *wfc = container_of(work, struct work_for_cpu, work);
-
+	struct work_for_cpu *wfc = _wfc;
 	wfc->ret = wfc->fn(wfc->arg);
+	complete(&wfc->completion);
+	return 0;
 }
 
 /**
@@ -3762,11 +3667,19 @@ static void work_for_cpu_fn(struct work_struct *work)
  */
 long work_on_cpu(unsigned int cpu, long (*fn)(void *), void *arg)
 {
-	struct work_for_cpu wfc = { .fn = fn, .arg = arg };
+	struct task_struct *sub_thread;
+	struct work_for_cpu wfc = {
+		.completion = COMPLETION_INITIALIZER_ONSTACK(wfc.completion),
+		.fn = fn,
+		.arg = arg,
+	};
 
-	INIT_WORK_ONSTACK(&wfc.work, work_for_cpu_fn);
-	schedule_work_on(cpu, &wfc.work);
-	flush_work(&wfc.work);
+	sub_thread = kthread_create(do_work_for_cpu, &wfc, "work_for_cpu");
+	if (IS_ERR(sub_thread))
+		return PTR_ERR(sub_thread);
+	kthread_bind(sub_thread, cpu);
+	wake_up_process(sub_thread);
+	wait_for_completion(&wfc.completion);
 	return wfc.ret;
 }
 EXPORT_SYMBOL_GPL(work_on_cpu);
@@ -3930,8 +3843,7 @@ static int __init init_workqueues(void)
 	unsigned int cpu;
 	int i;
 
-	cpu_notifier(workqueue_cpu_up_callback, CPU_PRI_WORKQUEUE_UP);
-	cpu_notifier(workqueue_cpu_down_callback, CPU_PRI_WORKQUEUE_DOWN);
+	cpu_notifier(workqueue_cpu_callback, CPU_PRI_WORKQUEUE);
 
 	/* initialize gcwqs */
 	for_each_gcwq_cpu(cpu) {
@@ -3992,17 +3904,9 @@ static int __init init_workqueues(void)
 					      WQ_FREEZABLE, 0);
 	system_nrt_freezable_wq = alloc_workqueue("events_nrt_freezable",
 			WQ_NON_REENTRANT | WQ_FREEZABLE, 0);
-	system_power_efficient_wq = alloc_workqueue("events_power_efficient",
-			WQ_POWER_EFFICIENT, 0);
-	system_freezable_power_efficient_wq = alloc_workqueue("events_freezable_power_efficient",
-			WQ_FREEZABLE | WQ_POWER_EFFICIENT,
-			0);
-
 	BUG_ON(!system_wq || !system_long_wq || !system_nrt_wq ||
 	       !system_unbound_wq || !system_freezable_wq ||
-		!system_nrt_freezable_wq ||
-		!system_power_efficient_wq ||
-		!system_freezable_power_efficient_wq);
+		!system_nrt_freezable_wq);
 	return 0;
 }
 early_initcall(init_workqueues);
