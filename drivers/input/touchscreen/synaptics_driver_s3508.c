@@ -1526,11 +1526,11 @@ static void gesture_judge(struct synaptics_ts_data *ts)
 			keyCode = KEY_GESTURE_UP_ARROW;
 			break;
 		case LeftVee:
-			if(ts->right_arrow_enable)
+			if(ts->double_swipe_enable)
 			keyCode = KEY_GESTURE_RIGHT_ARROW;
 			break;
 		case RightVee:
-			if(ts->left_arrow_enable)
+			if(ts->double_swipe_enable)
 			keyCode = KEY_GESTURE_LEFT_ARROW;
 			break;
 		case Circle:
