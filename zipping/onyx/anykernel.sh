@@ -10,7 +10,7 @@
 do.devicecheck=1
 do.initd=0
 do.modules=0
-do.cleanup=1
+do.cleanup=0
 device.name1=OnePlus
 device.name2=ONE
 device.name3=onyx
@@ -302,7 +302,9 @@ dump_boot;
 backup_file default.prop;
 replace_string default.prop "ro.adb.secure=0" "ro.adb.secure=1" "ro.adb.secure=0";
 replace_string default.prop "ro.secure=0" "ro.secure=1" "ro.secure=0";
-
+insert_file init.qcom.rc "spectrum" before "on early-init" init.qcom.rc;
+chmod 750 $ramdisk/init.spectrum.sh;
+chmod 750 $ramdisk/init.spectrum.rc;
 ############### Ramdisk customization end ###############
 
 # write new kernel

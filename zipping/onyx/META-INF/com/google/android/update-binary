@@ -173,6 +173,18 @@ if [ ! -d /data/BlackReactor ]; then
 	ui_print " [*] Creating Directories...";
 	mkdir -p /data/BlackReactor;
 fi
+if [ ! -f /data/BlackReactor/Balanced.sh ]; then
+	ui_print "[*]Copying Files..";
+	cp /tmp/anykernel/system/Balanced.sh /data/BlackReactor/Balanced.sh;
+	chmod 750 /data/BlackReactor/Balanced.sh;
+	cp /tmp/anykernel/system/Performance.sh /data/BlackReactor/Performance.sh;
+	chmod 750 /data/BlackReactor/Performance.sh;
+	cp /tmp/anykernel/system/Battery.sh /data/BlackReactor/Battery.sh;
+	chmod 750 /data/BlackReactor/Battery.sh;
+	cp /tmp/anykernel/system/Gaming.sh /data/BlackReactor/Gaming.sh;
+	chmod 750 /data/BlackReactor/Gaming.sh;
+fi
+
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
 	rm -rf /tmp/anykernel;
 fi;
