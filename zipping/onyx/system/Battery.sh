@@ -53,3 +53,5 @@ echo 600 > /proc/sys/vm/dirty_writeback_centisecs
 echo 8192 > /proc/sys/vm/min_free_kbytes
 echo 32768 > /proc/sys/vm/extra_free_kbytes
 echo 512 > /proc/sys/kernel/random/read_wakeup_threshold
+echo 8192 > /proc/sys/vm/min_free_kbytes
+echo 32768 > /proc/sys/vm/extra_free_kbytes

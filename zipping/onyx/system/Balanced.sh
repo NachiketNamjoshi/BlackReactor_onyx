@@ -9,6 +9,7 @@ echo 0 > /sys/block/mmcblk0/queue/iostats
 echo 0 > /sys/block/mmcblk0/queue/add_random
 echo 0 > /proc/sys/vm/swappiness
 echo 600 > /proc/sys/vm/dirty_writeback_centisecs
+echo 5000 > /proc/sys/vm/dirty_expire_centisecs
 echo 8192 > /proc/sys/vm/min_free_kbytes
 echo 32768 > /proc/sys/vm/extra_free_kbytes
 echo 512 > /proc/sys/kernel/random/read_wakeup_threshold

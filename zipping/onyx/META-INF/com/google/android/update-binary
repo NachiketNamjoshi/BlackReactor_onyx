@@ -182,7 +182,6 @@ cp /tmp/anykernel/system/Battery.sh /data/BlackReactor/Battery.sh;
 chmod 750 /data/BlackReactor/Battery.sh;
 cp /tmp/anykernel/system/Gaming.sh /data/BlackReactor/Gaming.sh;
 chmod 750 /data/BlackReactor/Gaming.sh;
-fi
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
 	rm -rf /tmp/anykernel;
