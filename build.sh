@@ -28,7 +28,7 @@ nocol='\033[0m'
 KERNEL_DIR=$PWD
 KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage-dtb
 OUT_DIR=$KERNEL_DIR/zipping/onyx
-REACTOR_VERSION="stable-2.2"
+REACTOR_VERSION="stable-3.0"
 PRODUCT_INFO=$KERNEL_DIR/product_info
 COMPILE_LOG=$KERNEL_DIR/compile.log
 SIGNAPK=$KERNEL_DIR/zipping/common/sign/signapk.jar
@@ -36,7 +36,7 @@ CERT=$KERNEL_DIR/zipping/common/sign/certificate.pem
 KEY=$KERNEL_DIR/zipping/common/sign/key.pk8
 # Device Spceifics
 export ARCH=arm
-export CROSS_COMPILE="/home/nachiket/Android/onyx/kernel/toolchains/Linaro/arm-4.9/bin/arm-linux-androideabi-"
+export CROSS_COMPILE="/home/nachiket/Android/onyx/kernel/toolchains/Linaro/4.8/bin/arm-eabi-"
 export KBUILD_BUILD_USER="nachiket"
 export KBUILD_BUILD_HOST="reactor"
 
@@ -75,11 +75,8 @@ zipping() {
 # make new zip
 cp $KERN_IMG $OUT_DIR/zImage
 cd $OUT_DIR
-zip -r -9 BR_UNSIGNED.zip *
-java -jar $SIGNAPK $CERT $KEY BR_UNSIGNED.zip BlackReactor-onyx-$REACTOR_VERSION-$(date +"%Y%m%d")-$(date +"%H%M%S").zip
-rm -f BR_UNSIGNED.zip
+zip -r -9 BlackReactor-onyx-$REACTOR_VERSION-$(date +"%Y%m%d")-$(date +"%H%M%S").zip *
 }
-
 block_ads() {
 HOSTS_FILE="$OUT_DIR/system/hosts"
 HOST_FILE="$OUT_DIR/system/host"
