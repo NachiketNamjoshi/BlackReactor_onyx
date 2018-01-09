@@ -2785,7 +2785,7 @@ out:
 static long do_rmdir(int dfd, const char __user *pathname)
 {
 	int error = 0;
-	char * name = NULL;
+	char * name = getname(pathname);
 	struct dentry *dentry;
 	struct nameidata nd;
 
