@@ -160,11 +160,6 @@ mount -o remount,rw /system;
 ui_print " |- Copying 00BlackReactor...";
 cp -f /tmp/anykernel/system/00BlackReactor /system/etc/init.d/00BlackReactor;
 chmod 777 /system/etc/init.d/00BlackReactor;
-ui_print " |- Adding Ad-blocker..."
-rm -rf /system/etc/hosts
-cp -f /tmp/anykernel/system/hosts /system/etc/hosts;
-chmod 644 /system/etc/hosts;
-chown 0:0 /system/etc/hosts;
 ui_print " |- Adding setcurr utility...";
 cp -f /tmp/anykernel/system/setcurr /system/bin/setcurr;
 chmod 777 /system/bin/setcurr;
