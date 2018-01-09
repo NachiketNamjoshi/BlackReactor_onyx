@@ -36,7 +36,7 @@ CERT=$KERNEL_DIR/zipping/common/sign/certificate.pem
 KEY=$KERNEL_DIR/zipping/common/sign/key.pk8
 # Device Spceifics
 export ARCH=arm
-export CROSS_COMPILE="/home/nachiket/Android/onyx/kernel/toolchains/Linaro/4.8/bin/arm-eabi-"
+export CROSS_COMPILE="/home/nachiket/Android/onyx/kernel/toolchains/Linaro/4.9/bin/arm-linux-androideabi-"
 export KBUILD_BUILD_USER="nachiket"
 export KBUILD_BUILD_HOST="reactor"
 
